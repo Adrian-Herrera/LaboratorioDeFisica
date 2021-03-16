@@ -12,7 +12,7 @@ public class Lane : MonoBehaviour
     [SerializeField]
     private GameObject endPoint = null;
     [SerializeField]
-    private GameObject Car = null;
+    // private GameObject Car = null;
     private int Horizontal, Vertical;
     private float terrainSize;
 
