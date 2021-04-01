@@ -44,7 +44,7 @@ public class Lane : MonoBehaviour
         //Debug.Log(startPoint.transform.localPosition);
 
         // Se instancia el punto final
-        endPoint.transform.localPosition = new Vector3(startPoint.transform.localPosition.x + _soCar.finalPosition, 0f, 0f);
+        // endPoint.transform.localPosition = new Vector3(startPoint.transform.localPosition.x + _soCar.finalPosition, 0f, 0f);
         // endPoint.transform.SetParent(this.transform, false);
 
         // El terreno se ubica al medio de los dos puntos y aumenta su tamaño

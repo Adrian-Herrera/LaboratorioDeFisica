@@ -48,19 +48,19 @@ public class UI : MonoBehaviour
 
     private void setData(TMP_InputField[] data, soCar car)
     {
-        data[0].text = car.speed.ToString("F3");
-        data[1].text = car.acceleration.ToString("F3");
-        data[2].text = car.initialPosition.ToString("F3");
-        data[3].text = car.finalPosition.ToString("F3");
-        data[4].text = car.timeMov.ToString("F2");
+        // data[0].text = car.speed.ToString("F3");
+        // data[1].text = car.acceleration.ToString("F3");
+        // data[2].text = car.initialPosition.ToString("F3");
+        // data[3].text = car.finalPosition.ToString("F3");
+        // data[4].text = car.timeMov.ToString("F2");
     }
 
     public void updateData(TMP_InputField[] data, soCar car)
     {
-        car.speed = float.Parse(data[0].text);
-        car.acceleration = float.Parse(data[1].text);
-        car.initialPosition = float.Parse(data[2].text);
-        car.finalPosition = float.Parse(data[3].text);
+        // car.speed = float.Parse(data[0].text);
+        // car.acceleration = float.Parse(data[1].text);
+        // car.initialPosition = float.Parse(data[2].text);
+        // car.finalPosition = float.Parse(data[3].text);
 
     }
 

@@ -28,7 +28,7 @@ public class Car : MonoBehaviour
         addLine();
         speedTxt();
         // time = 0;
-        dataCar.timeMov = 0;
+        // dataCar.timeMov = 0;
         // Debug.Log("Velocidad " + rb.velocity);
     }
 
@@ -41,17 +41,17 @@ public class Car : MonoBehaviour
             updateSpeedText();
 
             // time += Time.deltaTime;
-            
+
         }
     }
     void FixedUpdate()
     {
         if (onMove)
         {
-            dataCar.speed += dataCar.acceleration * Time.deltaTime;
-            rb.velocity = new Vector2(dataCar.speed, 0);
+            // dataCar.speed += dataCar.acceleration * Time.deltaTime;
+            // rb.velocity = new Vector2(dataCar.speed, 0);
 
-            dataCar.timeMov += Time.deltaTime;
+            // dataCar.timeMov += Time.deltaTime;
         }
     }
 
@@ -68,10 +68,10 @@ public class Car : MonoBehaviour
             instance = true;
         }
 
-        rb.velocity = new Vector2(dataCar.speed, 0);
-        carForce = new Vector2(dataCar.acceleration, 0);
+        // rb.velocity = new Vector2(dataCar.speed, 0);
+        // carForce = new Vector2(dataCar.acceleration, 0);
 
-        dataCar.onMove = true;
+        // dataCar.onMove = true;
         onMove = true;
     }
     public void Pause()
@@ -79,7 +79,7 @@ public class Car : MonoBehaviour
         rb.velocity = new Vector2(0, 0);
         carForce = new Vector2(0f, 0f);
 
-        dataCar.onMove = false;
+        // dataCar.onMove = false;
         onMove = false;
     }
     public void Restart()
@@ -91,8 +91,8 @@ public class Car : MonoBehaviour
         lnr.SetPosition(1, this.transform.position + new Vector3(0f, 1f, 0f));
         endPoint = this.transform.position;
 
-        dataCar.timeMov = 0;
-        dataCar.onMove = false;
+        // dataCar.timeMov = 0;
+        // dataCar.onMove = false;
         onMove = false;
     }
 

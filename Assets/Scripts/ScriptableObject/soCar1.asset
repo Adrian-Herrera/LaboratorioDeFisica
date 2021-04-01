@@ -10,9 +10,8 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: fe839b5f6b317ca4e87b2319c90c7f5a, type: 3}
-  m_Name: Car2
+  m_Name: soCar1
   m_EditorClassIdentifier: 
-  speed: 5
-  acceleration: 0
-  initialPosition: 0
-  finalPosition: 50
+  vel: 7.74
+  acc: 0
+  numberSegments: 0
