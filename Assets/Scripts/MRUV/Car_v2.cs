@@ -16,6 +16,10 @@ public class Car_v2 : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private Transform startPoint, endPoint;
+
+    private float distance;
+
     void Awake()
     {
         rb = GetComponent<Rigidbody2D>();
@@ -25,20 +29,13 @@ public class Car_v2 : MonoBehaviour
     void Start()
     {
         dataCar.vel = 0;
-        onPlay = false; firstUse = true;
-        // data = new float[2, 5];
+        onPlay = false;
+        firstUse = true;
 
-        // data[0, 0] = vel_inicial;
-        // data[0, 1] = vel_final;
-        // data[0, 2] = dist_final;
-        // data[0, 3] = acceleration;
-        // data[0, 4] = tiempo;
-
-        // data[1, 0] = vel_inicial;
-        // data[1, 1] = vel_final;
-        // data[1, 2] = dist_final;
-        // data[1, 3] = acceleration;
-        // data[1, 4] = tiempo;
+        startPoint = transform;
+        endPoint = transform.GetChild(0);
+        distance = Vector3.Distance(endPoint.position, transform.position);
+        dataCar.dist = distance;
 
     }
 
@@ -52,16 +49,18 @@ public class Car_v2 : MonoBehaviour
 
     }
 
-    // public void Play()
-    // {
-    //     if (firstUse)
-    //     {
-    //         getData();
-    //         firstUse = false;
-    //     }
-    //     onPlay = true;
+    public void Play()
+    {
+        if (firstUse)
+        {
+            firstUse = false;
+            
 
-    // }
+        }
+        dataCar.Play();
+        onPlay = true;
+
+    }
     public void Pause()
     {
         onPlay = false;

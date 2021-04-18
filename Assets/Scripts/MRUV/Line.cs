@@ -57,7 +57,7 @@ public class Line : MonoBehaviour, IPointerDownHandler
         // Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
         // Debug.Log(segmentsList.IndexOf(eventData.pointerCurrentRaycast.gameObject));
         selectedSegment = segmentsList.IndexOf(eventData.pointerCurrentRaycast.gameObject);
-        if (selectedSegment > 0)
+        if (selectedSegment >= 0)
         {
 
             showData();
@@ -97,45 +97,25 @@ public class Line : MonoBehaviour, IPointerDownHandler
         }
         // Debug.Log(emptyData);
 
+        for (int i = 0; i < dataCar.numberSegments; i++)
+        {
+            var sg = Instantiate(segment, this.transform);
+            segmentsList.Add(sg);
+            sg.name = "Segment" + (i + 1);
 
-        if (emptyData >= (dataCar.numberSegments - 1))
-        {
-            for (int i = 0; i < dataCar.numberSegments; i++)
+            if (dataCar.dataTable[i, 5] == 0)
             {
-                var sg = Instantiate(segment, this.transform);
-                segmentsList.Add(sg);
-                sg.name = "Segment" + (i + 1);
                 SetPositionSegment(sg, lineSize / dataCar.numberSegments);
+                sg.GetComponentInChildren<TMP_Text>().text = "X <sub>" + (i + 1) + "</sub>";
+
             }
-        }
-        else
-        {
-            for (int i = 0; i < dataCar.numberSegments; i++)
+            else
             {
                 var SizePercent = ((dataCar.dataTable[i, 5] * 100) / dataCar.x_total) / 100;
-
-                var sg = Instantiate(segment, this.transform);
-                segmentsList.Add(sg);
-                sg.name = "Segment" + (i + 1);
-                if (dataCar.dataTable[i, 5] == 0)
-                {
-                    SetPositionSegment(sg, lineSize / dataCar.numberSegments);
-                }
-                else
-                {
-                    if (emptyData == 0)
-                    {
-                        SetPositionSegment(sg, lineSize * SizePercent);
-
-                    }
-                    else
-                    {
-                        SetPositionSegment(sg, (lineSize - (lineSize / dataCar.numberSegments)) * SizePercent);
-                    }
-
-                }
-
+                SetPositionSegment(sg, (lineSize - ((lineSize / dataCar.numberSegments) * emptyData)) * SizePercent);
+                sg.GetComponentInChildren<TMP_Text>().text = dataCar.dataTable[i, 5].ToString();
             }
+
         }
         initialPos = 0;
     }
