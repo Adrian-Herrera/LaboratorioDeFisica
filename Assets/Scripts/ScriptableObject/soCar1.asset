@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe839b5f6b317ca4e87b2319c90c7f5a, type: 3}
   m_Name: soCar1
   m_EditorClassIdentifier: 
-  vel: 7.74
-  acc: 0
-  numberSegments: 0
+  x_total: 0
+  time_total: 0
+  carSprite: {fileID: 21300000, guid: c4a95553124893b48a5f74672a5ebbe7, type: 3}
+  numberSegments: 1
+  selectedSegment: 0
+  varToResolve: 

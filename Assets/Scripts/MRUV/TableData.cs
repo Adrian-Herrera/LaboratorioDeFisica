@@ -25,6 +25,6 @@ public class TableData : MonoBehaviour
     public void ChangeData(string Text)
     {
         // Debug.Log("Text: " + Text);
-        table.Change(inputField, Text);
+        // table.Change(inputField, Text);
     }
 }
