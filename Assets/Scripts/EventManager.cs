@@ -10,24 +10,24 @@ public class EventManager : MonoBehaviour
     {
         current = this;
     }
-    public delegate void ClickAction();
-    public static event ClickAction OnClicked;
+    public delegate void voidDelegate();
+    public static event voidDelegate onChangeType;
 
-    public static void ChangeOptions()
+    public static void ChangeType()
     {
-        if (OnClicked != null)
+        if (onChangeType != null)
         {
-            OnClicked();
+            onChangeType();
         }
     }
 
     // Fields Events
-    public event Action onSelectType;
-    public void SelectType()
+    public event voidDelegate onChangeProblem;
+    public void ChangeProblem()
     {
-        if (onSelectType != null)
+        if (onChangeProblem != null)
         {
-            onSelectType();
+            onChangeProblem();
         }
     }
 }

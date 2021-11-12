@@ -26,7 +26,7 @@ public class FieldsManager : MonoBehaviour
     void Start()
     {
         ColorUtility.TryParseHtmlString("#FFCC70", out newCol);
-        EventManager.current.onSelectType += CheckIncognitas;
+        EventManager.current.onChangeProblem += CheckIncognitas;
         AsignFieldsID();
     }
 
@@ -56,9 +56,10 @@ public class FieldsManager : MonoBehaviour
                 }
             }
         }
-        if (isAnyFieldEmpty)
+        if (!isAnyFieldEmpty)
         {
-            Debug.Log("Faltan Datos");
+            HeaderManager.current.ActiveProblem.Calculate();
+            ShowData();
         }
     }
     private void Clear()
@@ -76,6 +77,17 @@ public class FieldsManager : MonoBehaviour
     public void ChangeData(int segment, int id, float newValue)
     {
         carSO.Datos[segment, id] = newValue;
+    }
+
+    public void ShowData()
+    {
+        for (int i = 0; i < SegmentsFields.Count; i++)
+        {
+            for (int j = 0; j < SegmentsFields[i].transform.childCount; j++)
+            {
+                SegmentsFields[i].transform.GetChild(j).GetComponent<TMP_InputField>().text = carSO.Datos[i, j].ToString();
+            }
+        }
     }
 
 }

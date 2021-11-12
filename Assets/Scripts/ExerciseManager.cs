@@ -24,11 +24,7 @@ public class ExerciseManager : MonoBehaviour
     }
     public void CalculateVelF()
     {
-        // Debug.Log("Vo: " + Cars[0].Datos[0, (int)Variables.Vo]);
-        // Debug.Log("a: " + Cars[0].Datos[0, (int)Variables.a]);
-        // Debug.Log("t: " + Cars[0].Datos[0, (int)Variables.t]);
         float res = Formulary.current.VelF_1(Cars[0].Datos[0, (int)Variables.Vo], Cars[0].Datos[0, (int)Variables.a], Cars[0].Datos[0, (int)Variables.t]);
-        // Debug.Log("res: " + res);
         Cars[0].Datos[0, (int)Variables.Vf] = res;
 
     }

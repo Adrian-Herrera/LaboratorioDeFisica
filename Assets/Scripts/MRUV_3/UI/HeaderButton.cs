@@ -5,17 +5,16 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 using TMPro;
 
-public class Type_button : MonoBehaviour
+public class HeaderButton : MonoBehaviour
 {
     // public Header_manager manager;
     private Sprite imageCover;
     private Button _button;
     private string title;
-    private int id, type;
+    private int type;
 
-    public void newButton(int _id, string _title, int _type)
+    public void setData(string _title, int _type)
     {
-        id = _id;
         title = _title;
         type = _type;
     }
@@ -30,33 +29,6 @@ public class Type_button : MonoBehaviour
     void Start()
     {
         _button.GetComponentInChildren<TMP_Text>().text = title;
-        _button.onClick.AddListener(onClick);
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
 
     }
-
-    private void onClick()
-    {
-
-        if (type == 0)
-        {
-
-            EventManager.ChangeOptions();
-        }
-        else
-        {
-
-            EventManager.current.SelectType();
-            HeaderManager.current.ActiveProblem.Calculate();
-        }
-    }
-
-
-
-
-
 }

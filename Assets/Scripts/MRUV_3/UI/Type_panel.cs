@@ -12,18 +12,13 @@ public class Type_panel : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        // for (int i = 0; i < manager.options.Length; i++)
-        // {
-        //     GameObject go = Instantiate(_button, transform);
-        //     TypeList.Add(go);
-        //     go.GetComponent<Type_button>().newButton(TypeList.FindIndex(d => d == go) ,manager.options[i].name, 0);
-        // } 
-        foreach (var item in Types)
+        foreach (TypesSO item in Types)
         {
             GameObject go = Instantiate(_button, transform);
             TypeList.Add(go);
-            go.GetComponent<Type_button>().newButton(TypeList.FindIndex(d => d == go), item.title, 0);
+            go.GetComponent<HeaderButton>().setData(item.title, 0);
             go.GetComponent<Button>().onClick.AddListener(item.SelectType);
+            go.GetComponent<Button>().onClick.AddListener(EventManager.ChangeType);
         }
     }
 

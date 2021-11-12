@@ -10,22 +10,13 @@ public class Question_panel : MonoBehaviour
     private GameObject _button;
     // public Header_manager manager;
     private List<GameObject> QuestionList = new List<GameObject>();
-    private void OnEnable() {
-        EventManager.OnClicked += showQuestion;
-    }
-    private void OnDisable() {
-        EventManager.OnClicked -= showQuestion;
-        
-    }
-    // Start is called before the first frame update
-    void Start()
+    private void OnEnable()
     {
-        
+        EventManager.onChangeType += showQuestion;
     }
-
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
+        EventManager.onChangeType -= showQuestion;
 
     }
     public void showQuestion()
@@ -39,8 +30,15 @@ public class Question_panel : MonoBehaviour
         {
             GameObject go = Instantiate(_button, transform);
             QuestionList.Add(go);
-            go.GetComponent<Type_button>().newButton(QuestionList.FindIndex(d => d == go), item.title, 1);
+            go.GetComponent<HeaderButton>().setData(item.title, 1);
             go.GetComponent<Button>().onClick.AddListener(item.SelectProblem);
+            go.GetComponent<Button>().onClick.AddListener(onQuestionClick);
         }
+    }
+
+    private void onQuestionClick()
+    {
+        EventManager.current.ChangeProblem();
+        
     }
 }
