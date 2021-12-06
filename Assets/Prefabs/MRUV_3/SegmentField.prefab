@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2135647253261767967}
   - component: {fileID: 2062189746293385983}
+  - component: {fileID: 7936606943850709048}
   m_Layer: 5
   m_Name: SegmentField
   m_TagString: Untagged
@@ -66,6 +67,19 @@ MonoBehaviour:
   m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
+--- !u!114 &7936606943850709048
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6221668148244051317}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e6fbacca9c0af994490d78d8afff0304, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  SegmentID: 0
 --- !u!1001 &1791900209842096226
 PrefabInstance:
   m_ObjectHideFlags: 0
