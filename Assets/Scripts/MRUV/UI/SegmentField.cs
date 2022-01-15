@@ -1,37 +1,56 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
 public class SegmentField : MonoBehaviour
 {
-    private Field[] childFields;
-    public ProblemsSO ActiveProblem;
-
-    public int SegmentID;
+    [SerializeField] private Sprite NormalFieldSprite, ErrorFieldSprite;
     private Color newCol;
+    private MessageBox Message;
+    private AlertMessages alertMessages = new AlertMessages();
+    public CarSO carSO;
+    public Field[] childFields;
+    public ProblemsSO ActiveProblem;
+    public int SegmentID;
+    public bool _error;
+
+    public bool error
+    {
+        get { return _error; }
+        set
+        {
+            if (value == true)
+            {
+                GetComponent<Image>().sprite = ErrorFieldSprite;
+            }
+            else
+            {
+                GetComponent<Image>().sprite = NormalFieldSprite;
+
+            }
+            _error = value;
+        }
+    }
     private void Awake()
     {
         childFields = GetComponentsInChildren<Field>();
         ColorUtility.TryParseHtmlString("#FFCC70", out newCol);
     }
-
-    public void assignChildIDs()
+    private void Start()
     {
-        for (int i = 0; i < childFields.Length; i++)
-        {
-            childFields[i].FieldSegment = SegmentID;
-            childFields[i].FieldID = i;
-        }
+        Message = GetComponent<MessageBox>();
     }
 
-    public int NumberEmptyFields(int incognita)
+    public int NumberEmptyFields()
     {
         int NumberOfEmptyFields = 0;
+        int incognita = (int)ActiveProblem.Incognita;
         foreach (Field field in childFields)
         {
-            if (field.FieldID != incognita && field.isEmpty())
+            if (field.column != incognita && field.isEmpty())
             {
                 NumberOfEmptyFields++;
             }
@@ -39,14 +58,15 @@ public class SegmentField : MonoBehaviour
         return NumberOfEmptyFields;
     }
 
-    public string EmptyField(int incognita)
+    public string EmptyField()
     {
         int _emptyField = 0;
+        int incognita = (int)ActiveProblem.Incognita;
         foreach (Field field in childFields)
         {
-            if (field.FieldID != incognita && field.isEmpty())
+            if (field.column != incognita && field.isEmpty())
             {
-                _emptyField = field.FieldID;
+                _emptyField = field.column;
             }
         }
         switch (_emptyField)
@@ -69,17 +89,17 @@ public class SegmentField : MonoBehaviour
 
     public void ChangeColor(int Variable, Color color)
     {
-        Clear();
+        ResetColor();
         foreach (Field field in childFields)
         {
-            if (field.FieldID != Variable)
+            if (field.column != Variable)
             {
                 field.ChangeColor(color);
             }
         }
     }
 
-    public void Clear()
+    public void ResetColor()
     {
         foreach (Field field in childFields)
         {
@@ -87,21 +107,23 @@ public class SegmentField : MonoBehaviour
         }
     }
 
-    public bool onNewProblem(ProblemsSO problem)
+    public bool CalculateProblem(ProblemsSO problem)
     {
         ActiveProblem = problem;
         int incognita = (int)ActiveProblem.Incognita;
-        ChangeColor(incognita, newCol);
-        if (NumberEmptyFields(incognita) < 2)
+        if (NumberEmptyFields() < 2)
         {
-            ActiveProblem.Calculate(EmptyField(incognita));
+            ResetColor();
+            error = false;
+            ActiveProblem.Calculate(EmptyField());
             return true;
         }
         else
         {
+            ChangeColor(incognita, newCol);
+            Message.Show(alertMessages.fieldAlerts.ThreeInputRequired);
             Debug.Log("Le faltan datos");
             return false;
         }
     }
-
 }

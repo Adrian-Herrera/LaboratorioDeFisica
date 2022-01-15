@@ -15,7 +15,7 @@ public class Data_panel : MonoBehaviour
     void Start()
     {
         SaveButtons(SegmentsButtons);
-        EnableSegment(CarSO.numberSegments);
+        EnableSegment(CarSO.numberOfSegments);
     }
 
     // Update is called once per frame
@@ -71,18 +71,18 @@ public class Data_panel : MonoBehaviour
     }
     private void AddSegment()
     {
-        if (CarSO.numberSegments < 3)
+        if (CarSO.numberOfSegments < 3)
         {
-            CarSO.numberSegments++;
-            EnableSegment(CarSO.numberSegments);
+            CarSO.numberOfSegments++;
+            EnableSegment(CarSO.numberOfSegments);
         }
     }
     private void RemoveSegment()
     {
-        if (CarSO.numberSegments > 1)
+        if (CarSO.numberOfSegments > 1)
         {
-            CarSO.numberSegments--;
-            EnableSegment(CarSO.numberSegments);
+            CarSO.numberOfSegments--;
+            EnableSegment(CarSO.numberOfSegments);
         }
     }
     private void HideButton()
@@ -91,10 +91,10 @@ public class Data_panel : MonoBehaviour
         {
             item.gameObject.SetActive(false);
         }
-        if (CarSO.numberSegments > 1)
+        if (CarSO.numberOfSegments > 1)
         {
 
-            HideButtonsList[CarSO.numberSegments - 1].gameObject.SetActive(true);
+            HideButtonsList[CarSO.numberOfSegments - 1].gameObject.SetActive(true);
         }
     }
 

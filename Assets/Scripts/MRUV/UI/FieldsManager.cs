@@ -7,66 +7,57 @@ using TMPro;
 
 public class FieldsManager : MonoBehaviour
 {
-    public CarSO carSO;
+    [SerializeField] private CarSO carSO;
+    [SerializeField] private ExtraInfo extraInfo;
     private SegmentField[] SegmentFields;
+    private Field[] Fields;
     private Color newCol;
     private void Awake()
     {
         SegmentFields = GetComponentsInChildren<SegmentField>();
+        Fields = GetComponentsInChildren<Field>();
+        // AsignFields();
     }
     // Start is called before the first frame update
     void Start()
     {
+        AsignFields();
         ColorUtility.TryParseHtmlString("#FFCC70", out newCol);
         EventManager.Current.onChangeProblem += CheckIncognitas;
-        EventManager.Current.onChangeFieldData += SaveDataOnSO;
         EventManager.Current.onSelectField += SelectSegment;
-        AsignFieldsID();
+
+
+        // StartCoroutine(carSO.Datos[0, 0].ShowMessage());
     }
-
-    private void SaveDataOnSO(int i, int j, string s)
+    private void AsignFields()
     {
-        if (s != "")
+        int numberField = 0;
+        for (int i = 0; i < carSO.Datos.GetLength(0); i++)
         {
-
-            carSO.Datos[i, j] = float.Parse(s);
-        }
-        else
-        {
-            carSO.Datos[i, j] = 0;
-        }
-    }
-
-    private void AsignFieldsID()
-    {
-        for (int i = 0; i < SegmentFields.Length; i++)
-        {
+            for (int j = 0; j < carSO.Datos.GetLength(1); j++)
+            {
+                carSO.Datos[i, j] = Fields[numberField];
+                Fields[numberField].row = i;
+                Fields[numberField].column = j;
+                numberField++;
+            }
             SegmentFields[i].SegmentID = i;
-            SegmentFields[i].assignChildIDs();
+            SegmentFields[i].carSO = carSO;
         }
     }
     private void CheckIncognitas()
     {
-        if (SegmentFields[carSO.selectedSegment].onNewProblem(HeaderManager.current.ActiveProblem))
+        if (SegmentFields[carSO.selectedSegment].CalculateProblem(HeaderManager.current.ActiveProblem))
         {
-            ShowDataOnUI();
+            // saveProblems();
         }
+        extraInfo.checkTime();
+        extraInfo.checkDistance();
     }
 
-    public void ShowDataOnUI()
-    {
-        for (int i = 0; i < SegmentFields.Length; i++)
-        {
-            for (int j = 0; j < SegmentFields[i].transform.childCount; j++)
-            {
-                SegmentFields[i].transform.GetChild(j).GetComponent<TMP_InputField>().text = carSO.Datos[i, j].ToString();
-            }
-        }
-    }
-
-    private void SelectSegment(int segment)
+    private void SelectSegment(int segment) // called by event
     {
         carSO.selectedSegment = segment;
-        // Debug.Log(segment);
     }
+
 }

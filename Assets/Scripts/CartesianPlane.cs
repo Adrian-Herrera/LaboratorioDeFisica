@@ -22,7 +22,7 @@ public class CartesianPlane : MonoBehaviour
     {
         getPositions();
         DrawLines();
-        startMovement();
+        // startMovement();
     }
 
     // Update is called once per frame

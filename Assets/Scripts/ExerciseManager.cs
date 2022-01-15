@@ -29,41 +29,41 @@ public class ExerciseManager : MonoBehaviour
     }
     private void getFieldData(int segment)
     {
-        Vo = Cars[0].Datos[segment, (int)Variables.Vo];
-        Vf = Cars[0].Datos[segment, (int)Variables.Vf];
-        a = Cars[0].Datos[segment, (int)Variables.a];
-        x = Cars[0].Datos[segment, (int)Variables.x];
-        t = Cars[0].Datos[segment, (int)Variables.t];
+        Vo = Cars[0].Datos[segment, (int)Variables.Vo].value;
+        Vf = Cars[0].Datos[segment, (int)Variables.Vf].value;
+        a = Cars[0].Datos[segment, (int)Variables.a].value;
+        x = Cars[0].Datos[segment, (int)Variables.x].value;
+        t = Cars[0].Datos[segment, (int)Variables.t].value;
     }
     public void CalculateVelF(string emptyVariable)
     {
         getFieldData(Cars[0].selectedSegment);
         float res = Formulary.Vel_f(Vo, a, x, t, emptyVariable);
-        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.Vf] = res;
+        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.Vf].value = res;
     }
     public void CalculateVelo(string emptyVariable)
     {
         getFieldData(Cars[0].selectedSegment);
         float res = Formulary.Vel_o(Vf, a, x, t, emptyVariable);
-        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.Vo] = res;
+        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.Vo].value = res;
     }
     public void CalculateAcc(string emptyVariable)
     {
         getFieldData(Cars[0].selectedSegment);
         float res = Formulary.Acc(Vo, Vf, x, t, emptyVariable);
-        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.a] = res;
+        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.a].value = res;
     }
     public void CalculateDist(string emptyVariable)
     {
         getFieldData(Cars[0].selectedSegment);
         float res = Formulary.Dist(Vo, Vf, a, t, emptyVariable);
-        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.x] = res;
+        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.x].value = res;
     }
     public void CalculateTime(string emptyVariable)
     {
         getFieldData(Cars[0].selectedSegment);
         float res = Formulary.Time(Vo, Vf, a, x, emptyVariable);
-        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.t] = res;
+        Cars[0].Datos[Cars[0].selectedSegment, (int)Variables.t].value = res;
     }
 
 
