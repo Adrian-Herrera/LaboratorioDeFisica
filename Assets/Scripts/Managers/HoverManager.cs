@@ -11,6 +11,7 @@ public class HoverManager : MonoBehaviour
     public Dictionary<GameObject, GameObject> Boxes = new Dictionary<GameObject, GameObject>();
     [SerializeField] private GameObject HoverBox;
     [SerializeField] private float Seconds = 3f;
+    private bool ShowMessage = false;
 
     private void Awake()
     {
@@ -31,15 +32,20 @@ public class HoverManager : MonoBehaviour
     public void show(GameObject parent, string message, HoverMessage.Positions pos)
     {
         SearchBox(parent).GetComponent<HoverMessage>().CreateHover(message, pos);
+        ShowMessage = true;
         StartCoroutine(ShowAfter(SearchBox(parent)));
     }
     public void hide(GameObject parent)
     {
         SearchBox(parent).SetActive(false);
+        ShowMessage = false;
     }
     private IEnumerator ShowAfter(GameObject go)
     {
         yield return new WaitForSeconds(Seconds);
-        go.SetActive(true);
+        if (ShowMessage)
+        {
+            go.SetActive(true);
+        }
     }
 }
