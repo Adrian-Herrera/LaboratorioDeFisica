@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
 
 public abstract class ExerciseManager : MonoBehaviour
 {
@@ -17,4 +18,5 @@ public abstract class ExerciseManager : MonoBehaviour
     }
     protected abstract void getFieldData(int segment);
     public abstract void searchFormula(int Variable);
+    public abstract void CheckEveryTime(BasePointSO car);
 }

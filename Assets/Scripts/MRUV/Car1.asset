@@ -13,4 +13,9 @@ MonoBehaviour:
   m_Name: Car1
   m_EditorClassIdentifier: 
   _sprite: {fileID: 0}
-  numberSegments: 1
+  ExtraFieldsNames:
+  - Tiempo Total
+  - Distancia Total
+  TotalTime: {fileID: 0}
+  TotalDistance: {fileID: 0}
+  numberOfSegments: 1

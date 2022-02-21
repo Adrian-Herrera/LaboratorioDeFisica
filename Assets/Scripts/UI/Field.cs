@@ -41,6 +41,17 @@ public class Field : MonoBehaviour
             _error = value;
         }
     }
+    #endregion
+    private void Awake()
+    {
+        if (TryGetComponent(out MessageBox box))
+        {
+            Message = box;
+        }
+        inputField = GetComponent<TMP_InputField>();
+        inputField.GetComponent<Image>().sprite = NormalFieldSprite;
+        inputField.onEndEdit.AddListener(updateValue);
+    }
     private void updateValue(string s)
     {
         if (s != "")
@@ -52,17 +63,6 @@ public class Field : MonoBehaviour
         {
             status = false;
         }
-    }
-    #endregion
-    private void Awake()
-    {
-        if (TryGetComponent(out MessageBox box))
-        {
-            Message = box;
-        }
-        inputField = GetComponent<TMP_InputField>();
-        inputField.GetComponent<Image>().sprite = NormalFieldSprite;
-        inputField.onEndEdit.AddListener(updateValue);
     }
     public void ChangeColor(Color newColor)
     {

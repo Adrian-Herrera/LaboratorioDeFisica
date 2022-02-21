@@ -7,32 +7,33 @@ using TMPro;
 
 public class FieldsManager : MonoBehaviour
 {
-    [SerializeField] private CarSO carSO;
+    [SerializeField] private BasePointSO BasePointSO;
     [SerializeField] private ExtraInfo extraInfo;
+    [SerializeField] private GameObject BasicInfo;
     private SegmentField[] SegmentFields;
     private Field[] Fields;
     // private Color newCol;
     private void Awake()
     {
-        SegmentFields = GetComponentsInChildren<SegmentField>();
-        Fields = GetComponentsInChildren<Field>();
+        SegmentFields = BasicInfo.GetComponentsInChildren<SegmentField>();
+        Fields = BasicInfo.GetComponentsInChildren<Field>();
 
     }
     // Start is called before the first frame update
     void Start()
     {
-        AsignFields();
-        // ColorUtility.TryParseHtmlString("#FFCC70", out newCol);
         EventManager.Current.onChangeProblem += CheckIncognitas;
+        AsignFields();
+        extraInfo.InstanceInputs(BasePointSO.getNames(), BasePointSO);
     }
     private void AsignFields()
     {
         int numberField = 0;
-        for (int i = 0; i < carSO.Datos.GetLength(0); i++)
+        for (int i = 0; i < BasePointSO.Datos.GetLength(0); i++)
         {
-            for (int j = 0; j < carSO.Datos.GetLength(1); j++)
+            for (int j = 0; j < BasePointSO.Datos.GetLength(1); j++)
             {
-                carSO.Datos[i, j] = Fields[numberField];
+                BasePointSO.Datos[i, j] = Fields[numberField];
                 Fields[numberField].row = i;
                 Fields[numberField].column = j;
                 numberField++;
@@ -51,7 +52,7 @@ public class FieldsManager : MonoBehaviour
         {
             // HeaderManager.current.ActiveProblem.Calculate();
         }
-        extraInfo.checkTime();
-        extraInfo.checkDistance();
+        ExerciseManager.current.CheckEveryTime(BasePointSO);
+        // extraInfo.checkDistance();
     }
 }

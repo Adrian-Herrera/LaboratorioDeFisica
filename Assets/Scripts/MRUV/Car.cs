@@ -3,30 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
-public class Car : MonoBehaviour
+public class Car : BasePoint
 {
-    [SerializeField] private CarSO carSO;
-    [SerializeField] private TMP_Text TimerText;
-    private Rigidbody2D _rb;
-    private float Vel, Velf, Acc, Timer, Distance, SegmentDistance;
-    private float TimeUntilStop;
-    private int actualSegment;
-    private bool playing;
-    private void Awake()
+    protected override void getInfo(int segment)
     {
-        _rb = GetComponent<Rigidbody2D>();
-    }
-    // Start is called before the first frame update
-    void Start()
-    {
+        if (!(actualSegment < carSO.numberOfSegments)) return;
+        Debug.Log("getInfo segment: " + segment);
         Timer = 0;
-        actualSegment = 0;
-        SegmentDistance = 0;
-        playing = false;
-    }
+        Vel = carSO.Datos[segment, 0].value;
+        Velf = carSO.Datos[segment, 1].value;
+        Acc = carSO.Datos[segment, 2].value;
+        Distance = carSO.Datos[segment, 3].value;
+        TimeUntilStop = carSO.Datos[segment, 4].value;
 
-    // Update is called once per frame
-    void FixedUpdate()
+        SegmentDistance = _rb.position.x;
+    }
+    protected override void move()
     {
         TimerText.text = Timer.ToString();
         if (StateManager.Current.ActualState == StateManager.states.Playing)
@@ -80,30 +72,5 @@ public class Car : MonoBehaviour
 
             }
         }
-    }
-
-    private void getInfo(int segment) 
-    {
-        if (!(actualSegment < carSO.numberOfSegments)) return;
-        Debug.Log("getInfo segment: " + segment);
-        Timer = 0;
-        Vel = carSO.Datos[segment, 0].value;
-        Velf = carSO.Datos[segment, 1].value;
-        Acc = carSO.Datos[segment, 2].value;
-        Distance = carSO.Datos[segment, 3].value;
-        TimeUntilStop = carSO.Datos[segment, 4].value;
-
-        SegmentDistance = _rb.position.x;
-    }
-    public void PlayCar()
-    {
-        StateManager.Current.ActualState = StateManager.states.Playing;
-        getInfo(actualSegment);
-    }
-    public void Reset()
-    {
-        StateManager.Current.ActualState = StateManager.states.Stop;
-        transform.position = Vector3.zero;
-        actualSegment = 0;
     }
 }

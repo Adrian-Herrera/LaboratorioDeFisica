@@ -2,10 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CaidaLibreFormulary
+public class CaidaLibreFormulary : BasicFormulary
 {
-    public enum option
-    {
-        Vo, Vf, a, x, t, AlturaMaxima, TiempoSubida, TiempoBajada
-    }
 }

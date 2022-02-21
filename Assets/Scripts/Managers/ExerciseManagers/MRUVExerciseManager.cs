@@ -8,7 +8,7 @@ public class MRUVExerciseManager : ExerciseManager
     private float Vo, Vf, a, x, t, TiempoEncuentro;
     protected override void Awake()
     {
-        base.Awake();
+        current = this;
         Formulary = GetComponent<MRUVFormulary>();
     }
     protected override void Start()
@@ -48,6 +48,10 @@ public class MRUVExerciseManager : ExerciseManager
                 Debug.Log("No se uso ninguna formula");
                 break;
         }
+    }
+    public override void CheckEveryTime(BasePointSO car)
+    {
+        Formulary.checkTime(car);
     }
 
 }

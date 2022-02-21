@@ -2,16 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicFormulary
+public class BasicFormulary : MonoBehaviour
 {
     public enum option
     {
         Vo, Vf, a, x, t
     }
-    private float Formula_1(float Vo, float Vf, float a, float t, option op)
+    public float Formula_1(float Vo, float Vf, float a, float t, int op)
     {
         Debug.Log("Se uso Formula 1 con " + op);
-        switch (op)
+        switch ((option)op)
         {
             case option.Vf:
                 return (Vo + (a * t));
@@ -25,10 +25,10 @@ public class BasicFormulary
                 return 0;
         }
     }
-    private float Formula_2(float Vo, float Vf, float x, float t, option op)
+    public float Formula_2(float Vo, float Vf, float x, float t, int op)
     {
         Debug.Log("Se uso Formula 2 con " + op);
-        switch (op)
+        switch ((option)op)
         {
             case option.Vf:
                 return (2 * x / t) - Vo;
@@ -42,10 +42,10 @@ public class BasicFormulary
                 return 0;
         }
     }
-    private float Formula_3(float Vo, float Vf, float a, float x, option op)
+    public float Formula_3(float Vo, float Vf, float a, float x, int op)
     {
         Debug.Log("Se uso Formula 3 con " + op);
-        switch (op)
+        switch ((option)op)
         {
             case option.Vf:
                 return Mathf.Sqrt(Mathf.Pow(Vo, 2) + (2 * a * x));
@@ -59,41 +59,50 @@ public class BasicFormulary
                 return 0;
         }
     }
-    private float Formula_4(float Vo, float a, float x, float t, option op)
+    public IEnumerator Formula_4(float Vo, float a, float x, float t, int op, Field f)
     {
         Debug.Log("Se uso Formula 4 con " + op);
-        switch (op)
+        switch ((option)op)
         {
             case option.Vo:
-                return (x - (a * Mathf.Pow(t, 2) / 2)) / t;
+                f.value = (x - (a * Mathf.Pow(t, 2) / 2)) / t;
+                break;
             case option.x:
-                return Vo * t + (a * Mathf.Pow(t, 2) / 2);
+                f.value = Vo * t + (a * Mathf.Pow(t, 2) / 2);
+                break;
             case option.a:
-                return (x - Vo * t) * 2 / Mathf.Pow(t, 2);
+                f.value = (x - Vo * t) * 2 / Mathf.Pow(t, 2);
+                break;
             case option.t:
-            // return QuadraticFormula((a / 2), Vo, -x);
+                yield return QuadraticFormula(f, (a / 2), Vo, -x);
+                break;
             default:
-                return 0;
+                break;
         }
     }
-    private float Formula_5(float Vf, float a, float x, float t, option op)
+    public IEnumerator Formula_5(float Vf, float a, float x, float t, int op, Field f)
     {
         Debug.Log("Se uso Formula 5 con " + op);
-        switch (op)
+        switch ((option)op)
         {
             case option.Vf:
-                return (x + (a * Mathf.Pow(t, 2) / 2)) / t;
+                f.value = (x + (a * Mathf.Pow(t, 2) / 2)) / t;
+                yield return null;
+                break;
             case option.x:
-                return Vf * t - (a * Mathf.Pow(t, 2) / 2);
+                f.value = Vf * t - (a * Mathf.Pow(t, 2) / 2);
+                break;
             case option.a:
-                return -((x - Vf * t) * 2 / Mathf.Pow(t, 2));
+                f.value = -((x - Vf * t) * 2 / Mathf.Pow(t, 2));
+                break;
             case option.t:
-            // return QuadraticFormula(-(a / 2), Vf, -x);
+                yield return QuadraticFormula(f, -(a / 2), Vf, -x);
+                break;
             default:
-                return 0;
+                break;
         }
     }
-    private (float? x1, float? x2) QuadraticFormula(float a, float b, float c)
+    public IEnumerator QuadraticFormula(Field x, float a, float b, float c)
     {
         float x1, x2;
         float BeforeSquare = Mathf.Pow(b, 2) - (4 * a * c);
@@ -101,34 +110,19 @@ public class BasicFormulary
         if (BeforeSquare == 0)
         {
             x1 = (-b + Mathf.Sqrt(BeforeSquare)) / (2 * a);
-            x2 = x1;
-            return (x1, x2);
+            x.value = x1;
         }
         else if (BeforeSquare > 0)
         {
             x1 = (-b + Mathf.Sqrt(BeforeSquare)) / (2 * a);
             x2 = (-b - Mathf.Sqrt(BeforeSquare)) / (2 * a);
-            return (x1, x2);
+            yield return QuadraticSolver.Current.createPanel(x, "Tiempo", x1, x2);
         }
         else
         {
-            return (null, null);
+            Debug.Log("No tiene solución");
+            yield return null;
         }
     }
 
-    // private void searchFormula(int ProblemOption)
-    // {
-
-    // }
-
-    // public string searchFormula(System.Reflection.MethodInfo method)
-    // {
-    //     string retVal = string.Empty;
-
-    //     if (method != null && method.GetParameters().Length > index)
-    //         retVal = method.GetParameters()[index].Name;
-
-
-    //     return retVal;
-    // }
 }
