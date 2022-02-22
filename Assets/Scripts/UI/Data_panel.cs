@@ -6,7 +6,7 @@ using TMPro;
 
 public class Data_panel : MonoBehaviour
 {
-    public CarSO CarSO;
+    public BasePointSO BasePointSO;
     public GameObject[] SegmentsButtons;
     public GameObject[] SegmentsFields;
     public List<Button> IndexButtonsList = new List<Button>();
@@ -15,7 +15,7 @@ public class Data_panel : MonoBehaviour
     void Start()
     {
         SaveButtons(SegmentsButtons);
-        EnableSegment(CarSO.numberOfSegments);
+        EnableSegment(BasePointSO.numberOfSegments);
     }
 
     // Update is called once per frame
@@ -71,18 +71,18 @@ public class Data_panel : MonoBehaviour
     }
     private void AddSegment()
     {
-        if (CarSO.numberOfSegments < 3)
+        if (BasePointSO.numberOfSegments < 3)
         {
-            CarSO.numberOfSegments++;
-            EnableSegment(CarSO.numberOfSegments);
+            BasePointSO.numberOfSegments++;
+            EnableSegment(BasePointSO.numberOfSegments);
         }
     }
     private void RemoveSegment()
     {
-        if (CarSO.numberOfSegments > 1)
+        if (BasePointSO.numberOfSegments > 1)
         {
-            CarSO.numberOfSegments--;
-            EnableSegment(CarSO.numberOfSegments);
+            BasePointSO.numberOfSegments--;
+            EnableSegment(BasePointSO.numberOfSegments);
         }
     }
     private void HideButton()
@@ -91,10 +91,10 @@ public class Data_panel : MonoBehaviour
         {
             item.gameObject.SetActive(false);
         }
-        if (CarSO.numberOfSegments > 1)
+        if (BasePointSO.numberOfSegments > 1)
         {
 
-            HideButtonsList[CarSO.numberOfSegments - 1].gameObject.SetActive(true);
+            HideButtonsList[BasePointSO.numberOfSegments - 1].gameObject.SetActive(true);
         }
     }
 
