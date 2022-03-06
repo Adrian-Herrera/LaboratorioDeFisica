@@ -17,11 +17,11 @@ public class MRUVExerciseManager : ExerciseManager
     }
     protected override void getFieldData(int segment)
     {
-        Vo = Cars[0].Datos[segment, 0].value;
-        Vf = Cars[0].Datos[segment, 1].value;
-        a = Cars[0].Datos[segment, 2].value;
-        x = Cars[0].Datos[segment, 3].value;
-        t = Cars[0].Datos[segment, 4].value;
+        Vo = BasePointSO[0].Datos[segment, 0].value;
+        Vf = BasePointSO[0].Datos[segment, 1].value;
+        a = BasePointSO[0].Datos[segment, 2].value;
+        x = BasePointSO[0].Datos[segment, 3].value;
+        t = BasePointSO[0].Datos[segment, 4].value;
     }
     public override void searchFormula(int Variable)
     {
@@ -52,6 +52,11 @@ public class MRUVExerciseManager : ExerciseManager
     public override void CheckEveryTime(BasePointSO car)
     {
         Formulary.checkTime(car);
+        Formulary.checkDistance(car);
+    }
+    public override void PreFormula()
+    {
+
     }
 
 }

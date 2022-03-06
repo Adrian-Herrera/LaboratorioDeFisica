@@ -6,13 +6,13 @@ using TMPro;
 public class ExtraInfo : MonoBehaviour
 {
     [SerializeField] private GameObject InputWithName;
-    public void InstanceInputs(string[] names, BasePointSO carSO)
+    public void InstanceInputs(BasePointSO BasePointSO)
     {
-        foreach (string name in names)
+        foreach (string name in BasePointSO.getNames())
         {
             GameObject go = Instantiate(InputWithName, transform);
             go.GetComponentInChildren<TMP_Text>().text = name;
-            carSO.AddExtraFields(name, go.GetComponentInChildren<Field>());
+            BasePointSO.AddExtraFields(name, go.GetComponentInChildren<Field>());
         }
     }
 }

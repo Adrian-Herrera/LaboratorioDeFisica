@@ -17,14 +17,16 @@ public class FieldsManager : MonoBehaviour
     {
         SegmentFields = BasicInfo.GetComponentsInChildren<SegmentField>();
         Fields = BasicInfo.GetComponentsInChildren<Field>();
-
     }
     // Start is called before the first frame update
     void Start()
     {
         EventManager.Current.onChangeProblem += CheckIncognitas;
+        // EventManager.Current.onUpdateData += delegate { ExerciseManager.current.CheckEveryTime(BasePointSO); };
         AsignFields();
-        extraInfo.InstanceInputs(BasePointSO.getNames(), BasePointSO);
+        extraInfo.InstanceInputs(BasePointSO);
+
+        BasePointSO.setDefaultValues();
     }
     private void AsignFields()
     {
@@ -53,6 +55,5 @@ public class FieldsManager : MonoBehaviour
             // HeaderManager.current.ActiveProblem.Calculate();
         }
         ExerciseManager.current.CheckEveryTime(BasePointSO);
-        // extraInfo.checkDistance();
     }
 }

@@ -21,9 +21,6 @@ MonoBehaviour:
   - title: Velocidad Final
     sprite: {fileID: 0}
     Incognita: 1
-  - title: "Aceleraci\xF3n"
-    sprite: {fileID: 0}
-    Incognita: 2
   - title: Distancia
     sprite: {fileID: 0}
     Incognita: 3

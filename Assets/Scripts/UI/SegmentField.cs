@@ -95,6 +95,7 @@ public class SegmentField : MonoBehaviour
     {
         ActiveProblem = problem;
         int incognita = (int)ActiveProblem.Incognita;
+        ExerciseManager.current.PreFormula();
         if (hasEnoughData())
         {
             ResetColor();

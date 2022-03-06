@@ -17,5 +17,9 @@ public class CarSO : BasePointSO
     {
         return ExtraFieldsNames;
     }
+    public override void setDefaultValues()
+    {
+        
+    }
 }
 

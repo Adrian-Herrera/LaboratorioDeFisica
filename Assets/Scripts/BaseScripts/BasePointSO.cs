@@ -12,6 +12,7 @@ public abstract class BasePointSO : ScriptableObject
     {
         numberOfSegments = 1;
         ExtraFields.Clear();
+        // setDefaultValues(Datos);
     }
     public void ShowDatos()
     {
@@ -39,4 +40,5 @@ public abstract class BasePointSO : ScriptableObject
     }
 
     public abstract string[] getNames();
+    public abstract void setDefaultValues();
 }

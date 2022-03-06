@@ -74,7 +74,14 @@ public class BasicFormulary : MonoBehaviour
                 f.value = (x - Vo * t) * 2 / Mathf.Pow(t, 2);
                 break;
             case option.t:
-                yield return QuadraticFormula(f, (a / 2), Vo, -x);
+                if (Vo == 0)
+                {
+                    f.value = Mathf.Sqrt(2 * x / a);
+                }
+                else
+                {
+                    yield return QuadraticFormula(f, a, -2 * Vo, 2 * x);
+                }
                 break;
             default:
                 break;
@@ -96,7 +103,15 @@ public class BasicFormulary : MonoBehaviour
                 f.value = -((x - Vf * t) * 2 / Mathf.Pow(t, 2));
                 break;
             case option.t:
-                yield return QuadraticFormula(f, -(a / 2), Vf, -x);
+                if (Vf == 0)
+                {
+                    f.value = Mathf.Sqrt(2 * x / -a);
+                }
+                else
+                {
+
+                    yield return QuadraticFormula(f, -(a / 2), Vf, -x);
+                }
                 break;
             default:
                 break;
@@ -104,6 +119,7 @@ public class BasicFormulary : MonoBehaviour
     }
     public IEnumerator QuadraticFormula(Field x, float a, float b, float c)
     {
+        Debug.Log("a: " + a + " b: " + b + " c: " + c);
         float x1, x2;
         float BeforeSquare = Mathf.Pow(b, 2) - (4 * a * c);
         Debug.Log("BeforeSquare: " + BeforeSquare);

@@ -61,6 +61,7 @@ public class Field : MonoBehaviour
         }
         else
         {
+            _value = 0;
             status = false;
         }
     }

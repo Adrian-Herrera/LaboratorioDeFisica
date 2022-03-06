@@ -47,7 +47,7 @@ public class MRUVFormulary : BasicFormulary
             }
         }
     }
-    public void checkDistance(CarSO carSO)
+    public void checkDistance(BasePointSO carSO)
     {
         int ValidData = 0;
         float FinalDistance = 0;
@@ -69,7 +69,7 @@ public class MRUVFormulary : BasicFormulary
                 {
                     if ((field.value - FinalDistance) <= 0)
                     {
-                        Debug.Log("Revise las distancias");  // Añadir error
+                        Debug.Log("alertMessages.DistanceAlerts.BadInput");
                     }
                     else
                     {
@@ -86,7 +86,7 @@ public class MRUVFormulary : BasicFormulary
         {
             if (field.value != FinalDistance)
             {
-                Debug.Log("Las distancias no son iguales"); //añadir error
+                Debug.Log("alertMessages.DistanceAlerts.NotEqual");
             }
         }
     }

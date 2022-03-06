@@ -18,4 +18,12 @@ public class EventManager : MonoBehaviour
             onChangeProblem();
         }
     }
+    public event Action<float> onChangeZoom;
+    public void ChangeZoom(float cameraScale)
+    {
+        if (onChangeZoom != null)
+        {
+            onChangeZoom(cameraScale);
+        }
+    }
 }

@@ -115,12 +115,14 @@ public class CartesianPlane2 : MonoBehaviour
     {
         Camera.main.orthographicSize -= 20;
         cameraScale = Camera.main.orthographicSize / 10;
+        EventManager.Current.ChangeZoom(cameraScale);
         UpdateSizes();
     }
     public void ZoomOut()
     {
         Camera.main.orthographicSize += 20;
         cameraScale = Camera.main.orthographicSize / 10;
+        EventManager.Current.ChangeZoom(cameraScale);
         UpdateSizes();
     }
 

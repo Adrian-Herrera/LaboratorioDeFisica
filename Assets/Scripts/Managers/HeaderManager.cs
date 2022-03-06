@@ -32,6 +32,7 @@ public class HeaderManager : MonoBehaviour
     }
     private void selectType(TypesSO type)
     {
+        Debug.Log("selectType");
         ActiveType = type;
 
         foreach (var item in QuestionList)

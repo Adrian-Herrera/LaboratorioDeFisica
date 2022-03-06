@@ -5,7 +5,7 @@ using TMPro;
 
 public abstract class BasePoint : MonoBehaviour
 {
-    [SerializeField] protected CarSO carSO;
+    [SerializeField] protected BasePointSO BasePointSO;
     [SerializeField] protected TMP_Text TimerText;
     protected Rigidbody2D _rb;
     protected float Vel, Velf, Acc, Timer, Distance, SegmentDistance;
@@ -22,7 +22,9 @@ public abstract class BasePoint : MonoBehaviour
         actualSegment = 0;
         SegmentDistance = 0;
     }
-
+    private void Update() {
+        PreMove();
+    }
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -30,7 +32,7 @@ public abstract class BasePoint : MonoBehaviour
     }
 
     protected abstract void getInfo(int segment);
-    public void PlayCar()
+    public void Play()
     {
         StateManager.Current.ActualState = StateManager.states.Playing;
         getInfo(actualSegment);
@@ -43,4 +45,5 @@ public abstract class BasePoint : MonoBehaviour
     }
 
     protected abstract void move();
+    protected abstract void PreMove();
 }
