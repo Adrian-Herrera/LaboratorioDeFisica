@@ -19,10 +19,11 @@ public class Field : MonoBehaviour
         get { return _value; }
         set
         {
-            // Debug.Log("Cambiaron el value: " + value);
-            inputField.text = value.ToString();
+            float v = Mathf.Round(value * 100f) / 100f;
+            Debug.Log("Cambiaron el value: " + value + "a: " + v);
+            inputField.text = v.ToString();
             status = true;
-            _value = value;
+            _value = v;
         }
     }
     public bool error
