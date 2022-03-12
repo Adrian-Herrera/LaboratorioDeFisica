@@ -51,6 +51,18 @@ public static class RectTransformExtensions
         rt.anchorMin = new Vector2(0.5f, 0.5f);
         rt.anchorMax = new Vector2(0.5f, 0.5f);
     }
+    public static void SetAnchorMin(this RectTransform rt, float x, float y)
+    {
+        rt.anchorMin = new Vector2(x, y);
+    }
+    public static void SetAnchorMax(this RectTransform rt, float x, float y)
+    {
+        rt.anchorMax = new Vector2(x, y);
+    }
+    public static void SetPivot(this RectTransform rt, float x, float y)
+    {
+        rt.pivot = new Vector2(x, y);
+    }
     public static void SetStretchMiddle(this RectTransform rt)
     {
         rt.anchorMin = new Vector2(0, 0.5f);
@@ -62,5 +74,5 @@ public static class RectTransformExtensions
         go.GetComponent<RectTransform>().anchoredPosition = pos;
         return go;
     }
-    
+
 }

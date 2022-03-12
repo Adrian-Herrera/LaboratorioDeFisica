@@ -20,7 +20,7 @@ public class Field : MonoBehaviour
         set
         {
             float v = Mathf.Round(value * 100f) / 100f;
-            Debug.Log("Cambiaron el value: " + value + "a: " + v);
+            // Debug.Log("Cambiaron el value: " + value + "a: " + v);
             inputField.text = v.ToString();
             status = true;
             _value = v;
