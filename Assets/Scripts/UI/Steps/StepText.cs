@@ -4,10 +4,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class StepNumber : MonoBehaviour
+public class StepText : MonoBehaviour
 {
-    private float LetterWidth = 18;
-    private float LetterHeight = 23;
+    [SerializeField] private float LetterWidth = 18;
+    [SerializeField] private float LetterHeight = 23;
     private TMP_Text text;
     private RectTransform rt;
     private int TextLength;
@@ -16,18 +16,10 @@ public class StepNumber : MonoBehaviour
         text = GetComponent<TMP_Text>();
         rt = GetComponent<RectTransform>();
     }
-    private void Start()
-    {
-        // TextLength = text.text.Length;
-    }
     public void init(string s)
     {
-        Debug.Log("init");
+        // Debug.Log("init");
         text.text = s;
         rt.sizeDelta = new Vector2(text.text.Length * LetterWidth, LetterHeight);
-    }
-    public float getSize()
-    {
-        return text.text.Length * LetterWidth;
     }
 }

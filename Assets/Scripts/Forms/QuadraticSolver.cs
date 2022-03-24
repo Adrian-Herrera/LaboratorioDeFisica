@@ -27,7 +27,7 @@ public class QuadraticSolver : MonoBehaviour
     public IEnumerator createPanel(Field x, string variable, float x1, float x2)
     {
         gameObject.SetActive(true);
-        Message.text = "La variable " + variable + " tiene dos posibles resultados. Escoja uno por favor";
+        Message.text = "La variable " + variable + " tiene dos posibles resultados. Escoja uno para usar en el ejercicio";
         btn1.GetComponentInChildren<TMP_Text>().text = x1.ToString();
         btn2.GetComponentInChildren<TMP_Text>().text = x2.ToString();
         yield return askAnswer();

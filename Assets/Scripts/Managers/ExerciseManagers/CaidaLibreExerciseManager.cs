@@ -14,6 +14,7 @@ public class CaidaLibreExerciseManager : ExerciseManager
     protected override void Start()
     {
         Debug.Log("CaidaLibreExerciseManager active");
+        Formulary._sa = "g";
     }
     protected override void getFieldData(int segment)
     {

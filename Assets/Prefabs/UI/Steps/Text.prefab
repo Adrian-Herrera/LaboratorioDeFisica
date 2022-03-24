@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 8852106510228855022}
   - component: {fileID: 8852106510228855020}
   - component: {fileID: 8852106510228855021}
-  - component: {fileID: 3190881751693913842}
+  - component: {fileID: 2737609043913437142}
   m_Layer: 5
-  m_Name: Number
+  m_Name: Text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -35,8 +35,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 17, y: 23}
+  m_AnchoredPosition: {x: 0.7340088, y: 1.371994}
+  m_SizeDelta: {x: 16, y: 21}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8852106510228855020
 CanvasRenderer:
@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 1
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: b8e3f3f4582bedb4aab78ab3d4e49eea, type: 2}
-  m_sharedMaterial: {fileID: -4225126546425591761, guid: b8e3f3f4582bedb4aab78ab3d4e49eea,
+  m_fontAsset: {fileID: 11400000, guid: d270fe1d1ed9e294b85ab9efb662063a, type: 2}
+  m_sharedMaterial: {fileID: -6614704460154048843, guid: d270fe1d1ed9e294b85ab9efb662063a,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -93,15 +93,15 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 30
-  m_fontSizeBase: 30
+  m_fontSize: 28
+  m_fontSizeBase: 28
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
   m_HorizontalAlignment: 2
-  m_VerticalAlignment: 256
+  m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -129,13 +129,13 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: -11.120132, z: 0, w: 0}
+  m_margin: {x: 0, y: 0, z: 0.5154724, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &3190881751693913842
+--- !u!114 &2737609043913437142
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -147,4 +147,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60650f1c74f4df04c8a4ec1171513a0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  text: {fileID: 0}
+  LetterWidth: 16
+  LetterHeight: 21

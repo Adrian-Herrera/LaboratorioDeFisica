@@ -51,6 +51,12 @@ public static class RectTransformExtensions
         rt.anchorMin = new Vector2(0.5f, 0.5f);
         rt.anchorMax = new Vector2(0.5f, 0.5f);
     }
+    public static void SetAnchorTopRigth(this RectTransform rt)
+    {
+        rt.pivot = new Vector2(0.5f, 0.5f);
+        rt.anchorMin = new Vector2(1f, 1f);
+        rt.anchorMax = new Vector2(1f, 1f);
+    }
     public static void SetAnchorMin(this RectTransform rt, float x, float y)
     {
         rt.anchorMin = new Vector2(x, y);
