@@ -5,46 +5,53 @@ using UnityEngine.UI;
 using TMPro;
 public class Steps : MonoBehaviour
 {
-    [SerializeField] private GameObject _text;
-    [SerializeField] private GameObject _exponent;
-    [SerializeField] private GameObject _fraction;
-    [SerializeField] private GameObject _group;
-    [SerializeField] private GameObject _sqrt;
-    [SerializeField] private GameObject _slash;
-    public GameObject Step;
-    private List<GameObject> _stepList = new List<GameObject>();
+    [SerializeField] private GameObject _content, _step, _text, _fraction, _group, _sqrt, _slash;
     private GameObject _actualStep;
-    private short indice;
-    public static Steps current;
+    private short _indice;
+    private float _stepsWidth;
+    public static Steps Current;
+    // General variables
+    private RectTransform _rt;
+    // Collapse variables
+    private bool _isActive;
+    private enum HideDirection
+    {
+        up, down, left, right
+    }
+    [SerializeField] private HideDirection _hideDirection;
+    [SerializeField] private Button _collapseButton;
     private void Awake()
     {
-        current = this;
+        Current = this;
+        _rt = GetComponent<RectTransform>();
     }
     private void Start()
     {
-        indice = 1;
+        _indice = 1;
+        _stepsWidth = _rt.rect.width - (_content.GetComponent<VerticalLayoutGroup>().padding.left + _content.GetComponent<VerticalLayoutGroup>().padding.right);
+        _collapseButton.onClick.AddListener(Collapse);
+        _isActive = false;
+        // Debug.Log($"_stepsWidth: {_stepsWidth}");
     }
     public void NewText(string text)
     {
-        _actualStep = Instantiate(Step, transform);
-        GameObject tempGo = CreateObject($"{indice}." + text);
-        float width = GetComponent<RectTransform>().rect.width;
-        // Debug.Log($"width: {width}");
+        _actualStep = Instantiate(_step, _content.transform);
+        GameObject tempGo = CreateObject($"{_indice}." + text);
+        float NumberLines = (int)(tempGo.GetComponent<RectTransform>().rect.width / _stepsWidth) + 1;
+        Debug.Log($"NumberLines: {NumberLines}");
         tempGo.GetComponent<TMP_Text>().enableWordWrapping = true;
         tempGo.GetComponent<TMP_Text>().horizontalAlignment = HorizontalAlignmentOptions.Left;
-        float NumberLines = (int)(tempGo.GetComponent<RectTransform>().rect.width / width) + 1;
-        Debug.Log($"NumberLines: {NumberLines}");
         if (NumberLines >= 1)
         {
-            Vector2 newSize = new Vector2(width, tempGo.GetComponent<RectTransform>().rect.height * ((NumberLines * 2) - 1));
+            Vector2 newSize = new Vector2(_stepsWidth, tempGo.GetComponent<RectTransform>().rect.height * ((NumberLines * 2) - 1));
             _actualStep.GetComponent<RectTransform>().sizeDelta = newSize;
             tempGo.GetComponent<RectTransform>().sizeDelta = newSize;
         }
-        indice++;
+        _indice++;
     }
     public void NewLine(params object[] list)
     {
-        _actualStep = Instantiate(Step, transform);
+        _actualStep = Instantiate(_step, _content.transform);
         GameObject tempGo;
         float width = 0, height = 0;
         foreach (object item in list)
@@ -55,7 +62,9 @@ public class Steps : MonoBehaviour
             tempGo.transform.SetParent(_actualStep.transform);
 
         }
-        _actualStep.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
+        float NumberLines = (int)(width / _stepsWidth) + 1;
+        Debug.Log($"NumberLines: {NumberLines}");
+        _actualStep.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height * NumberLines);
     }
     public GameObject CreateText(string s)  // text script
     {
@@ -107,7 +116,6 @@ public class Steps : MonoBehaviour
         group.GetComponent<RectTransform>().sizeDelta = new Vector2(width, height);
         return group;
     }
-
     public GameObject Sqrt(params object[] list) // _sqrt script
     {
         GameObject sqrt = Instantiate(_sqrt, _actualStep.transform);
@@ -125,11 +133,9 @@ public class Steps : MonoBehaviour
         Instantiate(_slash, tempGo.transform);
         return tempGo;
     }
-
     private GameObject CreateObject(object obj)
     {
         GameObject tempGo;
-        // Debug.Log(obj.GetType());
         switch (obj)
         {
             case float f:
@@ -146,6 +152,28 @@ public class Steps : MonoBehaviour
                 break;
         }
         return tempGo;
+    }
+    private void Collapse()
+    {
+        switch (_hideDirection)
+        {
+            case HideDirection.right:
+                _rt.anchoredPosition = _rt.anchoredPosition + new Vector2(_isActive ? _rt.rect.width : -_rt.rect.width, 0);
+                break;
+            case HideDirection.left:
+                _rt.anchoredPosition = _rt.anchoredPosition + new Vector2(_isActive ? -_rt.rect.width : _rt.rect.width, 0);
+                break;
+            case HideDirection.up:
+                _rt.anchoredPosition = _rt.anchoredPosition + new Vector2(0, _isActive ? _rt.rect.height : -_rt.rect.height);
+                break;
+            case HideDirection.down:
+                _rt.anchoredPosition = _rt.anchoredPosition + new Vector2(0, _isActive ? -_rt.rect.height : _rt.rect.height);
+                break;
+            default:
+                break;
+        }
+        _isActive = !_isActive;
+        _collapseButton.GetComponent<RectTransform>().Rotate(0, 0, 180);
     }
 
 }

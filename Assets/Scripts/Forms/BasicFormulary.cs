@@ -8,7 +8,7 @@ public class BasicFormulary : MonoBehaviour
     private Steps _stp;
     private void Start()
     {
-        _stp = Steps.current;
+        _stp = Steps.Current;
         _sVo = "Vo";
         _sVf = "Vf";
         _sa = "a";
@@ -292,7 +292,30 @@ public class BasicFormulary : MonoBehaviour
             x2 = (-b - Mathf.Sqrt(BeforeSquare)) / (2 * a);
             _stp.NewLine("t1=", x1);
             _stp.NewLine("t2=", x2);
-            yield return QuadraticSolver.Current.createPanel(x, "Tiempo", x1, x2);
+            if (x1 >= 0 && x2 >= 0)
+            {
+                yield return QuadraticSolver.Current.createPanel(x, "Tiempo", x1, x2);
+            }
+            else
+            {
+                if (x1 < 0 && x2 < 0)
+                {
+                    _stp.NewLine($"Ningun valor es valido. No puede existir tiempo negativo");
+                }
+                else
+                {
+                    if (x1 < 0)
+                    {
+                        _stp.NewText($"t1={x1} No es valor valido porque no existe tiempo negativo");
+                        _stp.NewLine("Por lo tanto t=", x2);
+                    }
+                    if (x2 < 0)
+                    {
+                        _stp.NewText($"t2={x2} No es valor valido porque no existe tiempo negativo");
+                        _stp.NewLine("Por lo tanto t=", x1);
+                    }
+                }
+            }
         }
         else
         {

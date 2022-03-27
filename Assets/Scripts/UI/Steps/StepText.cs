@@ -6,8 +6,8 @@ using TMPro;
 
 public class StepText : MonoBehaviour
 {
-    [SerializeField] private float LetterWidth = 18;
-    [SerializeField] private float LetterHeight = 23;
+    [SerializeField] private float LetterWidth;
+    [SerializeField] private float LetterHeight;
     private TMP_Text text;
     private RectTransform rt;
     private int TextLength;
@@ -20,6 +20,7 @@ public class StepText : MonoBehaviour
     {
         // Debug.Log("init");
         text.text = s;
+        // Debug.Log($"TextLength: {text.text.Length * LetterWidth}");
         rt.sizeDelta = new Vector2(text.text.Length * LetterWidth, LetterHeight);
     }
 }
