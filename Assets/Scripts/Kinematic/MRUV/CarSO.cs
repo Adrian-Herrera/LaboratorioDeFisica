@@ -11,6 +11,7 @@ public class CarSO : BasePointSO
     protected override void OnEnable()
     {
         base.OnEnable();
+        Datos = new Field[3, 5]; // { Vo, Vf, a, x, t }
         ExtraFieldsNames = new string[] { "Tiempo Total", "Distancia Total" };
     }
     public override string[] getNames()

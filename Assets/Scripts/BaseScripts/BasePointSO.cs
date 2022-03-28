@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class BasePointSO : ScriptableObject
 {
     public Sprite _sprite;
-    public Field[,] Datos = new Field[3, 5]; // { Vo, Vf, a, x, t }
+    public Field[,] Datos;
     public Dictionary<string, Field> ExtraFields = new Dictionary<string, Field>();
     public int numberOfSegments;
     protected virtual void OnEnable()

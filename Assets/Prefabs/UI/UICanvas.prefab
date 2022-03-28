@@ -1,5 +1,55 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!114 &9157699651823536349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2365151863664663635}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0be078f09182f4aa41e23b6aa9842f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  fitType: 3
+  rows: 3
+  columns: 1
+  cellSize: {x: 960, y: 138.18224}
+  spacing: {x: 0, y: 0}
+  fitX: 1
+  fitY: 1
+--- !u!114 &9157699651474248020
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4036604793544374183}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d0be078f09182f4aa41e23b6aa9842f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 0
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  fitType: 3
+  rows: 3
+  columns: 0
+  cellSize: {x: NaN, y: 50}
+  spacing: {x: 0, y: 0}
+  fitX: 1
+  fitY: 1
 --- !u!1 &9157699650458241484
 GameObject:
   m_ObjectHideFlags: 0
@@ -433,56 +483,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &9157699651474248020
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4036604793544374183}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d0be078f09182f4aa41e23b6aa9842f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  fitType: 3
-  rows: 3
-  columns: 0
-  cellSize: {x: NaN, y: 50}
-  spacing: {x: 0, y: 0}
-  fitX: 1
-  fitY: 1
---- !u!114 &9157699651823536349
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2365151863664663635}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d0be078f09182f4aa41e23b6aa9842f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 0
-  fitType: 3
-  rows: 3
-  columns: 1
-  cellSize: {x: 960, y: 138.18224}
-  spacing: {x: 0, y: 0}
-  fitX: 1
-  fitY: 1
 --- !u!1 &9157699652401744154
 GameObject:
   m_ObjectHideFlags: 0
@@ -1519,6 +1519,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121237073668391597, guid: f8449e4f79d154b48a9c1c6c3feda288,
+        type: 3}
+      propertyPath: m_Padding.m_Top
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121237073668391597, guid: f8449e4f79d154b48a9c1c6c3feda288,
+        type: 3}
+      propertyPath: m_Padding.m_Left
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121237073668391597, guid: f8449e4f79d154b48a9c1c6c3feda288,
+        type: 3}
+      propertyPath: m_Padding.m_Right
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 5121237073668391597, guid: f8449e4f79d154b48a9c1c6c3feda288,
+        type: 3}
+      propertyPath: m_Padding.m_Bottom
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5121237073668391598, guid: f8449e4f79d154b48a9c1c6c3feda288,
         type: 3}

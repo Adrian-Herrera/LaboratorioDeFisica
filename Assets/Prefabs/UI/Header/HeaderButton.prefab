@@ -147,7 +147,7 @@ GameObject:
   - component: {fileID: 2125474346987855248}
   - component: {fileID: 7122928814917723483}
   m_Layer: 5
-  m_Name: Type_button
+  m_Name: HeaderButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -252,18 +252,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1800697771996211503}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7122928814917723483}
-        m_MethodName: changeType
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &7122928814917723483
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,4 +265,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a1f5248445d6c44f810d7a0d327d839, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  manager: {fileID: 11400000, guid: e5b802087d3ccec4fb3cbc9bd8de0f7f, type: 2}

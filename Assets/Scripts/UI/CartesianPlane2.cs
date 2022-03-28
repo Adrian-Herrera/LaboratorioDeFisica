@@ -10,10 +10,11 @@ public class CartesianPlane2 : MonoBehaviour
     [SerializeField] private GameObject MainObject;
     private List<GameObject> DivisionsLines = new List<GameObject>();
     private GameObject MainLine;
+    private GameObject _horizontalLine, _verticalLine;
     private float distanceCenterToBorder, screenSize;
     private float LineWidth;
     private float cameraScale;
-    private RectTransform _MainLineRT;
+    private RectTransform _MainLineRT, _horizontalRT, _verticalRT;
 
     public enum PlaneType
     {
@@ -25,24 +26,23 @@ public class CartesianPlane2 : MonoBehaviour
         cameraScale = 1;
         CreateMainLine();
     }
-    void Update()
-    {
-
-    }
-    private void getPositions()
-    {
-        // Debug.Log("Camera.main.orthographicSize: " + Camera.main.orthographicSize);
-        // distanceCenterToBorder = (16 * Camera.main.orthographicSize / 9);
-        // Debug.Log("distanceCenterToBorder: " + distanceCenterToBorder);
-        // screenSize = GetComponent<RectTransform>().rect.width;
-        // Debug.Log("screenSize: " + screenSize);
-        // MainObject.transform.localScale = new Vector3((Camera.main.orthographicSize / 10), (Camera.main.orthographicSize / 10));
-    }
     private void CreateMainLine()
     {
-        MainLine = Instantiate(Line, transform);
-        MainLine.name = "MainLine";
-        _MainLineRT = MainLine.GetComponent<RectTransform>();
+        if (type == PlaneType.MRUV || type == PlaneType.CaidaLibre)
+        {
+            MainLine = Instantiate(Line, transform);
+            MainLine.name = "MainLine";
+            _MainLineRT = MainLine.GetComponent<RectTransform>();
+        }
+        if (type == PlaneType.Parabolico)
+        {
+            _horizontalLine = Instantiate(Line, transform);
+            _horizontalLine.name = "HorizontalLine";
+            _horizontalRT = _horizontalLine.GetComponent<RectTransform>();
+            _verticalLine = Instantiate(Line, transform);
+            _verticalLine.name = "VerticalLine";
+            _verticalRT = _verticalLine.GetComponent<RectTransform>();
+        }
         cameraScale = Camera.main.orthographicSize / 10;
         UpdateSizes();
     }
@@ -50,19 +50,32 @@ public class CartesianPlane2 : MonoBehaviour
     {
         float HorizontalDistance = (16 * Camera.main.orthographicSize / 9);
         float VerticalDistance = Camera.main.orthographicSize;
-        if (type == PlaneType.MRUV)
+        switch (type)
         {
-            _MainLineRT.SetAnchorMiddle();
-            LineWidth = VerticalDistance / 50;
-            _MainLineRT.sizeDelta = new Vector2(HorizontalDistance * 2, LineWidth);
-            Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
-        }
-        else if (type == PlaneType.CaidaLibre)
-        {
-            _MainLineRT.SetAnchorBottom();
-            LineWidth = VerticalDistance / 50;
-            _MainLineRT.sizeDelta = new Vector2(LineWidth, VerticalDistance * 2);
-            Camera.main.GetComponent<Transform>().position = new Vector3(HorizontalDistance / 2, VerticalDistance * 0.7f, -10);
+            case PlaneType.MRUV:
+                _MainLineRT.SetAnchorMiddle();
+                LineWidth = VerticalDistance / 50;
+                _MainLineRT.sizeDelta = new Vector2(HorizontalDistance * 2, LineWidth);
+                Camera.main.GetComponent<Transform>().position = new Vector3(0, 0, -10);
+                break;
+            case PlaneType.CaidaLibre:
+                _MainLineRT.SetAnchorBottom();
+                LineWidth = VerticalDistance / 50;
+                _MainLineRT.sizeDelta = new Vector2(LineWidth, VerticalDistance * 2);
+                Camera.main.GetComponent<Transform>().position = new Vector3(HorizontalDistance / 2, VerticalDistance * 0.7f, -10);
+                break;
+            case PlaneType.Parabolico:
+                LineWidth = VerticalDistance / 50;
+
+                _horizontalRT.SetAnchorLeft();
+                _horizontalRT.sizeDelta = new Vector2(HorizontalDistance * 2, LineWidth);
+
+                _verticalRT.SetAnchorBottom();
+                _verticalRT.sizeDelta = new Vector2(LineWidth, VerticalDistance * 2);
+                Camera.main.GetComponent<Transform>().position = new Vector3(HorizontalDistance * 0.8f, VerticalDistance * 0.5f, -10);
+                break;
+            default:
+                break;
         }
         MainObject.transform.localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
         CreateDivisions();
@@ -75,40 +88,70 @@ public class CartesianPlane2 : MonoBehaviour
             Destroy(item);
         }
         DivisionsLines.Clear();
-
-        if (type == PlaneType.MRUV)
+        float AvailableSpace, temp = 0, divisionDistance;
+        switch (type)
         {
-            float AvailableSpace = 16 * Camera.main.orthographicSize / 9;
-            float temp = 0;
-            float distance = CalculateRulerDistance(AvailableSpace);
-            while (temp < AvailableSpace)
-            {
-                GameObject newDiv = Instantiate(Line, MainLine.transform).setPosition(new Vector2(temp, 0));
-                newDiv.GetComponent<RectTransform>().sizeDelta = new Vector2(0.1f, 1);
-                newDiv.GetComponent<RectTransform>().localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
-                newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
-                DivisionsLines.Add(newDiv);
-                temp += distance;
-            }
-        }
-        else if (type == PlaneType.CaidaLibre)
-        {
-            float AvailableSpace = Camera.main.orthographicSize + Camera.main.orthographicSize / 2;
-            float temp = 0;
-            float distance = CalculateRulerDistance(AvailableSpace);
-            while (temp < AvailableSpace)
-            {
-                GameObject newDiv = Instantiate(Line, transform).setPosition(new Vector2(0, temp));
-                RectTransform divRT = newDiv.GetComponent<RectTransform>();
-                Transform divText = newDiv.transform.Find("Text");
-                divRT.sizeDelta = new Vector2(1, 0.1f);
-                divRT.localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
-                divText.GetComponent<RectTransform>().SetAnchorRigth();
-                divText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, 0);
-                newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
-                DivisionsLines.Add(newDiv);
-                temp += distance;
-            }
+            case PlaneType.MRUV:
+                AvailableSpace = 16 * Camera.main.orthographicSize / 9;
+                divisionDistance = CalculateRulerDistance(AvailableSpace);
+                while (temp < AvailableSpace)
+                {
+                    GameObject newDiv = Instantiate(Line, MainLine.transform).setPosition(new Vector2(temp, 0));
+                    newDiv.GetComponent<RectTransform>().sizeDelta = new Vector2(0.1f, 1);
+                    newDiv.GetComponent<RectTransform>().localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
+                    newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
+                    DivisionsLines.Add(newDiv);
+                    temp += divisionDistance;
+                }
+                break;
+            case PlaneType.CaidaLibre:
+                AvailableSpace = Camera.main.orthographicSize + Camera.main.orthographicSize / 2;
+                divisionDistance = CalculateRulerDistance(AvailableSpace);
+                while (temp < AvailableSpace)
+                {
+                    GameObject newDiv = Instantiate(Line, transform).setPosition(new Vector2(0, temp));
+                    RectTransform divRT = newDiv.GetComponent<RectTransform>();
+                    Transform divText = newDiv.transform.Find("Text");
+                    divRT.sizeDelta = new Vector2(1, 0.1f);
+                    divRT.localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
+                    divText.GetComponent<RectTransform>().SetAnchorRigth();
+                    divText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, 0);
+                    newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
+                    DivisionsLines.Add(newDiv);
+                    temp += divisionDistance;
+                }
+                break;
+            case PlaneType.Parabolico:
+                float spaceWidth = (16 * Camera.main.orthographicSize / 9) * 2;
+                float spaceHeight = Camera.main.orthographicSize * 2;
+                divisionDistance = CalculateRulerDistance(spaceWidth);
+                while (temp < spaceWidth)
+                {
+                    GameObject newDiv = Instantiate(Line, transform).setPosition(new Vector2(temp, 0));
+                    newDiv.GetComponent<RectTransform>().sizeDelta = new Vector2(0.1f, 1);
+                    newDiv.GetComponent<RectTransform>().localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
+                    newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
+                    DivisionsLines.Add(newDiv);
+                    temp += divisionDistance;
+                }
+                divisionDistance = CalculateRulerDistance(spaceHeight);
+                temp = 0;
+                while (temp < spaceHeight)
+                {
+                    GameObject newDiv = Instantiate(Line, transform).setPosition(new Vector2(0, temp));
+                    RectTransform divRT = newDiv.GetComponent<RectTransform>();
+                    Transform divText = newDiv.transform.Find("Text");
+                    divRT.sizeDelta = new Vector2(1, 0.1f);
+                    divRT.localScale = new Vector3(1 * cameraScale, 1 * cameraScale, 0);
+                    divText.GetComponent<RectTransform>().SetAnchorRigth();
+                    divText.GetComponent<RectTransform>().anchoredPosition = new Vector2(-1, 0);
+                    newDiv.GetComponentInChildren<TMP_Text>().SetText(temp.ToString());
+                    DivisionsLines.Add(newDiv);
+                    temp += divisionDistance;
+                }
+                break;
+            default:
+                break;
         }
     }
     public void ZoomIn()

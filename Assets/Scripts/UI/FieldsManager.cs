@@ -46,7 +46,7 @@ public class FieldsManager : MonoBehaviour
     }
     private void CheckIncognitas()
     {
-        if ((int)HeaderManager.current.ActiveProblem.Incognita <= 4)
+        if ((int)HeaderManager.current.ActiveProblem.Incognita <= BasePointSO.Datos.GetLength(1))
         {
             ExerciseManager.current.SelectedSegment.CalculateProblem(HeaderManager.current.ActiveProblem);
         }

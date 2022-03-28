@@ -1,16 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-[CreateAssetMenu(fileName = "BallSO", menuName = "ScriptableObject/Points/BallSO")]
-
-public class BallSO : BasePointSO
+[CreateAssetMenu(fileName = "ParabolicBallSO", menuName = "ScriptableObject/Points/ParabolicBallSO")]
+public class ParabolicBallSO : BasePointSO
 {
     [SerializeField] protected string[] ExtraFieldsNames;
     protected override void OnEnable()
     {
         base.OnEnable();
-        Datos = new Field[3, 5]; // { Vo, Vf, a, x, t }
-        ExtraFieldsNames = new string[] { "h-max", "Ho", "Tiempo Subida", "Tiempo Bajada" };
+        Datos = new Field[3, 12]; // { Voy, Vy, g, y, t, Vox, x, V , "Angulo", "y-max", "tv", "x-max"}
+        ExtraFieldsNames = new string[] { "Trayectoria" };
     }
     public override string[] getNames()
     {
@@ -23,7 +22,6 @@ public class BallSO : BasePointSO
             Datos[i, 2].value = 9.8f;
         }
     }
-
     public bool isRising()
     {
         return Datos[0, 2].value < 0;

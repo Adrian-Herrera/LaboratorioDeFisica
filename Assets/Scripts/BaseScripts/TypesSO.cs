@@ -19,6 +19,8 @@ public struct problem
     public string title;
     public Sprite sprite;
     public int Incognita;
+    public int Necesarios;
+    public int[] Requisitos;
     public void SelectProblem()
     {
         HeaderManager.current.ActiveProblem = this;

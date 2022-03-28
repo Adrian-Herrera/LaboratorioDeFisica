@@ -35,15 +35,16 @@ public class SegmentField : MonoBehaviour
     }
     private void Awake()
     {
+
+    }
+    private void Start()
+    {
         childFields = GetComponentsInChildren<Field>();
         for (int i = 0; i < childFields.Length; i++)
         {
             childFields[i].inputField.onSelect.AddListener(delegate { setSegment(); });
         }
         ColorUtility.TryParseHtmlString("#FFCC70", out newCol);
-    }
-    private void Start()
-    {
         Message = GetComponent<MessageBox>();
     }
 
@@ -53,29 +54,40 @@ public class SegmentField : MonoBehaviour
     }
     public bool hasEnoughData()
     {
-        int emptyFields = 0;
-        int incognita = (int)ActiveProblem.Incognita;
-        foreach (Field field in childFields)
+        int validFields = 0;
+        // int incognita = (int)ActiveProblem.Incognita;
+        // foreach (Field field in childFields)
+        // {
+        //     if ((field.column != incognita) && !field.status)
+        //     {
+        //         emptyFields++;
+        //     }
+        // }
+        if (ActiveProblem.Requisitos.Length == 0) return true;
+        foreach (int id in ActiveProblem.Requisitos)
         {
-            if (field.column != incognita && !field.status)
-            {
-                emptyFields++;
-            }
+            if (childFields[id].status) validFields++;
         }
-        return emptyFields <= 1 ? true : false;
+        return validFields == ActiveProblem.Necesarios ? true : false;
     }
 
     public int EmptyField()
     {
         int _emptyField = 0;
-        int incognita = (int)ActiveProblem.Incognita;
-        foreach (Field field in childFields)
+        int incognita = ActiveProblem.Incognita;
+        // foreach (Field field in childFields)
+        // {
+        //     if (field.column != incognita && !field.status)
+        //     {
+        //         _emptyField = field.column;
+        //     }
+        // }
+        if (ActiveProblem.Requisitos.Length == 0) return incognita;
+        foreach (int id in ActiveProblem.Requisitos)
         {
-            if (field.column != incognita && !field.status)
-            {
-                _emptyField = field.column;
-            }
+            if (!childFields[id].status) _emptyField = id;
         }
+        // Debug.Log($"_emptyField: {_emptyField}");
         return _emptyField;
         // switch (_emptyField)
         // {
@@ -107,7 +119,7 @@ public class SegmentField : MonoBehaviour
         else
         {
             ChangeColor(incognita, newCol);
-            Message.Show(alertMessages.fieldAlerts.ThreeInputRequired);
+            if (ActiveProblem.Necesarios == 3) Message.Show(alertMessages.fieldAlerts.ThreeInputRequired);
             Debug.Log("Le faltan datos");
             return false;
         }
@@ -117,13 +129,17 @@ public class SegmentField : MonoBehaviour
     public void ChangeColor(int Variable, Color color)
     {
         ResetColor();
-        foreach (Field field in childFields)
+        foreach (int id in ActiveProblem.Requisitos)
         {
-            if (field.column != Variable)
-            {
-                field.ChangeColor(color);
-            }
+            childFields[id].ChangeColor(color);
         }
+        // foreach (Field field in childFields)
+        // {
+        //     if (field.column != Variable)
+        //     {
+        //         field.ChangeColor(color);
+        //     }
+        // }
     }
     public void ResetColor()
     {
