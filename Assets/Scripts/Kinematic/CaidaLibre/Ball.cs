@@ -38,6 +38,7 @@ public class Ball : BasePoint
                     Vel += (Acc * Time.deltaTime);
                     // _rb.velocity = new Vector2(0f, Vel);
                     _rb.MovePosition(_rb.position + new Vector2(0f, Vel) * Time.fixedDeltaTime);
+                    Timer += Time.deltaTime;
                 }
                 else
                 {

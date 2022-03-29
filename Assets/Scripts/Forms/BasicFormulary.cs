@@ -308,11 +308,13 @@ public class BasicFormulary : MonoBehaviour
                     {
                         _stp.NewText($"t1={x1} No es valor valido porque no existe tiempo negativo");
                         _stp.NewLine("Por lo tanto t=", x2);
+                        x.value = x2;
                     }
                     if (x2 < 0)
                     {
                         _stp.NewText($"t2={x2} No es valor valido porque no existe tiempo negativo");
                         _stp.NewLine("Por lo tanto t=", x1);
+                        x.value = x1;
                     }
                 }
             }

@@ -18,15 +18,25 @@ MonoBehaviour:
   - title: Velocidad Inicial
     sprite: {fileID: 0}
     Incognita: 0
+    Necesarios: 3
+    Requisitos: 01000000020000000300000004000000
   - title: Velocidad Final
     sprite: {fileID: 0}
     Incognita: 1
+    Necesarios: 3
+    Requisitos: 00000000020000000300000004000000
   - title: "Aceleraci\xF3n"
     sprite: {fileID: 0}
     Incognita: 2
+    Necesarios: 3
+    Requisitos: 00000000010000000300000004000000
   - title: Distancia
     sprite: {fileID: 0}
     Incognita: 3
+    Necesarios: 3
+    Requisitos: 00000000010000000200000004000000
   - title: Tiempo
     sprite: {fileID: 0}
     Incognita: 4
+    Necesarios: 3
+    Requisitos: 00000000010000000200000003000000

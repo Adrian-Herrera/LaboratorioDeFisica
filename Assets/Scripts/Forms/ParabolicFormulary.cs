@@ -8,8 +8,6 @@ public class ParabolicFormulary : BasicFormulary
     public float Angulo(BasePointSO basePointSO)
     {
         Debug.Log("Se uso angulo");
-        // Field field = basePointSO.ExtraFields["Angulo"];
-        // field.error = false;
         return Mathf.Sqrt(Mathf.Pow(basePointSO.Datos[0, 0].value, 2) + Mathf.Pow(basePointSO.Datos[0, 5].value, 2));
     }
     public float AlturaMaxima(BasePointSO basePointSO)
@@ -63,9 +61,9 @@ public class ParabolicFormulary : BasicFormulary
             num = Mathf.Pow(basePointSO.Datos[0, 7].value, 2) * Mathf.Sin(2 * basePointSO.Datos[0, 8].value * Mathf.PI / 180);
             return num / dem;
         }
-        else if (basePointSO.Datos[0, 5].status == true && basePointSO.Datos[0, 4].status)
+        else if (basePointSO.Datos[0, 5].status == true && basePointSO.Datos[0, 10].status)
         {
-            return basePointSO.Datos[0, 5].value * basePointSO.Datos[0, 4].value;
+            return basePointSO.Datos[0, 5].value * basePointSO.Datos[0, 10].value;
         }
         Debug.Log("AlcanceMaximo - No se resolvio");
         return 0;

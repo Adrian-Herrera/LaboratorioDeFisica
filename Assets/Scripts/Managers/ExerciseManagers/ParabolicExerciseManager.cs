@@ -32,7 +32,7 @@ public class ParabolicExerciseManager : ExerciseManager
         yMax = BasePointSO[0].Datos[segment, 9].value;
         tv = BasePointSO[0].Datos[segment, 10].value;
         xMax = BasePointSO[0].Datos[segment, 11].value;
-        Trayectoria = BasePointSO[0].ExtraFields["Trayectoria"].value;
+        // Trayectoria = BasePointSO[0].ExtraFields["Trayectoria"].value;
     }
     public override void searchFormula(int Variable)
     {
@@ -42,7 +42,7 @@ public class ParabolicExerciseManager : ExerciseManager
         switch (Variable)
         {
             case 3:
-                SelectedSegment.childFields[op].value = BasePointSO[0].ExtraFields["Ho"].status ? Formulary.Formula_1(Vo, Vf, a, t, op) + BasePointSO[0].ExtraFields["Ho"].value : Formulary.Formula_1(Vo, Vf, a, t, op);
+                SelectedSegment.childFields[op].value = Formulary.Formula_1(Vo, Vf, a, t, op);
                 break;
             case 2:
                 SelectedSegment.childFields[op].value = Formulary.Formula_2(Vo, Vf, x, t, op);

@@ -9,7 +9,7 @@ public class ParabolicBallSO : BasePointSO
     {
         base.OnEnable();
         Datos = new Field[3, 12]; // { Voy, Vy, g, y, t, Vox, x, V , "Angulo", "y-max", "tv", "x-max"}
-        ExtraFieldsNames = new string[] { "Trayectoria" };
+        ExtraFieldsNames = new string[] { };
     }
     public override string[] getNames()
     {

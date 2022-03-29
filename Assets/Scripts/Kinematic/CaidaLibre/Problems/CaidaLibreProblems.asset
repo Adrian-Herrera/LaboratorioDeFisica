@@ -18,21 +18,35 @@ MonoBehaviour:
   - title: Velocidad Inicial
     sprite: {fileID: 0}
     Incognita: 0
+    Necesarios: 3
+    Requisitos: 01000000020000000300000004000000
   - title: Velocidad Final
     sprite: {fileID: 0}
     Incognita: 1
+    Necesarios: 3
+    Requisitos: 00000000020000000300000004000000
   - title: Distancia
     sprite: {fileID: 0}
     Incognita: 3
+    Necesarios: 3
+    Requisitos: 00000000010000000200000004000000
   - title: Tiempo
     sprite: {fileID: 0}
     Incognita: 4
+    Necesarios: 3
+    Requisitos: 00000000010000000200000003000000
   - title: Tiempo Subida
     sprite: {fileID: 0}
     Incognita: 5
+    Necesarios: 0
+    Requisitos: 
   - title: Tiempo Bajada
     sprite: {fileID: 0}
     Incognita: 6
+    Necesarios: 0
+    Requisitos: 
   - title: Altura Maxima
     sprite: {fileID: 0}
     Incognita: 7
+    Necesarios: 0
+    Requisitos: 

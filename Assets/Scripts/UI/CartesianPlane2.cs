@@ -72,7 +72,7 @@ public class CartesianPlane2 : MonoBehaviour
 
                 _verticalRT.SetAnchorBottom();
                 _verticalRT.sizeDelta = new Vector2(LineWidth, VerticalDistance * 2);
-                Camera.main.GetComponent<Transform>().position = new Vector3(HorizontalDistance * 0.8f, VerticalDistance * 0.5f, -10);
+                Camera.main.GetComponent<Transform>().position = new Vector3(HorizontalDistance * 0.8f, VerticalDistance * 0.8f, -10);
                 break;
             default:
                 break;

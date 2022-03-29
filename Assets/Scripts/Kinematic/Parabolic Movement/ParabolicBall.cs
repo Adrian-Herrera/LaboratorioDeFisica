@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ParabolicBall : BasePoint
 {
+    float velx;
     protected override void getInfo(int segment)
     {
         if (!(actualSegment < BasePointSO.numberOfSegments)) return;
@@ -14,6 +15,8 @@ public class ParabolicBall : BasePoint
         Acc = BasePointSO.Datos[segment, 2].value;
         Distance = BasePointSO.Datos[segment, 3].value;
         TimeUntilStop = BasePointSO.Datos[segment, 4].value;
+
+        velx = BasePointSO.Datos[segment, 5].value;
 
         SegmentDistance = _rb.position.x;
     }
@@ -28,52 +31,26 @@ public class ParabolicBall : BasePoint
         {
             if (actualSegment < BasePointSO.numberOfSegments)
             {
-                if (BasePointSO.Datos[actualSegment, 4].status)
+                if (_rb.position.y >= 0)
                 {
-                    if (Timer < TimeUntilStop)
-                    {
-                        Vel += (Acc * Time.deltaTime);
-                        _rb.velocity = new Vector2(Vel, 0f);
-                        Timer += Time.deltaTime;
-                    }
-                    else
-                    {
-                        actualSegment++;
-                        getInfo(actualSegment);
-                    }
+                    Vel += (Acc * Time.deltaTime);
+                    // _rb.velocity = new Vector2(0f, Vel);
+                    _rb.MovePosition(_rb.position + new Vector2(velx, Vel) * Time.fixedDeltaTime);
+                    Timer += Time.deltaTime;
                 }
-                else if (BasePointSO.Datos[actualSegment, 1].status)
+                else
                 {
-                    if (Vel <= Velf)
-                    {
-                        Vel += (Acc * Time.deltaTime);
-                        _rb.velocity = new Vector2(Vel, 0f);
-                    }
-                    else
-                    {
-                        actualSegment++;
-                        getInfo(actualSegment);
-                    }
-                }
-                else if (BasePointSO.Datos[actualSegment, 3].status)
-                {
-                    if (_rb.position.x - SegmentDistance <= Distance)
-                    {
-                        Vel += (Acc * Time.deltaTime);
-                        _rb.velocity = new Vector2(Vel, 0f);
-                    }
-                    else
-                    {
-                        actualSegment++;
-                        getInfo(actualSegment);
-                    }
+                    _rb.velocity = new Vector2(0f, 0f);
                 }
             }
             else
             {
                 _rb.velocity = new Vector2(0f, 0f);
-
             }
+        }
+        else
+        {
+            _rb.velocity = new Vector2(0f, 0f);
         }
     }
 }

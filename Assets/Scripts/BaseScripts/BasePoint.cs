@@ -11,6 +11,7 @@ public abstract class BasePoint : MonoBehaviour
     protected float Vel, Velf, Acc, Timer, Distance, SegmentDistance;
     protected float TimeUntilStop;
     protected int actualSegment;
+    protected bool isPaused;
     protected void Awake()
     {
         _rb = GetComponent<Rigidbody2D>();
@@ -21,8 +22,10 @@ public abstract class BasePoint : MonoBehaviour
         Timer = 0;
         actualSegment = 0;
         SegmentDistance = 0;
+        isPaused = false;
     }
-    private void Update() {
+    private void Update()
+    {
         PreMove();
     }
     // Update is called once per frame
@@ -34,14 +37,30 @@ public abstract class BasePoint : MonoBehaviour
     protected abstract void getInfo(int segment);
     public void Play()
     {
+        Time.timeScale = 1;
         StateManager.Current.ActualState = StateManager.states.Playing;
         getInfo(actualSegment);
     }
     public void Reset()
     {
+        Time.timeScale = 1;
         StateManager.Current.ActualState = StateManager.states.Stop;
         transform.position = Vector3.zero;
         actualSegment = 0;
+    }
+    public void PauseResume()
+    {
+        if (!isPaused)
+        {
+            StateManager.Current.ActualState = StateManager.states.Pause;
+            Time.timeScale = 0;
+        }
+        else
+        {
+            StateManager.Current.ActualState = StateManager.states.Playing;
+            Time.timeScale = 1;
+        }
+        isPaused = !isPaused;
     }
 
     protected abstract void move();
