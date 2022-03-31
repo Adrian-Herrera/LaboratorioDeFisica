@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class HeaderManager : MonoBehaviour
 {
@@ -16,11 +17,13 @@ public class HeaderManager : MonoBehaviour
     [SerializeField] private GameObject TypePanel, ProblemPanel;
     [SerializeField] private GameObject _button;
     [SerializeField] private TypesSO[] Types;
+    [SerializeField] private TMP_Dropdown _dropdown;
     private List<GameObject> TypeList = new List<GameObject>();
     private List<GameObject> QuestionList = new List<GameObject>();
 
     private void Start()
     {
+        getMetricSystem();
         foreach (TypesSO item in Types)
         {
             GameObject go = Instantiate(_button, TypePanel.transform);
@@ -54,6 +57,20 @@ public class HeaderManager : MonoBehaviour
     {
         ActiveProblem = problem;
         EventManager.Current.ChangeProblem();
+    }
+
+    // Dropdown methods
+    private void getMetricSystem()
+    {
+        _dropdown.AddOptions(ExerciseManager.current.Units);
+        _dropdown.onValueChanged.AddListener(delegate
+        {
+            DropdownValueChanged(_dropdown);
+        });
+    }
+    private void DropdownValueChanged(TMP_Dropdown change)
+    {
+        ExerciseManager.current.setUnit(change.value);
     }
 
 

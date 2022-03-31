@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class MRUVExerciseManager : ExerciseManager
 {
-    public MRUVFormulary Formulary;
+    private MRUVFormulary Formulary;
     private float Vo, Vf, a, x, t, TiempoEncuentro;
     protected override void Awake()
     {
@@ -22,6 +22,27 @@ public class MRUVExerciseManager : ExerciseManager
         a = BasePointSO[0].Datos[segment, 2].value;
         x = BasePointSO[0].Datos[segment, 3].value;
         t = BasePointSO[0].Datos[segment, 4].value;
+    }
+    public override void setUnit(int unit) // refactorizar
+    {
+        base.setUnit(unit);
+        int segment = SelectedSegment.SegmentID;
+        if (SelectedUnit == 0)
+        {
+            if (BasePointSO[0].Datos[segment, 0].value != 0) BasePointSO[0].Datos[segment, 0].value = MtsToKmh(BasePointSO[0].Datos[segment, 0].value, false);
+            if (BasePointSO[0].Datos[segment, 1].value != 0) BasePointSO[0].Datos[segment, 1].value = MtsToKmh(BasePointSO[0].Datos[segment, 1].value, false);
+            if (BasePointSO[0].Datos[segment, 2].value != 0) BasePointSO[0].Datos[segment, 2].value = Mts2ToKmh2(BasePointSO[0].Datos[segment, 2].value, false);
+            if (BasePointSO[0].Datos[segment, 3].value != 0) BasePointSO[0].Datos[segment, 3].value = MetersToKilometers(BasePointSO[0].Datos[segment, 3].value, false);
+            if (BasePointSO[0].Datos[segment, 4].value != 0) BasePointSO[0].Datos[segment, 4].value = SecondsToHours(BasePointSO[0].Datos[segment, 4].value, false);
+        }
+        else if (SelectedUnit == 1)
+        {
+            if (BasePointSO[0].Datos[segment, 0].value != 0) BasePointSO[0].Datos[segment, 0].value = MtsToKmh(BasePointSO[0].Datos[segment, 0].value);
+            if (BasePointSO[0].Datos[segment, 1].value != 0) BasePointSO[0].Datos[segment, 1].value = MtsToKmh(BasePointSO[0].Datos[segment, 1].value);
+            if (BasePointSO[0].Datos[segment, 2].value != 0) BasePointSO[0].Datos[segment, 2].value = Mts2ToKmh2(BasePointSO[0].Datos[segment, 2].value);
+            if (BasePointSO[0].Datos[segment, 3].value != 0) BasePointSO[0].Datos[segment, 3].value = MetersToKilometers(BasePointSO[0].Datos[segment, 3].value);
+            if (BasePointSO[0].Datos[segment, 4].value != 0) BasePointSO[0].Datos[segment, 4].value = SecondsToHours(BasePointSO[0].Datos[segment, 4].value);
+        }
     }
     public override void searchFormula(int Variable)
     {
