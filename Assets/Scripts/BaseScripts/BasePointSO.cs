@@ -26,9 +26,6 @@ public abstract class BasePointSO : ScriptableObject
             data += "\n";
         }
         Debug.Log(data);
-        // Debug.Log("TotalTime: " + TotalTime.value);
-        // Debug.Log("TotalDistance: " + TotalDistance.value);
-
         foreach (var item in ExtraFields)
         {
             Debug.Log(item.Key + ": " + item.Value.value);
@@ -41,4 +38,29 @@ public abstract class BasePointSO : ScriptableObject
 
     public abstract string[] getNames();
     public abstract void setDefaultValues();
+    public virtual void ChangeFieldValue(int segmentId, int fieldId, float value)
+    {
+        Datos[segmentId, fieldId].value = value;
+        Datos[segmentId, fieldId].SetInteractable(false);
+    }
+    public virtual void ChangeFieldInteractable(int segmentId, int fieldId, bool value)
+    {
+        Datos[segmentId, fieldId].SetInteractable(value);
+    }
+    public virtual void ResetValues()
+    {
+        int iLength = Datos.GetLength(0);
+        int jLength = Datos.GetLength(1);
+        for (int i = 0; i < iLength; i++)
+        {
+            for (int j = 0; j < jLength; j++)
+            {
+                Datos[i, j].Clear();
+            }
+        }
+    }
+    public Field GetField(int i, int j)
+    {
+        return Datos[i, j];
+    }
 }

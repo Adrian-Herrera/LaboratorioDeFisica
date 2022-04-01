@@ -35,11 +35,10 @@ public class SegmentField : MonoBehaviour
     }
     private void Awake()
     {
-
+        childFields = GetComponentsInChildren<Field>();
     }
     private void Start()
     {
-        childFields = GetComponentsInChildren<Field>();
         for (int i = 0; i < childFields.Length; i++)
         {
             childFields[i].inputField.onSelect.AddListener(delegate { setSegment(); });
@@ -146,6 +145,17 @@ public class SegmentField : MonoBehaviour
         foreach (Field field in childFields)
         {
             field.ChangeColor(Color.white);
+        }
+    }
+    public void setInteractable(int id, bool value)
+    {
+        childFields[id].SetInteractable(value);
+    }
+    public void setInteractableAll(bool value)
+    {
+        foreach (Field field in childFields)
+        {
+            field.SetInteractable(value);
         }
     }
 }

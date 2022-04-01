@@ -12,7 +12,7 @@ public class Field : MonoBehaviour
     public int row, column;
     private float _value;
     public TMP_InputField inputField;
-    public bool status, _error;
+    public bool status, _error, answer = false;
     #region getters and setters
     public float value
     {
@@ -74,5 +74,18 @@ public class Field : MonoBehaviour
     {
         error = true;
         Message.Show(text);
+    }
+    public void Clear()
+    {
+        error = false;
+        status = false;
+        _value = 0;
+        inputField.text = "";
+        ChangeColor(Color.white);
+        SetInteractable(true);
+    }
+    public void SetInteractable(bool b)
+    {
+        inputField.interactable = b;
     }
 }

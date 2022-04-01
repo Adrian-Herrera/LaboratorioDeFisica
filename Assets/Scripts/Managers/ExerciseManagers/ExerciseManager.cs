@@ -44,6 +44,17 @@ public abstract class ExerciseManager : MonoBehaviour
     public virtual void setUnit(int unit)
     {
         SelectedUnit = (short)unit;
-
+    }
+    public virtual void ChangeFieldValue(int segmentId, int fieldId, float value)
+    {
+        BasePointSO[0].ChangeFieldValue(segmentId, fieldId, value);
+    }
+    public virtual void ResetValues()
+    {
+        BasePointSO[0].ResetValues();
+    }
+    public Field getBasePointField(int i, int j)
+    {
+        return BasePointSO[0].GetField(i, j);
     }
 }

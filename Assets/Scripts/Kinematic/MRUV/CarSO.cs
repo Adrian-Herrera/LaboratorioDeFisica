@@ -20,7 +20,7 @@ public class CarSO : BasePointSO
     }
     public override void setDefaultValues()
     {
-        
+
     }
 }
 
