@@ -15,7 +15,7 @@ public class MRUVExerciseManager : ExerciseManager
     {
         Debug.Log("MRUVExerciseManager active");
     }
-    protected override void getFieldData(int segment)
+    protected override void GetFieldData(int segment)
     {
         Vo = BasePointSO[0].Datos[segment, 0].value;
         Vf = BasePointSO[0].Datos[segment, 1].value;
@@ -23,9 +23,9 @@ public class MRUVExerciseManager : ExerciseManager
         x = BasePointSO[0].Datos[segment, 3].value;
         t = BasePointSO[0].Datos[segment, 4].value;
     }
-    public override void setUnit(int unit) // refactorizar
+    public override void SetUnit(int unit) // refactorizar
     {
-        base.setUnit(unit);
+        base.SetUnit(unit);
         int segment = SelectedSegment.SegmentID;
         if (SelectedUnit == 0)
         {
@@ -44,9 +44,9 @@ public class MRUVExerciseManager : ExerciseManager
             if (BasePointSO[0].Datos[segment, 4].value != 0) BasePointSO[0].Datos[segment, 4].value = SecondsToHours(BasePointSO[0].Datos[segment, 4].value);
         }
     }
-    public override void searchFormula(int Variable)
+    public override void SearchFormula(int Variable)
     {
-        getFieldData(SelectedSegment.SegmentID);
+        GetFieldData(SelectedSegment.SegmentID);
         int op = HeaderManager.current.ActiveProblem.Incognita;
         switch (Variable)
         {

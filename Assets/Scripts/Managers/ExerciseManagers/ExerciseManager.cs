@@ -21,8 +21,8 @@ public abstract class ExerciseManager : MonoBehaviour
         SelectedUnit = 0;
         Debug.Log("ExerciseManager active");
     }
-    protected abstract void getFieldData(int segment);
-    public abstract void searchFormula(int Variable);
+    protected abstract void GetFieldData(int segment);
+    public abstract void SearchFormula(int Variable);
     public abstract void CheckEveryTime(BasePointSO BasePointSO);
     public abstract void PreFormula();
     protected float MetersToKilometers(float value, bool normal = true)
@@ -41,7 +41,7 @@ public abstract class ExerciseManager : MonoBehaviour
     {
         return normal ? (value / 3600) : (value * 3600);
     }
-    public virtual void setUnit(int unit)
+    public virtual void SetUnit(int unit)
     {
         SelectedUnit = (short)unit;
     }
@@ -53,7 +53,7 @@ public abstract class ExerciseManager : MonoBehaviour
     {
         BasePointSO[0].ResetValues();
     }
-    public Field getBasePointField(int i, int j)
+    public Field GetBasePointField(int i, int j)
     {
         return BasePointSO[0].GetField(i, j);
     }

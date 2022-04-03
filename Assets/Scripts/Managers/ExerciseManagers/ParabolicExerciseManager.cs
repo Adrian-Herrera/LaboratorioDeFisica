@@ -16,7 +16,7 @@ public class ParabolicExerciseManager : ExerciseManager
         Debug.Log("ParabolicExerciseManager active");
         Formulary._sa = "g";
     }
-    protected override void getFieldData(int segment)
+    protected override void GetFieldData(int segment)
     {
         Vo = BasePointSO[0].Datos[segment, 0].value;
         Vf = BasePointSO[0].Datos[segment, 1].value;
@@ -34,9 +34,9 @@ public class ParabolicExerciseManager : ExerciseManager
         xMax = BasePointSO[0].Datos[segment, 11].value;
         // Trayectoria = BasePointSO[0].ExtraFields["Trayectoria"].value;
     }
-    public override void searchFormula(int Variable)
+    public override void SearchFormula(int Variable)
     {
-        getFieldData(SelectedSegment.SegmentID);
+        GetFieldData(SelectedSegment.SegmentID);
         int op = HeaderManager.current.ActiveProblem.Incognita;
         PreFormula();
         switch (Variable)
@@ -80,7 +80,7 @@ public class ParabolicExerciseManager : ExerciseManager
 
     public override void PreFormula()
     {
-        getFieldData(SelectedSegment.SegmentID);
+        GetFieldData(SelectedSegment.SegmentID);
         // if (!BasePointSO[0].Datos[0, 3].status && (BasePointSO[0].ExtraFields["Ho"].status && BasePointSO[0].ExtraFields["h-max"].status))
         // {
         //     BasePointSO[0].Datos[0, 3].value = hmax - ho;

@@ -112,7 +112,7 @@ public class SegmentField : MonoBehaviour
             ResetColor();
             error = false;
             // ActiveProblem.Calculate(EmptyField());
-            ExerciseManager.current.searchFormula(EmptyField());
+            ExerciseManager.current.SearchFormula(EmptyField());
             return true;
         }
         else

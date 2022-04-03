@@ -26,3 +26,4 @@ MonoBehaviour:
   Questions:
   - name: 1
     value: 10
+  QuestionsFields: []

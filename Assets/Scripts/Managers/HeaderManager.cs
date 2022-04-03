@@ -70,7 +70,7 @@ public class HeaderManager : MonoBehaviour
     }
     private void DropdownValueChanged(TMP_Dropdown change)
     {
-        ExerciseManager.current.setUnit(change.value);
+        ExerciseManager.current.SetUnit(change.value);
     }
 
 

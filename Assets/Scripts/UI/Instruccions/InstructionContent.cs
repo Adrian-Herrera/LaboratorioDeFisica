@@ -8,11 +8,12 @@ public class InstructionContent : MonoBehaviour
 {
     [SerializeField] private TMP_Text _instruction;
     [SerializeField] private GameObject _formulas;
-    private List<Field> AnswerFields = new List<Field>();
+    private readonly List<Field> AnswerFields = new List<Field>();
     // private Dictionary<Field, bool> AnswerFields = new Dictionary<Field, bool>();
     private Variable[] Questions;
-    public void setData(Instruction inst)
+    public void SetData(Instruction inst)
     {
+        Reset();
         Questions = inst.Questions;
         _instruction.text = inst.text;
 
@@ -27,7 +28,7 @@ public class InstructionContent : MonoBehaviour
         foreach (Variable item in Questions)
         {
             CreateVariable(item, false);
-            AnswerFields.Add(ExerciseManager.current.getBasePointField(0, (int)item.name));
+            AnswerFields.Add(ExerciseManager.current.GetBasePointField(0, (int)item.name));
             ExerciseManager.current.SelectedSegment.setInteractable((int)item.name, true);
         }
 
@@ -63,14 +64,22 @@ public class InstructionContent : MonoBehaviour
         }
         return true;
     }
+    private void Reset()
+    {
+        foreach (Field f in AnswerFields)
+        {
+            f.answer = false;
+        }
+        AnswerFields.Clear();
+    }
 }
 [System.Serializable]
 public struct Variable
 {
-    public enum names
+    public enum Names
     {
         Vo, Vf, a, x, t
     }
-    public names name;
+    public Names name;
     public int value;
 };

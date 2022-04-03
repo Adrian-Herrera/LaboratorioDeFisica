@@ -7,63 +7,71 @@ using TMPro;
 public class InstructionManager : MonoBehaviour
 {
     [SerializeField] private TMP_Text _title;
+    [SerializeField] private TMP_Text _timerTxt;
     [SerializeField] private InstructionContent _content;
     [SerializeField] private Button _previousBtn, _nextBtn;
+    [SerializeField] private float _limitTime;
     public Instruction[] Instructions;
     [HideInInspector]
     public Instruction SelectedInstruction;
     private int _indice;
+    private float _timer;
+    private bool _isPaused;
     void Start()
     {
         _indice = 0;
-        setInstruction(Search(_indice));
+        _isPaused = false;
+        _timer = _limitTime;
+        SetInstruction(_indice);
     }
-    void Update()
+    private void Update()
     {
-
+        if (_isPaused) return;
+        _timer -= Time.deltaTime;
+        _timerTxt.text = _timer.ToString();
+        if (_timer <= 0)
+        {
+            _indice = 0;
+            _timer = _limitTime;
+            SetInstruction(_indice);
+        }
     }
 
-    private void setInstruction(Instruction instruction)
+    private void SetInstruction(int indice)
     {
-        _title.text = instruction.title;
+        if (Instructions.Length <= 0) return;
+
+        SelectedInstruction = Instructions[indice];
+
+        _title.text = SelectedInstruction.title;
         ExerciseManager.current.ResetValues();
-        _content.setData(instruction);
-        SelectedInstruction = instruction;
-
+        _content.SetData(SelectedInstruction);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_content.GetComponent<RectTransform>());
 
         _previousBtn.gameObject.SetActive(_indice != 0);
         _nextBtn.gameObject.SetActive(_indice != Instructions.Length - 1);
+
+        _timer = _limitTime;
+        _isPaused = false;
         if (_nextBtn.IsActive())
         {
             _nextBtn.interactable = false;
         }
     }
-    private Instruction Search(int indice)
+    public void CheckAnswer() // call by button
     {
-        if (Instructions.Length > 0)
+        if (_content.CheckAnswer())
         {
-            return Instructions[indice];
+            _nextBtn.interactable = true;
+            _isPaused = true;
         }
-        else
-        {
-            return null;
-        }
-    }
-    public void CheckAnswer()
-    {
-        // Debug.Log(_content.CheckAnswer());
-        _nextBtn.interactable = _content.CheckAnswer();
-    }
-    public void ShowResult()
-    {
-
     }
     public void Previous()
     {
         if (_indice > 0)
         {
             _indice--;
-            setInstruction(Search(_indice));
+            SetInstruction(_indice);
         }
     }
     public void Next()
@@ -71,7 +79,7 @@ public class InstructionManager : MonoBehaviour
         if (_indice < Instructions.Length - 1)
         {
             _indice++;
-            setInstruction(Search(_indice));
+            SetInstruction(_indice);
         }
     }
 }
