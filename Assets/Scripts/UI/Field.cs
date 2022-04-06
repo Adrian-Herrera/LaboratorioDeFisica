@@ -75,10 +75,11 @@ public class Field : MonoBehaviour
         error = true;
         Message.Show(text);
     }
-    public void Clear()
+    public void SetDefaultValues()
     {
         error = false;
         status = false;
+        answer = false;
         _value = 0;
         inputField.text = "";
         ChangeColor(Color.white);

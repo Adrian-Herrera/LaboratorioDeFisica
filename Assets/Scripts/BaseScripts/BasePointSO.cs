@@ -55,8 +55,12 @@ public abstract class BasePointSO : ScriptableObject
         {
             for (int j = 0; j < jLength; j++)
             {
-                Datos[i, j].Clear();
+                Datos[i, j].SetDefaultValues();
             }
+        }
+        foreach (Field item in ExtraFields.Values)
+        {
+            item.SetDefaultValues();
         }
     }
     public Field GetField(int i, int j)

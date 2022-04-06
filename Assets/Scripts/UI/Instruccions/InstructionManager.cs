@@ -9,16 +9,17 @@ public class InstructionManager : MonoBehaviour
     [SerializeField] private TMP_Text _title;
     [SerializeField] private TMP_Text _timerTxt;
     [SerializeField] private InstructionContent _content;
+    [SerializeField] private ScrollRect _scrollRect;
     [SerializeField] private Button _previousBtn, _nextBtn;
     [SerializeField] private float _limitTime;
+    [HideInInspector] public Instruction SelectedInstruction;
     public Instruction[] Instructions;
-    [HideInInspector]
-    public Instruction SelectedInstruction;
     private int _indice;
     private float _timer;
     private bool _isPaused;
     void Start()
     {
+        // Debug.Log("instruction manager start");
         _indice = 0;
         _isPaused = false;
         _timer = _limitTime;
@@ -64,6 +65,7 @@ public class InstructionManager : MonoBehaviour
         {
             _nextBtn.interactable = true;
             _isPaused = true;
+            _content.Congratulation(Instructions.Length - (_indice + 1));
         }
     }
     public void Previous()

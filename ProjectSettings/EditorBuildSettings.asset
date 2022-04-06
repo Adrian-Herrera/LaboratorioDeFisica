@@ -10,5 +10,11 @@ EditorBuildSettings:
     guid: e92614ee47c2cc644b281dd16d3f91c1
   - enabled: 1
     path: Assets/Scenes/MRUV.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
+    guid: 68721fc1ac3913549b1767db68cda525
+  - enabled: 1
+    path: Assets/Scenes/CaidaLibre.unity
+    guid: 01e6913a75fb40f4d8fd90bf94ea308e
+  - enabled: 1
+    path: Assets/Scenes/Parabolico.unity
+    guid: 17e1165d055fe234da36dbb12acbcb52
   m_configObjects: {}

@@ -51,7 +51,10 @@ public abstract class ExerciseManager : MonoBehaviour
     }
     public virtual void ResetValues()
     {
-        BasePointSO[0].ResetValues();
+        foreach (BasePointSO item in BasePointSO)
+        {
+            item.ResetValues();
+        }
     }
     public Field GetBasePointField(int i, int j)
     {

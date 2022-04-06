@@ -13,17 +13,19 @@ MonoBehaviour:
   m_Name: MRUV1.2
   m_EditorClassIdentifier: 
   title: Problema 1.2
-  text: "Un trineo parte del reposo con una aceleraci\xF3n constante de 2m/s<sup>2</sup>\nCalcular:\nb)La
-    que recorre al cabo de 5s."
-  Formulas: {fileID: 0}
+  text: "Un trineo  <color=\"blue\">parte del reposo</color> con una <color=\"red\">aceleraci\xF3n
+    constante de 2m/s<sup>2</sup></color>\nCalcular:\nb)La que recorre al cabo de<color=\"green\">5s.</color>."
   Data:
   - name: 0
     value: 0
+    color: {r: 0, g: 0.14507627, b: 1, a: 1}
   - name: 2
     value: 2
+    color: {r: 1, g: 0, b: 0, a: 1}
   - name: 4
     value: 5
+    color: {r: 0.0036325455, g: 1, b: 0, a: 1}
   Questions:
   - name: 3
     value: 25
-  QuestionsFields: []
+    color: {r: 0, g: 0, b: 0, a: 1}

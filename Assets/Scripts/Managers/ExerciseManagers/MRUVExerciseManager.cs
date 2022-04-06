@@ -8,12 +8,13 @@ public class MRUVExerciseManager : ExerciseManager
     private float Vo, Vf, a, x, t, TiempoEncuentro;
     protected override void Awake()
     {
+        // Debug.Log("MRUVExerciseManager awake");
         current = this;
         Formulary = GetComponent<MRUVFormulary>();
     }
     protected override void Start()
     {
-        Debug.Log("MRUVExerciseManager active");
+        
     }
     protected override void GetFieldData(int segment)
     {

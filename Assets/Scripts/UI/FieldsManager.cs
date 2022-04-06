@@ -15,14 +15,15 @@ public class FieldsManager : MonoBehaviour
     // private Color newCol;
     private void Awake()
     {
+        // Debug.Log("FieldManager Awake");
         SegmentFields = BasicInfo.GetComponentsInChildren<SegmentField>();
         Fields = BasicInfo.GetComponentsInChildren<Field>();
-        AsignFields();
-        ExerciseManager.current.SelectedSegment = SegmentFields[0];
     }
     // Start is called before the first frame update
     void Start()
     {
+        AsignFields();
+        ExerciseManager.current.SelectedSegment = SegmentFields[0];
         EventManager.Current.onChangeProblem += CheckIncognitas;
         // EventManager.Current.onUpdateData += delegate { ExerciseManager.current.CheckEveryTime(BasePointSO); };
 
