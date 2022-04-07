@@ -7,18 +7,21 @@ using UnityEngine.EventSystems;
 
 public class InstructionContent : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private TMP_Text _instructionTitle, _instruction, _data;
+    [SerializeField] private TMP_Text _instructionTitle, _instructionContent, _data;
     private readonly List<Field> AnswerFields = new List<Field>();
     // private Dictionary<Field, bool> AnswerFields = new Dictionary<Field, bool>();
     private Variable[] Questions;
+    private Instruction _activeInstruction;
     public void SetData(Instruction inst)
     {
         Reset();
         Questions = inst.Questions;
-        _instruction.text = inst.text;
+        _activeInstruction = inst;
+        _instructionTitle.text = _activeInstruction.title;
+        _instructionContent.text = _activeInstruction.text;
 
         _data.text = "Datos: \n";
-        foreach (Variable item in inst.Data)
+        foreach (Variable item in _activeInstruction.Data)
         {
             _data.text += AddVariableText(item);
             ExerciseManager.current.ChangeFieldValue(0, (int)item.name, item.value);
@@ -78,22 +81,23 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
         _instructionTitle.text = "Felicidades!!!";
         if (remaining > 0)
         {
-            _instruction.text = $"Te {(remaining == 1 ? "falta" : "faltan")} {remaining} {(remaining == 1 ? "ejercicio" : "ejercicios")} mas";
+            _instructionContent.text = $"Te {(remaining == 1 ? "falta" : "faltan")} {remaining} {(remaining == 1 ? "ejercicio" : "ejercicios")} mas";
         }
         else
         {
-            _instruction.text = "Completaste todos los ejercicios";
+            _instructionContent.text = "Completaste todos los ejercicios";
         }
         _data.text = "";
 
     }
     public void OnPointerClick(PointerEventData eventData)
     {
+        // Debug.Log(eventData.pointerCurrentRaycast.gameObject.name);
         if (eventData.pointerCurrentRaycast.gameObject == _instructionTitle.transform.gameObject)
         {
-            _instruction.gameObject.SetActive(!_instruction.gameObject.activeSelf);
-            _instructionTitle.text = _instruction.gameObject.activeSelf ? "Enunciado" : "Enunciado...";
-            LayoutRebuilder.ForceRebuildLayoutImmediate(_instruction.transform.parent.GetComponent<RectTransform>());
+            _instructionContent.gameObject.SetActive(!_instructionContent.gameObject.activeSelf);
+            _instructionTitle.text = _instructionContent.gameObject.activeSelf ? _activeInstruction.title : _activeInstruction.title + "...";
+            LayoutRebuilder.ForceRebuildLayoutImmediate(_instructionContent.transform.parent.GetComponent<RectTransform>());
         }
     }
 
