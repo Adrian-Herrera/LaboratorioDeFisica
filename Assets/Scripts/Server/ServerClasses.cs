@@ -45,7 +45,7 @@ public class Quiz
 }
 public class Question
 {
-    public string Title;
+    public string Title; // eliminar
     public string Content;
     public QuestionData[] Data;
     public QuestionData[] Questions;

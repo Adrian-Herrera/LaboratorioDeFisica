@@ -24,6 +24,10 @@ public class LevelManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    private void Start()
+    {
+        Application.targetFrameRate = 30;
+    }
 
     public async void LoadScene(string sceneName)
     {
@@ -44,6 +48,10 @@ public class LevelManager : MonoBehaviour
         _loaderCanvas.SetActive(false);
 
 
+    }
+    public void chargeScene(string name)
+    {
+        SceneManager.LoadScene(name);
     }
 
     private void Update()

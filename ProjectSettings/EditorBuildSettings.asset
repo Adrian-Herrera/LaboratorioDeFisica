@@ -17,4 +17,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/Parabolico.unity
     guid: 17e1165d055fe234da36dbb12acbcb52
+  - enabled: 1
+    path: Assets/Scenes/Exercises.unity
+    guid: 748f48ef5d5a3ef4cb60f284d824102b
   m_configObjects: {}
