@@ -10,7 +10,7 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
     [SerializeField] private TMP_Text _instructionTitle, _instructionContent, _data;
     private readonly List<Field> AnswerFields = new List<Field>();
     // private Dictionary<Field, bool> AnswerFields = new Dictionary<Field, bool>();
-    private Variable[] Questions;
+    private VariableUI[] Questions;
     private Instruction _activeInstruction;
     public void SetData(Instruction inst)
     {
@@ -21,14 +21,14 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
         _instructionContent.text = _activeInstruction.text;
 
         _data.text = "Datos: \n";
-        foreach (Variable item in _activeInstruction.Data)
+        foreach (VariableUI item in _activeInstruction.Data)
         {
             _data.text += AddVariableText(item);
             ExerciseManager.current.ChangeFieldValue(0, (int)item.name, item.value);
         }
         ExerciseManager.current.SelectedSegment.setInteractableAll(false);
         _data.text += "\n Incógnitas: \n";
-        foreach (Variable item in Questions)
+        foreach (VariableUI item in Questions)
         {
             _data.text += AddVariableText(item, false);
             AnswerFields.Add(ExerciseManager.current.GetBasePointField(0, (int)item.name));
@@ -36,7 +36,7 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
         }
 
     }
-    public string AddVariableText(Variable variable, bool value = true)
+    public string AddVariableText(VariableUI variable, bool value = true)
     {
         string Color = ColorUtility.ToHtmlStringRGB(variable.color);
         return $" <color=#{Color}>{variable.name}={(value ? variable.value.ToString() : " ? ")}</color>";
@@ -45,7 +45,7 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
     {
         foreach (var f in AnswerFields)
         {
-            foreach (Variable item in Questions)
+            foreach (VariableUI item in Questions)
             {
                 if (f.column == (int)item.name)
                 {
@@ -103,7 +103,7 @@ public class InstructionContent : MonoBehaviour, IPointerClickHandler
 
 }
 [System.Serializable]
-public struct Variable
+public struct VariableUI
 {
     public enum Names
     {

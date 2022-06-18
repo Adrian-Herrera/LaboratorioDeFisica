@@ -24,7 +24,7 @@ public class QuizContent : MonoBehaviour
         _messagePanel.gameObject.SetActive(false);
         _contentPanel.gameObject.SetActive(true);
     }
-    public void SetQuestion(Question question)
+    public void SetQuestion(Pregunta question)
     {
         if (!_contentPanel.gameObject.activeSelf) ActivateContent();
         _contentPanel.SetQuestion(question);

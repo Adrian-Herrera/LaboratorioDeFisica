@@ -10,17 +10,16 @@ public class QuestionsInput : MonoBehaviour
     [SerializeField] private TMP_InputField _input;
     [SerializeField] private TMP_Text _text;
     private float _answer;
-    private QuestionData _questionData;
-    public void SetData(QuestionData data, bool isData = false)
+    private Dato _questionData;
+    public void SetData(Dato data, bool isData = false)
     {
         _questionData = data;
-        _name.text = _questionData.VarName + "=";
-        _answer = _questionData.Answer;
+        _name.text = _questionData.Variable.Abrev + " =";
+        _answer = _questionData.Valor;
         if (_questionData.IsAnswered)
         {
             _input.interactable = false;
             _input.GetComponent<Image>().color = Color.green;
-            _input.text = _questionData.Answer.ToString();
         }
 
         if (isData) _text.text = _answer.ToString();
@@ -29,7 +28,9 @@ public class QuestionsInput : MonoBehaviour
     }
     public bool CheckAnswer()
     {
+        Debug.Log("Check answer from: " + _questionData.Variable.Abrev);
         if (_questionData.IsAnswered) return true;
+        Debug.Log(float.Parse(_input.text) + " = " + _answer);
         if (float.Parse(_input.text) == _answer)
         {
             _input.interactable = false;

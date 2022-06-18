@@ -18,7 +18,7 @@ public class ContentPanel : MonoBehaviour
     {
         _rtChildren = _data.GetComponentsInChildren<RectTransform>();
     }
-    public void SetQuestion(Question question)
+    public void SetQuestion(Pregunta Pregunta)
     {
         foreach (QuestionsInput item in QuestionList)
         {
@@ -31,21 +31,27 @@ public class ContentPanel : MonoBehaviour
         }
         DataList.Clear();
 
-        _title.text = question.Title;
-        _data.text = question.Content;
+        _data.text = Pregunta.Texto;
 
-        foreach (QuestionData item in question.Data)
+        foreach (Dato item in Pregunta.Datos)
         {
-            QuestionsInput q = Instantiate(_questionsInput, dataSpace.transform);
-            q.SetData(item, true);
-            DataList.Add(q);
-        }
+            QuestionsInput q;
+            switch (item.TipoDatoId)
+            {
+                case 1:
+                    q = Instantiate(_questionsInput, dataSpace.transform);
+                    q.SetData(item, true);
+                    DataList.Add(q);
+                    break;
+                case 2:
+                    q = Instantiate(_questionsInput, questionsSpace.transform);
+                    q.SetData(item);
+                    QuestionList.Add(q);
+                    break;
+                default:
+                    break;
+            }
 
-        foreach (QuestionData item in question.Questions)
-        {
-            QuestionsInput q = Instantiate(_questionsInput, questionsSpace.transform);
-            q.SetData(item);
-            QuestionList.Add(q);
         }
 
         foreach (RectTransform item in _rtChildren)
