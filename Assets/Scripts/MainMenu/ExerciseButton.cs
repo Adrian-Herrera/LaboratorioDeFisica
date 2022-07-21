@@ -12,16 +12,15 @@ public class ExerciseButton : MonoBehaviour
     {
         _button = GetComponent<Button>();
     }
-    public void Init(int _id)
+    public void Init(int _id, int index)
     {
         id = _id;
-        _button.GetComponentInChildren<TMP_Text>().text = id.ToString();
+        _button.GetComponentInChildren<TMP_Text>().text = index.ToString();
         _button.onClick.AddListener(delegate { SendId(id); });
     }
     private void SendId(int _id)
     {
-        CredentialManager.Current.SendId = _id;
+        LevelManager.Instance.quizId = _id;
         LevelManager.Instance.LoadScene("Exercises");
-        Debug.Log(id);
     }
 }

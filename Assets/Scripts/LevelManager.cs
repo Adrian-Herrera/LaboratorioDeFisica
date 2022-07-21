@@ -8,10 +8,12 @@ using System.Threading.Tasks;
 public class LevelManager : MonoBehaviour
 {
     public static LevelManager Instance;
-
     [SerializeField] private GameObject _loaderCanvas;
     [SerializeField] private Image _progressBar;
     private float _target;
+    // global variables
+    public int temaId;
+    public int quizId;
     private void Awake()
     {
         if (Instance == null)

@@ -13,30 +13,40 @@ public class LoginForm : MonoBehaviour
     [SerializeField] private Button submitBtn;
 
     [SerializeField] GameObject mainMenu, loginMenu;
-    IEnumerator Upload()
+    IEnumerator Login()
     {
-        bool isLogin = false;
         WWWForm form = new WWWForm();
         form.AddField("LoginUser", username.text);
         form.AddField("LoginPassword", password.text);
-        StartCoroutine(CredentialManager.Current.Login(form, (callback) =>
-        {
-            isLogin = callback;
-        }));
-        while (isLogin == false)
-        {
-            yield return null;
-        }
-        if (isLogin)
-        {
-            mainMenu.SetActive(true);
-            loginMenu.SetActive(false);
-        }
-        yield return null;
 
+        UnityWebRequest www = UnityWebRequest.Post("http://localhost:4000/ingresar", form);
+        yield return www.SendWebRequest();
+
+        if (www.isNetworkError || www.isHttpError)
+        {
+            Debug.Log(www.error);
+            Debug.Log(www.downloadHandler.text);
+        }
+        else
+        {
+            CredentialManager.Current.JwtCredential = JsonUtility.FromJson<JwtCredential>(www.downloadHandler.text);
+            UnityWebRequest www2 = UnityWebRequest.Get("http://localhost:4000/usuario/" + CredentialManager.Current.JwtCredential.userId);
+            yield return www2.SendWebRequest();
+            if (www2.isNetworkError || www2.isHttpError)
+            {
+                Debug.Log(www2.error);
+                Debug.Log(www2.downloadHandler.text);
+            }
+            else
+            {
+                CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(www2.downloadHandler.text);
+                mainMenu.SetActive(true);
+                loginMenu.SetActive(false);
+            }
+        }
     }
     public void Submit()
     {
-        StartCoroutine(Upload());
+        StartCoroutine(Login());
     }
 }

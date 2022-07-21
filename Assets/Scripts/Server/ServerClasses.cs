@@ -10,8 +10,9 @@ public class ServerClasses
 [Serializable]
 public class Cuestionario
 {
+    public int Id;
     public string Titulo;
-    public float TiempoLimite;
+    public int TiempoLimite;
     public Pregunta[] Preguntas;
 }
 [Serializable]
@@ -27,14 +28,29 @@ public class Dato
     public float Valor;
     public int VariableId;
     public int TipoDatoId;
-    public Var Variable;
+    public int UnidadId;
     public bool IsAnswered = false;
 }
 
 [Serializable]
-public class Var
+public class Variable
 {
     public int Id;
     public string Nombre;
     public string Abrev;
+}
+[Serializable]
+public class Unidad
+{
+    public int Id;
+    public string Abrev;
+}
+[Serializable]
+public class Historial
+{
+    public int Id;
+    public int Puntaje;
+    public int AlumnoId;
+    public int CuestionarioId;
+    public int NumeroIntento;
 }
