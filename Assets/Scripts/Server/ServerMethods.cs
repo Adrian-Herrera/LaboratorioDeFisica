@@ -3,19 +3,36 @@ using System.Collections.Generic;
 using System;
 using UnityEngine;
 using UnityEngine.Networking;
-
+using System.Net;
+using System.Net.NetworkInformation;
+using System.Net.Sockets;
 public class ServerMethods : MonoBehaviour
 {
     public static ServerMethods Current;
     private void Awake()
     {
         Current = this;
+        GetLocalIPAddress();
     }
-    private string baseUrl = "http://localhost:4000";
+    private string baseUrl = "http://172.16.0.33:4000";
+    public string GetLocalIPAddress()
+    {
+        var host = Dns.GetHostEntry(Dns.GetHostName());
+        foreach (var ip in host.AddressList)
+        {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+                Debug.Log(ip.ToString());
+                return ip.ToString();
+            }
+        }
+        throw new System.Exception("No network adapters with an IPv4 address in the system!");
+    }
     private IEnumerator GetJson(string url, Action<string> res)
     {
         Debug.Log("GetRequest");
         UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
+        www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
         if (www.isNetworkError || www.isHttpError)
         {

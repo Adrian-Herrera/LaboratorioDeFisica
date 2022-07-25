@@ -31,6 +31,7 @@ public class LoginForm : MonoBehaviour
         {
             CredentialManager.Current.JwtCredential = JsonUtility.FromJson<JwtCredential>(www.downloadHandler.text);
             UnityWebRequest www2 = UnityWebRequest.Get("http://localhost:4000/usuario/" + CredentialManager.Current.JwtCredential.userId);
+            www2.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
             yield return www2.SendWebRequest();
             if (www2.isNetworkError || www2.isHttpError)
             {
