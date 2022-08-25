@@ -106,6 +106,7 @@ public class ServerMethods : MonoBehaviour
         form.AddField("NumeroIntento", historial.NumeroIntento);
 
         UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/historial", form);
+        www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
 
         if (www.isNetworkError || www.isHttpError)
