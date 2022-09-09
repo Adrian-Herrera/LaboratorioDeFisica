@@ -55,6 +55,11 @@ public class LevelManager : MonoBehaviour
     {
         SceneManager.LoadScene(name);
     }
+    public void ChargeQuiz(int id)
+    {
+        quizId = id;
+        LoadScene("Exercise");
+    }
 
     private void Update()
     {

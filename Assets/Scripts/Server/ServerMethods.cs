@@ -14,7 +14,7 @@ public class ServerMethods : MonoBehaviour
         Current = this;
         GetLocalIPAddress();
     }
-    private string baseUrl = "http://172.16.0.33:4000";
+    private readonly string baseUrl = "http://172.16.0.33:4000";
     public string GetLocalIPAddress()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -34,7 +34,7 @@ public class ServerMethods : MonoBehaviour
         UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
-        if (www.isNetworkError || www.isHttpError)
+        if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
             Debug.Log(www.downloadHandler.text);
@@ -99,7 +99,7 @@ public class ServerMethods : MonoBehaviour
     }
     public IEnumerator CreateHistorial(Historial historial)
     {
-        WWWForm form = new WWWForm();
+        WWWForm form = new();
         form.AddField("Puntaje", historial.Puntaje);
         form.AddField("AlumnoId", historial.AlumnoId);
         form.AddField("CuestionarioId", historial.CuestionarioId);
@@ -109,7 +109,7 @@ public class ServerMethods : MonoBehaviour
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
 
-        if (www.isNetworkError || www.isHttpError)
+        if (www.result != UnityWebRequest.Result.Success)
         {
             Debug.Log(www.error);
             Debug.Log(www.downloadHandler.text);
@@ -118,5 +118,14 @@ public class ServerMethods : MonoBehaviour
         {
             Debug.Log("Historial creado correctamente");
         }
+    }
+    public IEnumerator GetAlumnoEjercicios(int TemaId, Action<Ejercicio[]> res)
+    {
+        Debug.Log($"GetAlumnoEjercicios alumno Id = {CredentialManager.Current.JwtCredential.id} temaId = {TemaId}");
+        string url = "/alumno/" + CredentialManager.Current.JwtCredential.id + "/ejercicios?temaId=" + TemaId;
+        yield return StartCoroutine(GetJson(url, (json) =>
+        {
+            res(JsonHelper.FromJson<Ejercicio>(json));
+        }));
     }
 }

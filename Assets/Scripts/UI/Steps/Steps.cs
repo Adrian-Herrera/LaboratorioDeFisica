@@ -32,6 +32,8 @@ public class Steps : MonoBehaviour
         _collapseButton.onClick.AddListener(Collapse);
         _isActive = false;
         // Debug.Log($"_stepsWidth: {_stepsWidth}");
+        Color newcolor = new Color(164, 210, 255);
+        // GetComponent<Image>().color = newcolor;
     }
     public void NewText(string text)
     {

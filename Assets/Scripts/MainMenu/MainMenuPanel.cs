@@ -10,11 +10,13 @@ public class MainMenuPanel : MonoBehaviour
     [SerializeField] private Button loginBtn;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private Button logoutBtn;
+    [SerializeField] private Image background;
 
     private void OnEnable()
     {
         if (CredentialManager.Current == null)
         {
+            Debug.Log("Credential empty");
             return;
         }
         ShowName();
@@ -22,7 +24,7 @@ public class MainMenuPanel : MonoBehaviour
     private void ShowName()
     {
         Debug.Log("ShowName");
-        if (CredentialManager.Current.JwtCredential != null)
+        if (CredentialManager.Current.isAuth)
         {
             nameText.gameObject.SetActive(true);
             nameText.text = "Bienvenido " + CredentialManager.Current.UserInfo.User;

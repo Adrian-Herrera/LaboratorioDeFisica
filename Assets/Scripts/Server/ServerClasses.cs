@@ -54,3 +54,9 @@ public class Historial
     public int CuestionarioId;
     public int NumeroIntento;
 }
+[Serializable]
+public class Tema
+{
+    public int Id;
+    public string Nombre;
+}

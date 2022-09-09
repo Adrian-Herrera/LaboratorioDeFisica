@@ -10,6 +10,7 @@ public class CredentialManager : MonoBehaviour
     public int SendId;
     public JwtCredential JwtCredential;
     public UserInfo UserInfo;
+    public bool isAuth = false;
     private void Awake()
     {
         if (Current == null)
@@ -22,6 +23,11 @@ public class CredentialManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
+    public void CleanData(){
+        JwtCredential = null;
+        UserInfo = null;
+        isAuth = false;
+    }
 }
 [Serializable]
 public class JwtCredential
@@ -31,7 +37,7 @@ public class JwtCredential
     public int userId;
 }
 [Serializable]
-public struct UserInfo
+public class UserInfo
 {
     public string Nombre;
     public string ApellidoPaterno;
@@ -39,4 +45,17 @@ public struct UserInfo
     public string User;
     public string Correo;
     public string Celular;
+    public string NombreCompleto()
+    {
+        string name = Nombre;
+        if (!string.IsNullOrEmpty(ApellidoPaterno))
+        {
+            name += " " + ApellidoPaterno;
+        }
+        if (!string.IsNullOrEmpty(ApellidoMaterno))
+        {
+            name += " " + ApellidoMaterno;
+        }
+        return name;
+    }
 }
