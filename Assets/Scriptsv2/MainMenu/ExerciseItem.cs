@@ -16,9 +16,15 @@ public class ExerciseItem : MonoBehaviour, IPointerClickHandler
     public void Init(Ejercicio ejercicio)
     {
         _ejercicio = ejercicio;
+        _medal.color = new Color(1, 1, 1, 1);
         if (ejercicio.PuntuacionMaxima == 100) _medal.sprite = medals.GoldMedal;
         else if (ejercicio.PuntuacionMaxima > 70) _medal.sprite = medals.SilverMedal;
         else if (ejercicio.PuntuacionMaxima > 50) _medal.sprite = medals.BronzeMedal;
+        else
+        {
+            _medal.sprite = null;
+            _medal.color = new Color(1, 1, 1, 0);
+        };
 
         _title.text = ejercicio.Titulo;
         _exerciseBtn.onClick.AddListener(ChargeExercise);

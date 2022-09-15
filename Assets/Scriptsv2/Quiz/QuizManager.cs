@@ -21,7 +21,6 @@ public class QuizManager : MonoBehaviour
     private void Start()
     {
         StartCoroutine(GetData());
-
     }
     private IEnumerator GetData()
     {

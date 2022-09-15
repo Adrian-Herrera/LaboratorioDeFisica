@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour
     public void ChargeQuiz(int id)
     {
         quizId = id;
-        LoadScene("Exercise");
+        LoadScene("Exercises");
     }
 
     private void Update()

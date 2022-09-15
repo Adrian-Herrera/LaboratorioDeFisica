@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using System;
 
 public class QuizUI : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class QuizUI : MonoBehaviour
     [SerializeField] private TMP_Text _title;
     [SerializeField] private TMP_Text _timer;
     [SerializeField] private TabBtn[] _tabBtns;
-    private int _remainingTime;
+    private TimeSpan _remainingTime;
     private Cuestionario _quiz;
     private TabBtn _activeTabBtn;
     private int _activeQuestionIndex;
@@ -44,12 +45,20 @@ public class QuizUI : MonoBehaviour
     {
         _quiz = quiz;
         _title.text = quiz.Titulo;
-        // _remainingTime = quiz.TiempoLimite;
-        _timer.text = _remainingTime.ToString();
+        _remainingTime = TimeSpan.FromSeconds(quiz.TiempoLimite);
+        _timer.text = _remainingTime.ToString(@"mm\:ss");
         for (int i = 0; i < _tabBtns.Length; i++)
         {
-            _tabBtns[i].gameObject.SetActive(i < _quiz.Preguntas.Length);
-            _tabBtns[i].SetInteractable(false);
+            if (i < _quiz.Preguntas.Length)
+            {
+                _tabBtns[i].gameObject.SetActive(true);
+                _tabBtns[i].Id = i;
+                _tabBtns[i].SetInteractable(false);
+            }
+            else
+            {
+                _tabBtns[i].gameObject.SetActive(false);
+            }
         }
         ShowContent(false);
     }
@@ -66,7 +75,7 @@ public class QuizUI : MonoBehaviour
             _tabBtns[i].SetInteractable(true);
             _tabBtns[i]._isAnswer = false;
         }
-        _remainingTime = _quiz.TiempoLimite;
+        // _remainingTime = _quiz.TiempoLimite;
         ShowContent(true);
         SetQuestion(0);
         _coStartTime = StartCoroutine(StartTime());
@@ -145,11 +154,11 @@ public class QuizUI : MonoBehaviour
 
     private IEnumerator StartTime()
     {
-        while (_remainingTime > 0)
+        while (_remainingTime.Seconds > 0)
         {
             yield return new WaitForSecondsRealtime(1);
-            _remainingTime--;
-            _timer.text = _remainingTime.ToString();
+            _remainingTime -= new TimeSpan(0, 0, 1);
+            _timer.text = _remainingTime.ToString(@"mm\:ss");
         }
         // Se acabo el tiempo
         TimeComplete();

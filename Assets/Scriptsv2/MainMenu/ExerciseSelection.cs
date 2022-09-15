@@ -76,7 +76,7 @@ public class ExerciseSelection : MonoBehaviour
     private void InstantiateInfo()
     {
         _infoTitle.text = _ejercicioSeleccionado.Titulo;
-        _infoAttempts.text = "Intentos: " + _ejercicioSeleccionado.Intentos.Length;
+        if (_ejercicioSeleccionado.Intentos != null) _infoAttempts.text = "Intentos: " + _ejercicioSeleccionado.Intentos.Length;
         _infoMaxScore.text = "Puntaje maximo: " + _ejercicioSeleccionado.PuntuacionMaxima;
         _infoTime.text = "Tiempo limite: " + _ejercicioSeleccionado.TiempoLimite;
         _infoQuestions.text = "Preguntas: " + _ejercicioSeleccionado.NumeroPreguntas;
@@ -85,11 +85,14 @@ public class ExerciseSelection : MonoBehaviour
             Destroy(item);
         }
         AttemptsList.Clear();
-        foreach (Intento intento in _ejercicioSeleccionado.Intentos)
+        if (_ejercicioSeleccionado.Intentos != null)
         {
-            GameObject go = Instantiate(_infoHistoryData, _attemptsContainer.transform);
-            go.GetComponent<HistoryData>().Init(intento.NumeroIntento.ToString(), intento.CreadoEl, intento.Puntaje.ToString());
-            AttemptsList.Add(go);
+            foreach (Intento intento in _ejercicioSeleccionado.Intentos)
+            {
+                GameObject go = Instantiate(_infoHistoryData, _attemptsContainer.transform);
+                go.GetComponent<HistoryData>().Init(intento.NumeroIntento.ToString(), intento.CreadoEl, intento.Puntaje.ToString());
+                AttemptsList.Add(go);
+            }
         }
     }
 

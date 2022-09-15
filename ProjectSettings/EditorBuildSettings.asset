@@ -9,6 +9,9 @@ EditorBuildSettings:
     path: Assets/Scenes/Menus/MainMenu.unity
     guid: e92614ee47c2cc644b281dd16d3f91c1
   - enabled: 1
+    path: Assets/Scenes/Menus/MainMenu v2.unity
+    guid: b261d0f14b7d0534a905f7a7cc8ce854
+  - enabled: 1
     path: Assets/Scenes/MRUV.unity
     guid: 68721fc1ac3913549b1767db68cda525
   - enabled: 1
