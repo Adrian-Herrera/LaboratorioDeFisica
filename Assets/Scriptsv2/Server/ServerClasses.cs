@@ -26,6 +26,7 @@ public class Dato
 {
     public string VarName;
     public float Valor;
+    public int Segmento;
     public int VariableId;
     public int TipoDatoId;
     public int UnidadId;

@@ -16,11 +16,11 @@ public class LoginForm : MonoBehaviour
     {
         submitBtn.onClick.AddListener(Submit);
     }
-    IEnumerator Login()
+    public static IEnumerator Login(string username, string password)
     {
         WWWForm form = new();
-        form.AddField("LoginUser", username.text);
-        form.AddField("LoginPassword", password.text);
+        form.AddField("LoginUser", username);
+        form.AddField("LoginPassword", password);
 
         using UnityWebRequest www = UnityWebRequest.Post("http://localhost:4000/ingresar", form);
         yield return www.SendWebRequest();
@@ -41,10 +41,11 @@ public class LoginForm : MonoBehaviour
         }
         CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(www2.downloadHandler.text);
         CredentialManager.Current.isAuth = true;
-        MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
+        Debug.Log("Login with " + CredentialManager.Current.JwtCredential.userId);
+        // MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
     }
     public void Submit()
     {
-        StartCoroutine(Login());
+        StartCoroutine(Login(username.text, password.text));
     }
 }

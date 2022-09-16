@@ -15,7 +15,7 @@ public class QuestionsInput : MonoBehaviour
     public void SetData(Dato data)
     {
         _questionData = data;
-        _name.text = QuizManager.Current.VariableIdToText(_questionData.VariableId) + " =";
+        _name.text = QuizManager.Current.VariableIdToText(_questionData.VariableId) + "=";
         _answer = _questionData.Valor;
         _unidad.text = QuizManager.Current.UnidadIdToText(_questionData.UnidadId);
         if (_questionData.IsAnswered)

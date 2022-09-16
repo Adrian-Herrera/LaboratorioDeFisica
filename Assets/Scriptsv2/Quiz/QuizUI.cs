@@ -8,6 +8,7 @@ using System;
 
 public class QuizUI : MonoBehaviour
 {
+    [SerializeField] private Graphic _graphic;
     [Header("Header")]
     [SerializeField] private TMP_Text _title;
     [SerializeField] private TMP_Text _timer;
@@ -93,19 +94,22 @@ public class QuizUI : MonoBehaviour
         Helpers.ClearListContent(_dataList);
         _enunciado.text = Pregunta.Texto;
 
+        _graphic.Init(Pregunta);
+        // Debug.Log("childCount: " + _dataSpace.transform.childCount);
         foreach (Dato item in Pregunta.Datos)
         {
             if (!_activeTabBtn._isAnswer) item.IsAnswered = false;
             QuestionsInput q;
+            // Debug.Log(item.Valor + " Segmento: " + item.Segmento);
             switch (item.TipoDatoId)
             {
                 case 1:
-                    q = Instantiate(_questionsInputPrefab, _dataSpace.transform);
+                    q = Instantiate(_questionsInputPrefab, _dataSpace.transform.GetChild(item.Segmento));
                     q.SetData(item);
                     _dataList.Add(q);
                     break;
                 case 2:
-                    q = Instantiate(_questionsInputPrefab, _questionsSpace.transform);
+                    q = Instantiate(_questionsInputPrefab, _questionsSpace.transform.GetChild(item.Segmento));
                     q.SetData(item);
                     _questionList.Add(q);
                     break;
@@ -154,7 +158,7 @@ public class QuizUI : MonoBehaviour
 
     private IEnumerator StartTime()
     {
-        while (_remainingTime.Seconds > 0)
+        while (_remainingTime.TotalSeconds > 0)
         {
             yield return new WaitForSecondsRealtime(1);
             _remainingTime -= new TimeSpan(0, 0, 1);

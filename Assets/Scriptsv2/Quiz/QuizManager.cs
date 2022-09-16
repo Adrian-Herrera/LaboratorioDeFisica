@@ -10,10 +10,9 @@ public class QuizManager : MonoBehaviour
         Current = this;
     }
     [SerializeField] private QuizUI _quizUI;
-    [SerializeField] private QuizHelpers _helpers;
     [SerializeField] private Cuestionario _currentQuiz;
-    private Unidad[] _unidades;
-    private Variable[] _variables;
+    public Unidad[] _unidades;
+    public Variable[] _variables;
     private Historial[] _historial;
     private List<Historial> _historialList = new List<Historial>();
     private int _numberOfAttempts;
@@ -24,7 +23,12 @@ public class QuizManager : MonoBehaviour
     }
     private IEnumerator GetData()
     {
-        yield return StartCoroutine(ServerMethods.Current.GetCuestionario(LevelManager.Instance.quizId, (res) =>
+        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(LevelManager.Instance.quizId, (res) =>
+        // {
+        //     _currentQuiz = res;
+        // }));
+        yield return StartCoroutine(LoginForm.Login("kilinor", "123456"));
+        yield return StartCoroutine(ServerMethods.Current.GetCuestionario(2, (res) =>
         {
             _currentQuiz = res;
         }));
