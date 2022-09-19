@@ -9,7 +9,7 @@ public class FooterManager : MonoBehaviour
     {
         _footerElements = GetComponentsInChildren<FooterElement>();
     }
-    public void Init(MainObject mainObject)
+    public void Init(MainObjectOld mainObject)
     {
         Debug.Log("Footer Manager Init");
         foreach (FooterElement footerElement in _footerElements)

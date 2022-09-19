@@ -1,0 +1,50 @@
+{
+    "Version": "0.1",
+    "Data": [
+        {
+            "Id": 1,
+            "Nombre": "Metros",
+            "Abrev": "m"
+        },
+        {
+            "Id": 2,
+            "Nombre": "Kilometros",
+            "Abrev": "km"
+        },
+        {
+            "Id": 3,
+            "Nombre": "Metros sobre segundo",
+            "Abrev": "m/s"
+        },
+        {
+            "Id": 4,
+            "Nombre": "Metros sobre segundo al cuadrado",
+            "Abrev": "m/s2"
+        },
+        {
+            "Id": 5,
+            "Nombre": "Kilometro por hora",
+            "Abrev": "km/h"
+        },
+        {
+            "Id": 6,
+            "Nombre": "Kilometro por hora al cuadrado",
+            "Abrev": "km/h2"
+        },
+        {
+            "Id": 7,
+            "Nombre": "Segundos",
+            "Abrev": "s"
+        },
+        {
+            "Id": 8,
+            "Nombre": "Minutos",
+            "Abrev": "min"
+        },
+        {
+            "Id": 9,
+            "Nombre": "Horas",
+            "Abrev": "h"
+        }
+    ]
+}

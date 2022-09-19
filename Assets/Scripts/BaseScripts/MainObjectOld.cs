@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class MainObject : MonoBehaviour
+public class MainObjectOld : MonoBehaviour
 {
     [SerializeField] private MainObjectMovement _mainObjectMovement;
     [SerializeField] private MainObjectConfig _mainObjectConfig;

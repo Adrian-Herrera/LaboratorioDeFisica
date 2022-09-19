@@ -16,7 +16,7 @@ public class FooterElement : MonoBehaviour
         _segments = GetComponentsInChildren<Segment>();
         _extraData = GetComponentInChildren<ExtraData>();
     }
-    public void Init(MainObject mainObject)
+    public void Init(MainObjectOld mainObject)
     {
         Debug.Log("Footer Element Init");
         _activateSegments = 1;
@@ -33,7 +33,7 @@ public class FooterElement : MonoBehaviour
 
     }
 
-    private void SetElements(MainObject mainObject)
+    private void SetElements(MainObjectOld mainObject)
     {
         // Debug.Log("Set Elements");
         for (int i = 0; i < mainObject.DataLengthi; i++)

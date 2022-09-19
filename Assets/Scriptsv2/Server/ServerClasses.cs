@@ -24,13 +24,19 @@ public class Pregunta
 [Serializable]
 public class Dato
 {
-    public string VarName;
     public float Valor;
     public int Segmento;
     public int VariableId;
     public int TipoDatoId;
     public int UnidadId;
     public bool IsAnswered = false;
+    public Dato(int variableId, float valor, int tipoDatoId, int unidadId)
+    {
+        VariableId = variableId;
+        Valor = valor;
+        TipoDatoId = tipoDatoId;
+        UnidadId = unidadId;
+    }
 }
 
 [Serializable]

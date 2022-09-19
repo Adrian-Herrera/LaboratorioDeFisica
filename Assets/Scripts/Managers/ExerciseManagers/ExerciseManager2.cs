@@ -12,7 +12,7 @@ public class ExerciseManager2 : MonoBehaviour
 
     [SerializeField] private HeaderManager _header;
     [SerializeField] private FooterManager _footer;
-    [SerializeField] private List<MainObject> _objects = new List<MainObject>();
+    [SerializeField] private List<MainObjectOld> _objects = new List<MainObjectOld>();
 
     private void Start()
     {
@@ -21,7 +21,7 @@ public class ExerciseManager2 : MonoBehaviour
     public void Init()
     {
         Debug.Log("Exercise Manager 2 Init");
-        foreach (MainObject item in _objects)
+        foreach (MainObjectOld item in _objects)
         {
             item.Init();
             _footer.Init(item);
