@@ -45,6 +45,7 @@ public class ObjectProperties : MonoBehaviour
                 _segments[i].gameObject.SetActive(false);
             }
         }
+        Playground.Instance.DrawLines();
     }
 
 }

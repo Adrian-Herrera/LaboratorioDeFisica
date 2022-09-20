@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,7 +11,6 @@ public class DataPropertie : MonoBehaviour
     [SerializeField] private TMP_InputField _input;
     [SerializeField] private TMP_Dropdown _drop;
     private Dato _dato;
-
     public void Init(Dato dato)
     {
         _dato = dato;
@@ -35,6 +35,10 @@ public class DataPropertie : MonoBehaviour
         else
         {
             _dato.Valor = float.Parse(newValue);
+            if (_dato.VariableId == 2)
+            {
+                Playground.Instance.DrawLines();
+            }
         }
     }
     public void ChangeText(float value)
