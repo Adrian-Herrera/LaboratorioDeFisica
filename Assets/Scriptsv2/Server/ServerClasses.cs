@@ -24,12 +24,25 @@ public class Pregunta
 [Serializable]
 public class Dato
 {
-    public float Valor;
+    public float _valor;
+    public float Valor
+    {
+        get { return _valor; }
+        set
+        {
+            Debug.Log("Valor change to " + value);
+            _valor = value;
+            // Debug.Log(dataPropertie);
+            if (dataPropertie != null) dataPropertie.ChangeText(value);
+
+        }
+    }
     public int Segmento;
     public int VariableId;
     public int TipoDatoId;
     public int UnidadId;
     public bool IsAnswered = false;
+    public DataPropertie dataPropertie;
     public Dato(int variableId, float valor, int tipoDatoId, int unidadId)
     {
         VariableId = variableId;
@@ -37,6 +50,7 @@ public class Dato
         TipoDatoId = tipoDatoId;
         UnidadId = unidadId;
     }
+
 }
 
 [Serializable]

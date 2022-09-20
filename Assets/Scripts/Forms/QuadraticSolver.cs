@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -24,8 +25,10 @@ public class QuadraticSolver : MonoBehaviour
         btn2.onClick.AddListener(delegate { _x2 = true; });
         gameObject.SetActive(false);
     }
-    public IEnumerator createPanel(Field x, string variable, float x1, float x2)
+    public IEnumerator createPanel(string variable, float x1, float x2, Action<float> res)
     {
+        _x1 = false;
+        _x2 = false;
         gameObject.SetActive(true);
         Message.text = "La variable " + variable + " tiene dos posibles resultados. Escoja uno para usar en el ejercicio";
         btn1.GetComponentInChildren<TMP_Text>().text = x1.ToString();
@@ -33,7 +36,7 @@ public class QuadraticSolver : MonoBehaviour
         yield return askAnswer();
         answer = _x1 == true ? x1 : x2;
         gameObject.SetActive(false);
-        x.value = answer;
+        res(answer);
         yield return null;
     }
 

@@ -10,38 +10,43 @@ public class MainObject : MonoBehaviour
     private Sprite _mainObject;
     public Segmento[] _segmentos = new Segmento[3];
     public int _activeSegments = 1;
-    public event Action<int> onAddSegmentData;
-    public event Action<int> onRemoveSegmentData;
+    public event Action<int> OnAddSegmentData;
+    public event Action<int> OnRemoveSegmentData;
     public void Init()
     {
 
     }
-    public void addDato(int segmentId, int variableId)
+    public void AddDato(int segmentId, int variableId)
     {
-        Dato dato = new(variableId, 0f, 1, 1);
+        Dato dato = new(variableId, 0, 1, 1);
         _segmentos[segmentId].datos.Add(dato);
         AddSegmentData(segmentId);
     }
-    public void removeDato(int segmentId, int variableId)
+    public void RemoveDato(int segmentId, int variableId)
     {
         Dato dt = _segmentos[segmentId].datos.Find(dato => dato.VariableId == variableId);
         if (dt == null) return;
         _segmentos[segmentId].datos.Remove(dt);
         RemoveSegmentData(segmentId);
     }
+    public bool ResolveDato(int segmentId, int variableId)
+    {
+        Dato dato = new(variableId, 0, 1, 1);
+        bool IsAnswered = Formulary.Instance.CheckRequirements(dato, _segmentos[segmentId].datos.ToArray());
+        if (IsAnswered)
+        {
+            _segmentos[segmentId].datos.Add(dato);
+            AddSegmentData(segmentId);
+        }
+        return IsAnswered;
+    }
     public void AddSegmentData(int segmentId)
     {
-        if (onAddSegmentData != null)
-        {
-            onAddSegmentData(segmentId);
-        }
+        OnAddSegmentData?.Invoke(segmentId);
     }
     public void RemoveSegmentData(int segmentId)
     {
-        if (onRemoveSegmentData != null)
-        {
-            onRemoveSegmentData(segmentId);
-        }
+        OnRemoveSegmentData?.Invoke(segmentId);
     }
 
 

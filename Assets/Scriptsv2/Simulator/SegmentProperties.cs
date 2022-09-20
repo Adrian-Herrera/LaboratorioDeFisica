@@ -11,12 +11,17 @@ public class SegmentProperties : MonoBehaviour
     private int _segmentId;
     private List<Dato> _datos = new();
     private List<DataPropertie> _dataList = new();
+    private bool isInit = false;
     public void Init(int segmentId)
     {
-        _segmentId = segmentId;
-        _dropdown.Init(_segmentId);
-        SimulatorManager._selectedObject.onAddSegmentData += CreateVariable;
-        SimulatorManager._selectedObject.onRemoveSegmentData += RemoveVariable;
+        if (!isInit)
+        {
+            isInit = true;
+            _segmentId = segmentId;
+            _dropdown.Init(_segmentId);
+            SimulatorManager._selectedObject.OnAddSegmentData += CreateVariable;
+            SimulatorManager._selectedObject.OnRemoveSegmentData += RemoveVariable;
+        }
     }
     private void CreateVariable(int segmentId)
     {
@@ -33,6 +38,10 @@ public class SegmentProperties : MonoBehaviour
                 _datos.Add(currentData);
                 LayoutRebuilder.ForceRebuildLayoutImmediate(dataPropertie.GetComponent<RectTransform>());
             }
+            // else
+            // {
+            //     _dataList[i].ChangeValue(currentData.Valor.ToString());
+            // }
         }
         LayoutRebuilder.ForceRebuildLayoutImmediate(_dataContainer.GetComponent<RectTransform>());
     }

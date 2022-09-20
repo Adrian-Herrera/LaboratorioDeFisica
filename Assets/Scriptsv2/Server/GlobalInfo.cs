@@ -7,13 +7,15 @@ using UnityEngine;
 public class GlobalInfo : MonoBehaviour
 {
     public static Variable[] Variables;
+    public static List<Variable> VarList;
     public static Unidad[] Unidades;
-    private string fileText;
-    private void Start()
+    private static string fileText;
+    public static void Init()
     {
+        print("Global info start");
         fileText = File.ReadAllText(Application.dataPath + "/Resources/Variables.json");
         Variables = JsonUtility.FromJson<ResourceData<Variable>>(fileText).Data;
-
+        VarList = new List<Variable>(Variables);
         fileText = File.ReadAllText(Application.dataPath + "/Resources/Unidades.json");
         Unidades = JsonUtility.FromJson<ResourceData<Unidad>>(fileText).Data;
 

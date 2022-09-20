@@ -23,20 +23,28 @@ public class DropDownOption : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         addVariable.onClick.AddListener(delegate
         {
             print($"Añadido {variable.Nombre} con id {variable.Id} del segmento {_segmentId}");
-            SimulatorManager._selectedObject.addDato(_segmentId, variable.Id);
+            SimulatorManager._selectedObject.AddDato(_segmentId, variable.Id);
             removeVariable.gameObject.SetActive(true);
             addVariable.gameObject.SetActive(false);
+            resolveVariable.gameObject.SetActive(false);
         });
         removeVariable.onClick.AddListener(delegate
         {
             print($"Eliminado {variable.Nombre} del segmento {_segmentId}");
-            SimulatorManager._selectedObject.removeDato(_segmentId, variable.Id);
+            SimulatorManager._selectedObject.RemoveDato(_segmentId, variable.Id);
             addVariable.gameObject.SetActive(true);
+            resolveVariable.gameObject.SetActive(true);
             removeVariable.gameObject.SetActive(false);
         });
         resolveVariable.onClick.AddListener(delegate
         {
             print($"Resolver {variable.Nombre} del segmento {_segmentId}");
+            if (SimulatorManager._selectedObject.ResolveDato(_segmentId, variable.Id))
+            {
+                removeVariable.gameObject.SetActive(true);
+                addVariable.gameObject.SetActive(false);
+                resolveVariable.gameObject.SetActive(false);
+            }
         });
     }
     public void OnPointerEnter(PointerEventData eventData)

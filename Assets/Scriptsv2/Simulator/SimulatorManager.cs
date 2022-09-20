@@ -10,6 +10,8 @@ public class SimulatorManager : MonoBehaviour
 
     private void Start()
     {
+        GlobalInfo.Init();
+        Formulary.Instance.Init();
         _selectedObject = _mainObjects[0];
         _objectProperties.Init();
     }

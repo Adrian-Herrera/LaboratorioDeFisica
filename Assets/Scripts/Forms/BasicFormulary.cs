@@ -294,7 +294,7 @@ public class BasicFormulary : MonoBehaviour
             _stp.NewLine("t2=", x2);
             if (x1 >= 0 && x2 >= 0)
             {
-                yield return QuadraticSolver.Current.createPanel(x, "Tiempo", x1, x2);
+                // yield return QuadraticSolver.Current.createPanel(x, "Tiempo", x1, x2);
             }
             else
             {
