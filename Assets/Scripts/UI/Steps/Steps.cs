@@ -6,6 +6,7 @@ using TMPro;
 public class Steps : MonoBehaviour
 {
     [SerializeField] private GameObject _content, _step, _text, _fraction, _group, _sqrt, _slash;
+    private List<GameObject> _steps = new();
     private GameObject _actualStep;
     private short _indice;
     private float _stepsWidth;
@@ -38,6 +39,7 @@ public class Steps : MonoBehaviour
     public void NewText(string text)
     {
         _actualStep = Instantiate(_step, _content.transform);
+        _steps.Add(_actualStep);
         GameObject tempGo = CreateObject($"{_indice}." + text);
         float NumberLines = (int)(tempGo.GetComponent<RectTransform>().rect.width / _stepsWidth) + 1;
         Debug.Log($"NumberLines: {NumberLines}");
@@ -54,6 +56,7 @@ public class Steps : MonoBehaviour
     public void NewLine(params object[] list)
     {
         _actualStep = Instantiate(_step, _content.transform);
+        _steps.Add(_actualStep);
         GameObject tempGo;
         float width = 0, height = 0;
         foreach (object item in list)
@@ -176,6 +179,15 @@ public class Steps : MonoBehaviour
         }
         _isActive = !_isActive;
         _collapseButton.GetComponent<RectTransform>().Rotate(0, 0, 180);
+    }
+    public void ClearSteps()
+    {
+        foreach (GameObject item in _steps)
+        {
+            Destroy(item);
+        }
+        _steps.Clear();
+        _indice = 1;
     }
 
 }

@@ -24,25 +24,32 @@ public class Pregunta
 [Serializable]
 public class Dato
 {
-    public float _valor;
-    public float Valor
-    {
-        get { return _valor; }
-        set
-        {
-            Debug.Log("Valor change to " + value);
-            _valor = value;
-            // Debug.Log(dataPropertie);
-            if (dataPropertie != null) dataPropertie.ChangeText(value);
+    public float Valor;
+    public string Text;
+    // public float Valor
+    // {
+    //     get { return _valor; }
+    //     set
+    //     {
+    //         Debug.Log("Valor change to " + value);
+    //         _valor = value;
+    //         // Debug.Log(dataPropertie);
+    //         if (dataPropertie != null) dataPropertie.ChangeText(value);
 
-        }
-    }
+    //     }
+    // }
     public int Segmento;
     public int VariableId;
     public int TipoDatoId;
     public int UnidadId;
+    public Variable Variable;
     public bool IsAnswered = false;
     public DataPropertie dataPropertie;
+    public void ChangeValor(float newValue)
+    {
+        Valor = newValue;
+        if (dataPropertie != null) dataPropertie.ChangeText(newValue);
+    }
     public Dato(int variableId, float valor, int tipoDatoId, int unidadId)
     {
         VariableId = variableId;

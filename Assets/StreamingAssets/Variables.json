@@ -1,0 +1,490 @@
+{
+    "Version": "0.1",
+    "Data": [
+        {
+            "Id": 1,
+            "Nombre": "Velocidad",
+            "Abrev": "v",
+            "Temas": [
+                {
+                    "Id": 1,
+                    "Nombre": "Movimiento Rectilineo Uniforme",
+                    "TemaVariable": {
+                        "TemaId": 1,
+                        "VariableId": 1,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 1,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 1,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 1,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 2,
+            "Nombre": "Distancia",
+            "Abrev": "x",
+            "Temas": [
+                {
+                    "Id": 1,
+                    "Nombre": "Movimiento Rectilineo Uniforme",
+                    "TemaVariable": {
+                        "TemaId": 1,
+                        "VariableId": 2,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 2,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 2,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 3,
+            "Nombre": "Tiempo",
+            "Abrev": "t",
+            "Temas": [
+                {
+                    "Id": 1,
+                    "Nombre": "Movimiento Rectilineo Uniforme",
+                    "TemaVariable": {
+                        "TemaId": 1,
+                        "VariableId": 3,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 3,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 3,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 3,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 4,
+            "Nombre": "Velocidad Inicial",
+            "Abrev": "Vo",
+            "Temas": [
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 4,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 4,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 4,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 5,
+            "Nombre": "Velocidad Final",
+            "Abrev": "Vf",
+            "Temas": [
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 5,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 5,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 5,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 6,
+            "Nombre": "Aceleracion",
+            "Abrev": "a",
+            "Temas": [
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 6,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 6,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 7,
+            "Nombre": "Tiempo Total",
+            "Abrev": "Tt",
+            "Temas": [
+                {
+                    "Id": 1,
+                    "Nombre": "Movimiento Rectilineo Uniforme",
+                    "TemaVariable": {
+                        "TemaId": 1,
+                        "VariableId": 7,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 7,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 7,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 8,
+            "Nombre": "Distancia Total",
+            "Abrev": "Xt",
+            "Temas": [
+                {
+                    "Id": 1,
+                    "Nombre": "Movimiento Rectilineo Uniforme",
+                    "TemaVariable": {
+                        "TemaId": 1,
+                        "VariableId": 8,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 2,
+                    "Nombre": "Movimiento Rectilineo Uniforme Variado",
+                    "TemaVariable": {
+                        "TemaId": 2,
+                        "VariableId": 8,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 8,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 9,
+            "Nombre": "Gravedad",
+            "Abrev": "g",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 9,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 9,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 10,
+            "Nombre": "Altura",
+            "Abrev": "y",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 10,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 10,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 11,
+            "Nombre": "Altura máxima",
+            "Abrev": "y-max",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 11,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 11,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 12,
+            "Nombre": "Altura inicial",
+            "Abrev": "h",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 12,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 12,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 13,
+            "Nombre": "Altura Total",
+            "Abrev": "H",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 13,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 13,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 14,
+            "Nombre": "Distancia máxima",
+            "Abrev": "x-max",
+            "Temas": [
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 14,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        },
+        {
+            "Id": 15,
+            "Nombre": "Tiempo de vuelo",
+            "Abrev": "Tv",
+            "Temas": [
+                {
+                    "Id": 3,
+                    "Nombre": "Caida Libre",
+                    "TemaVariable": {
+                        "TemaId": 3,
+                        "VariableId": 15,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                },
+                {
+                    "Id": 4,
+                    "Nombre": "Movimiento Parabolico",
+                    "TemaVariable": {
+                        "TemaId": 4,
+                        "VariableId": 15,
+                        "createdAt": "2022-09-23T04:09:34.000Z",
+                        "updatedAt": "2022-09-23T04:09:34.000Z"
+                    }
+                }
+            ]
+        }
+    ]
+}

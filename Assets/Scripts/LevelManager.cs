@@ -31,24 +31,24 @@ public class LevelManager : MonoBehaviour
         Application.targetFrameRate = 30;
     }
 
-    public async void LoadScene(string sceneName)
+    public void LoadScene(string sceneName)
     {
-        _target = 0;
-        _progressBar.fillAmount = 0;
-        var scene = SceneManager.LoadSceneAsync(sceneName);
-        scene.allowSceneActivation = false;
+        // _target = 0;
+        // _progressBar.fillAmount = 0;
+        // var scene = SceneManager.LoadSceneAsync(sceneName);
+        // scene.allowSceneActivation = false;
 
-        _loaderCanvas.SetActive(true);
+        // _loaderCanvas.SetActive(true);
 
-        do
-        {
-            // await Task.Delay(100);
-            _target = scene.progress;
-        } while (scene.progress < 0.9f);
-        scene.allowSceneActivation = true;
-        await Task.Delay(1000);
-        _loaderCanvas.SetActive(false);
-
+        // do
+        // {
+        //     // await Task.Delay(100);
+        //     _target = scene.progress;
+        // } while (scene.progress < 0.9f);
+        // scene.allowSceneActivation = true;
+        // await Task.Delay(1000);
+        // _loaderCanvas.SetActive(false);
+        SceneManager.LoadScene(sceneName);
 
     }
     public void chargeScene(string name)

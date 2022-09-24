@@ -122,7 +122,12 @@ public class QuizUI : MonoBehaviour
     }
     public void CheckExercise()
     {
-        bool allQuestionsAnswered = _questionList.All(q => q.CheckAnswer() == true);
+        bool allQuestionsAnswered = true;
+        foreach (QuestionsInput question in _questionList)
+        {
+            bool questionAnswered = question.CheckAnswer();
+            allQuestionsAnswered = allQuestionsAnswered && questionAnswered;
+        }
         if (allQuestionsAnswered) TabComplete();
     }
     public void TabComplete()

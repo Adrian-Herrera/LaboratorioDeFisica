@@ -27,10 +27,11 @@ public class QuizManager : MonoBehaviour
         {
             _currentQuiz = res;
         }));
-        // yield return StartCoroutine(LoginForm.Login("kilinor", "123456"));
-        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(2, (res) =>
+        // yield return StartCoroutine(LoginForm.Login("adrian", "123456"));
+        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(1, (res) =>
         // {
         //     _currentQuiz = res;
+        //     Debug.Log(res);
         // }));
         yield return StartCoroutine(ServerMethods.Current.GetUnidades((res) =>
         {

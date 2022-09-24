@@ -14,7 +14,7 @@ public class ServerMethods : MonoBehaviour
         Current = this;
         GetLocalIPAddress();
     }
-    private readonly string baseUrl = "http://172.16.0.33:4000";
+    private readonly string baseUrl = "http://localhost:4000";
     public string GetLocalIPAddress()
     {
         var host = Dns.GetHostEntry(Dns.GetHostName());
@@ -31,7 +31,7 @@ public class ServerMethods : MonoBehaviour
     private IEnumerator GetJson(string url, Action<string> res)
     {
         Debug.Log("GetRequest");
-        UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
+        using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
@@ -105,7 +105,7 @@ public class ServerMethods : MonoBehaviour
         form.AddField("CuestionarioId", historial.CuestionarioId);
         form.AddField("NumeroIntento", historial.NumeroIntento);
 
-        UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/historial", form);
+        using UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/historial", form);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
 

@@ -42,7 +42,7 @@ public class LoginForm : MonoBehaviour
         CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(www2.downloadHandler.text);
         CredentialManager.Current.isAuth = true;
         Debug.Log("Login with " + CredentialManager.Current.JwtCredential.userId);
-        // MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
+        if (MainMenuCanvasSelector.Instance != null) MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
     }
     public void Submit()
     {

@@ -53,6 +53,7 @@ public class Formulary : MonoBehaviour
                     StartCoroutine(formulaList[i].Calculate2(GlobalInfo.Variables[dataToAnswer.VariableId - 1], actualData, (res) =>
                     {
                         dataToAnswer.Valor = res;
+                        // dataToAnswer.ChangeValor(res);
                     }));
                 }
                 else

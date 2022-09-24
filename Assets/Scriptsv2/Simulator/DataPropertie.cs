@@ -35,7 +35,7 @@ public class DataPropertie : MonoBehaviour
         else
         {
             _dato.Valor = float.Parse(newValue);
-            if (_dato.VariableId == 2)
+            if (_dato.VariableId == 2 || _dato.VariableId == 12)
             {
                 Playground.Instance.DrawLines();
             }

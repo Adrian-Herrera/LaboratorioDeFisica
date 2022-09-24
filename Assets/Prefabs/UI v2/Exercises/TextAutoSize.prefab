@@ -12,9 +12,8 @@ GameObject:
   - component: {fileID: 1394466265559604034}
   - component: {fileID: 2219706363760991558}
   - component: {fileID: 1904678875840177936}
-  - component: {fileID: 5771894348315081697}
   m_Layer: 0
-  m_Name: LineInfo
+  m_Name: TextAutoSize
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -152,15 +151,3 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_HorizontalFit: 2
   m_VerticalFit: 2
---- !u!114 &5771894348315081697
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8143880962019980506}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30132df63477ee74f96aabe2dea08792, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

@@ -8,8 +8,9 @@ public class Playground : MonoBehaviour
     public static Playground Instance;
     private MainObject _mainObject;
     [SerializeField] private LineDrawer[] _lines;
+    [SerializeField] private RectTransform _building;
     public float TotalSize;
-    private int maxSize = 20;
+    private int maxSizeX = 20;
     public event Action<float> OnChangeScale;
     public void ChangeScale(float scale)
     {
@@ -29,37 +30,50 @@ public class Playground : MonoBehaviour
     }
     public void DrawLines()
     {
-        TotalSize = 0;
-        for (int i = 0; i < _lines.Length; i++)
+        if (LevelManager.Instance.temaId == 2)
         {
-            if (i < _mainObject._activeSegments)
+            TotalSize = 0;
+            for (int i = 0; i < _lines.Length; i++)
             {
-                _lines[i].gameObject.SetActive(true);
-                Dato dato = _mainObject._segmentos[i].datos.Find(dato => dato.VariableId == 2);
-                if (dato != null && dato._valor > 0)
+                if (i < _mainObject._activeSegments)
                 {
-                    print("Dato existe en segmneto " + i);
-                    _lines[i].Init(dato._valor, TotalSize);
-                    TotalSize += dato._valor;
+                    _lines[i].gameObject.SetActive(true);
+                    Dato dato = _mainObject._segmentos[i].datos.Find(dato => dato.VariableId == 2);
+                    if (dato != null && dato.Valor > 0)
+                    {
+                        print("Dato existe en segmneto " + i);
+                        _lines[i].Init(dato.Valor, TotalSize);
+                        TotalSize += dato.Valor;
+                    }
+                    else
+                    {
+                        print("Dato no existe en segmneto " + i);
+                        _lines[i].Init(15, TotalSize, false);
+                        TotalSize += 15;
+                    }
                 }
                 else
                 {
-                    print("Dato no existe en segmneto " + i);
-                    _lines[i].Init(15, TotalSize, false);
-                    TotalSize += 15;
+                    _lines[i].gameObject.SetActive(false);
                 }
             }
-            else
+            float scale = TotalSize / maxSizeX > 1 ? TotalSize / maxSizeX : 1;
+
+            Camera.main.orthographicSize = 10 * scale;
+            Camera.main.transform.position = new Vector3(15 * scale, 0, -10);
+
+            ChangeScale(scale);
+        }
+        else if (LevelManager.Instance.temaId == 3)
+        {
+            _building.gameObject.SetActive(true);
+            Dato dato = _mainObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+            if (dato != null && dato.Valor >= 0)
             {
-                _lines[i].gameObject.SetActive(false);
+                _building.sizeDelta = new Vector2(5, dato.Valor);
+                SimulatorManager._selectedObject.transform.position = new Vector3(SimulatorManager._selectedObject.transform.position.x, dato.Valor, SimulatorManager._selectedObject.transform.position.z);
             }
         }
-        float scale = TotalSize / maxSize > 1 ? TotalSize / maxSize : 1;
-
-        Camera.main.orthographicSize = 10 * scale;
-        Camera.main.transform.position = new Vector3(15 * scale, 0, -10);
-
-        ChangeScale(scale);
     }
 
 }

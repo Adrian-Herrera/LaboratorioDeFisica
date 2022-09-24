@@ -8,9 +8,17 @@ public class SimulatorManager : MonoBehaviour
     [SerializeField] private MainObject[] _mainObjects;
     [SerializeField] private ObjectProperties _objectProperties;
 
+    [SerializeField] private Sprite _car;
+    [SerializeField] private Sprite _ball;
+
     private void Start()
     {
-        GlobalInfo.Init();
+        StartCoroutine(AllInit());
+    }
+    IEnumerator AllInit()
+    {
+
+        yield return StartCoroutine(GlobalInfo.Instance.Init());
         Formulary.Instance.Init();
         _selectedObject = _mainObjects[0];
         _selectedObject.Init();

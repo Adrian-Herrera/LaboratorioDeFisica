@@ -10,6 +10,7 @@ public class QuestionsInput : MonoBehaviour
     [SerializeField] private TMP_InputField _input;
     [SerializeField] private TMP_Text _text;
     [SerializeField] private TMP_Text _unidad;
+    [SerializeField] private TMP_Text _texto;
     private float _answer;
     [SerializeField] private Dato _questionData;
     public void SetData(Dato data)
@@ -27,19 +28,31 @@ public class QuestionsInput : MonoBehaviour
         bool isQuestion = data.TipoDatoId == 2;
         if (!isQuestion) _text.text = _answer.ToString();
         _input.gameObject.SetActive(isQuestion);
+        _texto.gameObject.SetActive(isQuestion);
         _text.gameObject.SetActive(!isQuestion);
+        if (isQuestion)
+        {
+            _texto.text = data.Text;
+        }
+        else
+        {
+            _texto.text = "";
+        }
     }
     public bool CheckAnswer()
     {
         // Debug.Log("Check answer from: " + _questionData.Variable.Abrev);
         if (_questionData.IsAnswered) return true;
-        Debug.Log(float.Parse(_input.text) + " = " + _answer);
-        if (float.Parse(_input.text) == _answer)
+        if (!string.IsNullOrWhiteSpace(_input.text))
         {
-            _input.interactable = false;
-            _input.GetComponent<Image>().color = Color.green;
-            _questionData.IsAnswered = true;
-            return true;
+            Debug.Log(float.Parse(_input.text) + " = " + _answer);
+            if (float.Parse(_input.text) == _answer)
+            {
+                _input.interactable = false;
+                _input.GetComponent<Image>().color = Color.green;
+                _questionData.IsAnswered = true;
+                return true;
+            }
         }
         return false;
     }
