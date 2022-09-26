@@ -26,23 +26,12 @@ public class Dato
 {
     public float Valor;
     public string Text;
-    // public float Valor
-    // {
-    //     get { return _valor; }
-    //     set
-    //     {
-    //         Debug.Log("Valor change to " + value);
-    //         _valor = value;
-    //         // Debug.Log(dataPropertie);
-    //         if (dataPropertie != null) dataPropertie.ChangeText(value);
-
-    //     }
-    // }
     public int Segmento;
     public int VariableId;
     public int TipoDatoId;
     public int UnidadId;
     public Variable Variable;
+    public Unidad Unidad;
     public bool IsAnswered = false;
     public DataPropertie dataPropertie;
     public void ChangeValor(float newValue)

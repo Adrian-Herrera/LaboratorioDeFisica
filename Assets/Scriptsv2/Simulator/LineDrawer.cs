@@ -20,7 +20,7 @@ public class LineDrawer : MonoBehaviour
     {
         // _start = start;
         // _end = end;
-        _rt.anchoredPosition = (new Vector2(size, 0) / 2) + new Vector2(start, 0);
+        _rt.anchoredPosition = new Vector2(size / 2, -0.2f) + new Vector2(start, 0);
         _rt.sizeDelta = new Vector2(size, 0.25f);
         if (withData)
         {

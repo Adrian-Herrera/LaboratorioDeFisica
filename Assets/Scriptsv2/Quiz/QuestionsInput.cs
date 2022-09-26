@@ -16,9 +16,9 @@ public class QuestionsInput : MonoBehaviour
     public void SetData(Dato data)
     {
         _questionData = data;
-        _name.text = QuizManager.Current.VariableIdToText(_questionData.VariableId) + "=";
+        _name.text = data.Variable.Abrev + "=";
         _answer = _questionData.Valor;
-        _unidad.text = QuizManager.Current.UnidadIdToText(_questionData.UnidadId);
+        _unidad.text = data.Unidad.Abrev;
         if (_questionData.IsAnswered)
         {
             _input.interactable = false;
@@ -28,16 +28,9 @@ public class QuestionsInput : MonoBehaviour
         bool isQuestion = data.TipoDatoId == 2;
         if (!isQuestion) _text.text = _answer.ToString();
         _input.gameObject.SetActive(isQuestion);
-        _texto.gameObject.SetActive(isQuestion);
         _text.gameObject.SetActive(!isQuestion);
-        if (isQuestion)
-        {
-            _texto.text = data.Text;
-        }
-        else
-        {
-            _texto.text = "";
-        }
+        _texto.gameObject.SetActive(!string.IsNullOrEmpty(data.Text));
+        _texto.text = data.Text ?? "";
     }
     public bool CheckAnswer()
     {

@@ -13,17 +13,27 @@ public class CaidaLibreGraphic : MonoBehaviour
     [SerializeField] private TMP_Text _hMaxText;
     [SerializeField] private TMP_Text _HText;
     [SerializeField] private TMP_Text _TvText;
+    [SerializeField] private TMP_Text _TsText;
+    [SerializeField] private TMP_Text _TbText;
+
+    [SerializeField] private RectTransform _building;
+    [SerializeField] private RectTransform _alturaMaxima;
+
 
     [SerializeField] private GameObject _arrow;
     public void Init(Pregunta pregunta)
     {
-        line.Init();
+
         _VoText.gameObject.SetActive(false);
         _VfText.gameObject.SetActive(false);
         _hInicialText.gameObject.SetActive(false);
         _hMaxText.gameObject.SetActive(false);
         _HText.gameObject.SetActive(false);
         _TvText.gameObject.SetActive(false);
+        _TsText.gameObject.SetActive(false);
+        _TbText.gameObject.SetActive(false);
+
+        _building.gameObject.SetActive(false);
         for (int i = 0; i < pregunta.Datos.Length; i++)
         {
             switch (pregunta.Datos[i].VariableId)
@@ -45,6 +55,7 @@ public class CaidaLibreGraphic : MonoBehaviour
                     _hMaxText.text = GetDatoInfo(pregunta.Datos[i]);
                     break;
                 case 12: // Altura Inicial
+                    _building.gameObject.SetActive(true);
                     _hInicialText.gameObject.SetActive(true);
                     _hInicialText.text = GetDatoInfo(pregunta.Datos[i]);
                     break;
@@ -56,18 +67,35 @@ public class CaidaLibreGraphic : MonoBehaviour
                     _TvText.gameObject.SetActive(true);
                     _TvText.text = GetDatoInfo(pregunta.Datos[i]);
                     break;
+                case 16: // Tiempo de subida
+                    _TsText.gameObject.SetActive(true);
+                    _TsText.text = GetDatoInfo(pregunta.Datos[i]);
+                    break;
+                case 17: // Tiempo de bajada
+                    _TbText.gameObject.SetActive(true);
+                    _TbText.text = GetDatoInfo(pregunta.Datos[i]);
+                    break;
                 default:
                     break;
             }
         }
+        if (!(_hMaxText.gameObject.activeSelf && _TsText.gameObject.activeSelf))
+        {
+            _alturaMaxima.gameObject.SetActive(false);
+        }
+        else
+        {
+            _alturaMaxima.gameObject.SetActive(true);
+        }
+        line.Init();
     }
     public string GetDatoInfo(Dato dato)
     {
         string variable = QuizManager.Current._variables[dato.VariableId - 1].Abrev;
         string unidad = QuizManager.Current._unidades[dato.UnidadId - 1].Abrev;
-        string segmento = $"<sub>{dato.Segmento}</sub>";
+        // string segmento = $"<sub>{dato.Segmento}</sub>";
         string newText = variable;
-        if (dato.Segmento > 0) newText += segmento;
+        // if (dato.Segmento > 0) newText += segmento;
         if (dato.TipoDatoId == 1) newText += $"={dato.Valor}{unidad}";
         else newText += $"=?";
 

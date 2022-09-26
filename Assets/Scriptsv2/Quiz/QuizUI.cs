@@ -27,6 +27,7 @@ public class QuizUI : MonoBehaviour
     [SerializeField] private Button _msgBtn;
 
     [Header("Content Panel")]
+    [SerializeField] private GameObject _info;
     [SerializeField] private TMP_Text _enunciado;
     [SerializeField] private GameObject _dataSpace, _questionsSpace;
     [SerializeField] private QuestionsInput _questionsInputPrefab;
@@ -109,15 +110,19 @@ public class QuizUI : MonoBehaviour
                     _dataList.Add(q);
                     break;
                 case 2:
-                    q = Instantiate(_questionsInputPrefab, _questionsSpace.transform.GetChild(item.Segmento));
+                    q = Instantiate(_questionsInputPrefab, _questionsSpace.transform);
                     q.SetData(item);
                     _questionList.Add(q);
+
                     break;
                 default:
                     break;
             }
         }
         // necesario para que el tamaño se reajuste correctamente
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_dataSpace.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_questionsSpace.GetComponent<RectTransform>());
+        LayoutRebuilder.ForceRebuildLayoutImmediate(_info.GetComponent<RectTransform>());
         LayoutRebuilder.ForceRebuildLayoutImmediate(_contentPanel.GetComponent<RectTransform>());
     }
     public void CheckExercise()

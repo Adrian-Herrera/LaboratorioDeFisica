@@ -8,14 +8,18 @@ using UnityEngine.UI;
 public class MainObject : MonoBehaviour
 {
     [SerializeField] private LineRenderer _lineRenderer;
+    [SerializeField] private InterestPoint _interestPoint;
+    [SerializeField] private GameObject _worldCanvas;
     private Sprite _mainObject;
     private Transform _transform;
     public Segmento[] _segmentos = new Segmento[3];
     public int _activeSegments = 1;
     public bool IsMoving = false;
     private Rigidbody2D _rb;
-    private float Vel, _segmentDistance = 0, _segmentTimer = 0, _segmentStart;
-    public float? Velo, Velf, Acc, Timer, Distance;
+    private float Vel, _segmentDistance = 0, _segmentTimer = 0, _segmentStart, _alturaInicial;
+    public float? Velo, Velf, Acc, Timer, Distance, Velx;
+    public Vector3 maxHeight;
+    public List<InterestPoint> InterestPoints = new();
     private int _actualSegmentId = 0;
     private List<Vector3> _dotsList = new();
     public event Action<int> OnAddSegmentData;
@@ -37,7 +41,7 @@ public class MainObject : MonoBehaviour
         _transform = GetComponent<Transform>();
         Playground.Instance.OnChangeScale += ChangeScale;
     }
-    private void Update()
+    private void FixedUpdate()
     {
         if (!IsMoving) return;
         if (LevelManager.Instance.temaId == 2)
@@ -63,15 +67,15 @@ public class MainObject : MonoBehaviour
                 }
             }
         }
-        else if (LevelManager.Instance.temaId == 3)
+        else if (LevelManager.Instance.temaId == 3 || LevelManager.Instance.temaId == 4)
         {
-            _rb.velocity = new Vector2(1, Vel);
+            _rb.velocity = new Vector2(Velx ?? 1, Vel);
             if (Acc.HasValue) Vel += Acc.Value * Time.deltaTime;
             _segmentTimer += Time.deltaTime;
-            _segmentDistance = _rb.position.x - _segmentStart;
+            // _segmentDistance = _rb.position.x - _segmentStart;
             if (CheckConditionToStop())
             {
-                StopCoroutine(DrawDots());
+                // StopCoroutine(DrawDots());
                 if (_actualSegmentId + 1 < _activeSegments)
                 {
                     _actualSegmentId++;
@@ -82,7 +86,11 @@ public class MainObject : MonoBehaviour
                 {
                     print("Detenido");
                     StopCoroutine(DrawDots());
+                    Velf = MathF.Abs(_rb.velocity.y);
+                    CreateInterestPoint(maxHeight, _transform.localScale.x, "Maxima altura alcanzada: " + maxHeight.y.ToString("F2") + " m");
+                    CreateInterestPoint(transform.position, _transform.localScale.x, "Velocidad final alcanzada: " + Velf.Value.ToString("F2") + "m/s");
                     _rb.velocity = Vector2.zero;
+                    Playground.Instance.DrawLinesWhenStop();
                     IsMoving = false;
                 }
             }
@@ -114,31 +122,24 @@ public class MainObject : MonoBehaviour
     }
     private void ChangeScale(float scale)
     {
+        print("MainObject change scale");
         _transform.localScale = new Vector3(scale, scale, 1);
-        switch (LevelManager.Instance.temaId)
-        {
-            case 2:
-                _transform.position = new Vector3(_transform.position.x, 0.5f * scale, 0);
-                break;
-            case 3:
-                _transform.position = new Vector3(0.5f * scale, _transform.position.y, 0);
-                break;
-
-            default:
-                break;
-        }
     }
     public void StartMovement()
     {
+
         Velo = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 4)?.Valor ?? 0f;
         Velf = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 5)?.Valor;
         Acc = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 6)?.Valor ?? 0f;
         Timer = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 3)?.Valor;
         Distance = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 2)?.Valor;
+        Velx = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 1)?.Valor;
+
         Vel = Velo.Value;
         _segmentStart = _rb.position.x;
         _segmentDistance = 0;
         _segmentTimer = 0;
+        _alturaInicial = transform.position.y;
         IsMoving = true;
         _dotsList.Clear();
         StartCoroutine(DrawDots());
@@ -169,7 +170,7 @@ public class MainObject : MonoBehaviour
         }
         else
         {
-            if (LevelManager.Instance.temaId == 3)
+            if (LevelManager.Instance.temaId == 3 || LevelManager.Instance.temaId == 4)
             {
                 return SimulatorManager._selectedObject.transform.position.y < 0;
             }
@@ -180,13 +181,17 @@ public class MainObject : MonoBehaviour
     {
         IsMoving = false;
         _actualSegmentId = 0;
+        _lineRenderer.positionCount = 0;
+        // _lineRenderer.SetPositions(_dotsList.ToArray());
+        Dato dato;
         switch (LevelManager.Instance.temaId)
         {
             case 2:
                 _rb.position = new Vector2(0f, _rb.position.y);
                 break;
             case 3:
-                Dato dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+                Helpers.ClearListContent(InterestPoints);
+                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
                 if (dato != null && dato.Valor >= 0)
                 {
                     _rb.position = new Vector2(0f, 0f + dato.Valor);
@@ -197,6 +202,18 @@ public class MainObject : MonoBehaviour
                 }
 
                 break;
+            case 4:
+                Helpers.ClearListContent(InterestPoints);
+                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+                if (dato != null && dato.Valor >= 0)
+                {
+                    _rb.position = new Vector2(0f, 0f + dato.Valor);
+                }
+                else
+                {
+                    _rb.position = new Vector2(0f, 0f);
+                }
+                break;
 
             default:
                 break;
@@ -205,12 +222,18 @@ public class MainObject : MonoBehaviour
         _rb.velocity = Vector2.zero;
 
     }
+    private void CreateInterestPoint(Vector3 pos, float scale, string message)
+    {
+        InterestPoints.Add(Instantiate(_interestPoint.gameObject, _worldCanvas.transform).GetComponent<InterestPoint>().CreatePoint(pos, scale, message));
+    }
 
     private IEnumerator DrawDots()
     {
+        maxHeight = Vector3.zero;
         while (IsMoving)
         {
             _dotsList.Add(transform.position);
+            if (transform.position.y > maxHeight.y) maxHeight = transform.position;
             _lineRenderer.positionCount = _dotsList.Count;
             _lineRenderer.SetPositions(_dotsList.ToArray());
             yield return new WaitForSeconds(.1f);

@@ -10,9 +10,23 @@ public class SimulatorManager : MonoBehaviour
 
     [SerializeField] private Sprite _car;
     [SerializeField] private Sprite _ball;
+    private Camera _camera;
 
     private void Start()
     {
+        _camera = Camera.main;
+        if (LevelManager.Instance.temaId == 2 || LevelManager.Instance.temaId == 1)
+        {
+            _camera.transform.position = new Vector3(15, 0, -10);
+        }
+        else if (LevelManager.Instance.temaId == 3)
+        {
+            _camera.transform.position = new Vector3(5.5f, 5.5f, -10);
+        }
+        else if (LevelManager.Instance.temaId == 4)
+        {
+            _camera.transform.position = new Vector3(15f, 5.5f, -10);
+        }
         StartCoroutine(AllInit());
     }
     IEnumerator AllInit()
@@ -25,6 +39,7 @@ public class SimulatorManager : MonoBehaviour
         Playground.Instance.Init();
         _objectProperties.Init();
     }
+
 
 
 }

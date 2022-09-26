@@ -82,8 +82,8 @@ MonoBehaviour:
     m_DescentLine: -10.5
     m_SuperscriptOffset: 31.499998
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -10.5
-    m_SubscriptSize: 0.5
+    m_SubscriptOffset: -9.5
+    m_SubscriptSize: 0.6
     m_UnderlineOffset: -4.2
     m_UnderlineThickness: 2.1
     m_StrikethroughOffset: 7.2

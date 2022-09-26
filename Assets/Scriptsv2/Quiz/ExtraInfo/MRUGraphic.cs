@@ -60,7 +60,6 @@ public class MRUGraphic : MonoBehaviour
         if (segmento0.Count > 0)
         {
             _totalLine.SetActive(true);
-            string unidad;
             for (int i = 0; i < segmento0.Count; i++)
             {
                 switch (segmento0[i].VariableId)

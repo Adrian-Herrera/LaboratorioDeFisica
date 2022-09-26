@@ -23,11 +23,11 @@ public class QuizManager : MonoBehaviour
     }
     private IEnumerator GetData()
     {
+        // yield return StartCoroutine(LoginForm.Login("kilinor", "123456"));
         yield return StartCoroutine(ServerMethods.Current.GetCuestionario(LevelManager.Instance.quizId, (res) =>
         {
             _currentQuiz = res;
         }));
-        // yield return StartCoroutine(LoginForm.Login("adrian", "123456"));
         // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(1, (res) =>
         // {
         //     _currentQuiz = res;
