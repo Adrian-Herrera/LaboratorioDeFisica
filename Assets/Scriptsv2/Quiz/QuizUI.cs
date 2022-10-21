@@ -134,6 +134,7 @@ public class QuizUI : MonoBehaviour
             allQuestionsAnswered = allQuestionsAnswered && questionAnswered;
         }
         if (allQuestionsAnswered) TabComplete();
+        WsClient.Instance.UpdateScore(CalculateScore());
     }
     public void TabComplete()
     {
@@ -156,14 +157,19 @@ public class QuizUI : MonoBehaviour
     private void TimeComplete()
     {
         ShowContent(false);
+        QuizManager.Current.Score = CalculateScore();
+        _msgPanelText.text = "Se acabo el tiempo. Puntaje: " + QuizManager.Current.Score;
+        QuizManager.Current.AddHistorial();
+    }
+
+    private int CalculateScore()
+    {
         int questionsAnswered = 0;
         for (int i = 0; i < _quiz.Preguntas.Length; i++)
         {
             if (_tabBtns[i]._isAnswer) questionsAnswered++;
         }
-        QuizManager.Current.Score = questionsAnswered * 100 / _quiz.Preguntas.Length;
-        _msgPanelText.text = "Se acabo el tiempo. Puntaje: " + QuizManager.Current.Score;
-        QuizManager.Current.AddHistorial();
+        return questionsAnswered * 100 / _quiz.Preguntas.Length;
     }
 
     private IEnumerator StartTime()

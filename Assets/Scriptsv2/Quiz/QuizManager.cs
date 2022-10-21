@@ -23,16 +23,17 @@ public class QuizManager : MonoBehaviour
     }
     private IEnumerator GetData()
     {
-        // yield return StartCoroutine(LoginForm.Login("kilinor", "123456"));
-        yield return StartCoroutine(ServerMethods.Current.GetCuestionario(LevelManager.Instance.quizId, (res) =>
+        if (LevelManager.Instance.TypeQuiz == "Test")
         {
-            _currentQuiz = res;
-        }));
-        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(1, (res) =>
-        // {
-        //     _currentQuiz = res;
-        //     Debug.Log(res);
-        // }));
+            _currentQuiz = LevelManager.Instance.OnlineQuiz;
+        }
+        else if (LevelManager.Instance.TypeQuiz == "Quiz")
+        {
+            yield return StartCoroutine(ServerMethods.Current.GetCuestionario(LevelManager.Instance.quizId, (res) =>
+            {
+                _currentQuiz = res;
+            }));
+        }
         yield return StartCoroutine(ServerMethods.Current.GetUnidades((res) =>
         {
             _unidades = res;

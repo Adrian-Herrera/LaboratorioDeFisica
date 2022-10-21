@@ -14,6 +14,8 @@ public class LevelManager : MonoBehaviour
     // global variables
     public int temaId;
     public int quizId;
+    public Cuestionario OnlineQuiz;
+    public string TypeQuiz;
     private void Awake()
     {
         if (Instance == null)
@@ -58,6 +60,13 @@ public class LevelManager : MonoBehaviour
     public void ChargeQuiz(int id)
     {
         quizId = id;
+        TypeQuiz = "Quiz";
+        LoadScene("Exercises");
+    }
+    public void ChargeOnlineQuiz(Cuestionario quiz)
+    {
+        OnlineQuiz = quiz;
+        TypeQuiz = "Test";
         LoadScene("Exercises");
     }
 
