@@ -77,7 +77,7 @@ public class WsClient : MonoBehaviour
         }
         if (_roomFlag)
         {
-            Debug.Log(_wsCommand.Params.Room.Id);
+            // Debug.Log(_wsCommand.Params.Room.Id);
             _room = _wsCommand.Params.Room;
             _sala.GetComponentInChildren<TMP_Text>().text = _room.Id.ToString();
             Debug.Log(_room.Quiz);
@@ -142,6 +142,10 @@ public class WsClient : MonoBehaviour
         Debug.Log(JsonUtility.ToJson(command));
         ws.Send(JsonUtility.ToJson(command));
     }
+    public void SendCommand(string command)
+    {
+        ws.Send(command);
+    }
     [Serializable]
     public class WsCommand
     {
@@ -159,6 +163,7 @@ public class WsClient : MonoBehaviour
     public class Room
     {
         public string Id;
+        public string Status;
         public Cuestionario Quiz;
     }
 }

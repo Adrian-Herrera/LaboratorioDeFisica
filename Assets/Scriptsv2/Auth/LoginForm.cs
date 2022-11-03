@@ -43,7 +43,7 @@ public class LoginForm : MonoBehaviour
         CredentialManager.Current.isAuth = true;
         Debug.Log("Login with " + CredentialManager.Current.JwtCredential.userId);
         if (MainMenuCanvasSelector.Instance != null) MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
-        WsClient.Instance.Init();
+        if (WsClient.Instance != null) WsClient.Instance.Init();
     }
     public void Submit()
     {

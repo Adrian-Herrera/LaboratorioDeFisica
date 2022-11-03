@@ -17,4 +17,9 @@ public class Helpers : MonoBehaviour
         }
         list.Clear();
     }
+    public static Color HexColor(string hex)
+    {
+        if (ColorUtility.TryParseHtmlString(hex, out Color newColor)) return newColor;
+        else return Color.black;
+    }
 }

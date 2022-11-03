@@ -18,12 +18,14 @@ public class Cuestionario
 [Serializable]
 public class Pregunta
 {
+    public int Id;
     public string Texto;
     public Dato[] Datos;
 }
 [Serializable]
 public class Dato
 {
+    public int Id;
     public float Valor;
     public string Text;
     public int Segmento;
@@ -76,4 +78,25 @@ public class Tema
 {
     public int Id;
     public string Nombre;
+}
+[Serializable]
+public class LogInfo
+{
+    public int UserId;
+    public int ActivePregunta;
+    public LogPregunta[] Preguntas;
+}
+[Serializable]
+public class LogPregunta
+{
+    public int PreguntaId;
+    public int Tiempo;
+    public LogDato[] Datos;
+
+}
+[Serializable]
+public class LogDato
+{
+    public int DatoId;
+    public float[] Respuestas;
 }

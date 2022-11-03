@@ -44,9 +44,22 @@ public class QuestionsInput : MonoBehaviour
                 _input.interactable = false;
                 _input.GetComponent<Image>().color = Color.green;
                 _questionData.IsAnswered = true;
+                QuizManager.Current.SendAnswer(_questionData.Id, float.Parse(_input.text));
                 return true;
             }
+            else
+            {
+                StartCoroutine(WrongAnswer());
+            }
+            QuizManager.Current.SendAnswer(_questionData.Id, float.Parse(_input.text));
         }
         return false;
+    }
+    IEnumerator WrongAnswer()
+    {
+        Color actualColor = _input.GetComponent<Image>().color;
+        _input.GetComponent<Image>().color = Helpers.HexColor("#f2725e");
+        yield return new WaitForSeconds(3);
+        _input.GetComponent<Image>().color = actualColor;
     }
 }

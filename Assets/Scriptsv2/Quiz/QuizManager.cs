@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class QuizManager : MonoBehaviour
 {
@@ -14,15 +15,29 @@ public class QuizManager : MonoBehaviour
     public Unidad[] _unidades;
     public Variable[] _variables;
     private Historial[] _historial;
-    private List<Historial> _historialList = new List<Historial>();
     private int _numberOfAttempts;
     public int Score;
+    public int CurrentTime;
+    public bool isRunning = false;
+    [SerializeField] private TMP_Text _infoText;
+    public LogInfo _logInfo;
     private void Start()
     {
         StartCoroutine(GetData());
     }
+    private void Update()
+    {
+
+
+    }
     private IEnumerator GetData()
     {
+        // LevelManager.Instance.temaId = 1;
+        // yield return StartCoroutine(LoginForm.Login("adrian", "123456"));
+        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(2, (res) =>
+        //     {
+        //         _currentQuiz = res;
+        //     }));
         if (LevelManager.Instance.TypeQuiz == "Test")
         {
             _currentQuiz = LevelManager.Instance.OnlineQuiz;
@@ -48,6 +63,30 @@ public class QuizManager : MonoBehaviour
             _numberOfAttempts = _historial.Length;
             Debug.Log(_historial.Length);
         }));
+        // _logInfo = new()
+        // {
+        //     Preguntas = new LogPregunta[_currentQuiz.Preguntas.Length]
+        // };
+        // for (int i = 0; i < _currentQuiz.Preguntas.Length; i++)
+        // {
+        //     Pregunta pregunta = _currentQuiz.Preguntas[i];
+        //     LogPregunta nuevaP = new()
+        //     {
+        //         PreguntaId = pregunta.Id,
+        //         Tiempo = 0,
+        //         Datos = new LogDato[pregunta.Datos.Length]
+        //     };
+        //     for (int j = 0; j < pregunta.Datos.Length; j++)
+        //     {
+        //         LogDato nuevoD = new()
+        //         {
+        //             DatoId = pregunta.Datos[j].Id
+        //         };
+        //         nuevaP.Datos[j] = nuevoD;
+        //     }
+        //     _logInfo.Preguntas[i] = nuevaP;
+        // }
+
         _quizUI.Init(_currentQuiz);
     }
     public void GoExercise(int id)
@@ -57,45 +96,38 @@ public class QuizManager : MonoBehaviour
     public void StartQuiz()
     {
         // _currentQuestion = _currentQuiz.Preguntas[0];
+        // _logInfo.ActivePregunta = 1;
+        isRunning = true;
         _quizUI.StartQuiz();
-    }
-    public void TabComplete()
-    {
-        _quizUI.TabComplete();
     }
     public void AddHistorial()
     {
         _numberOfAttempts++;
 
-        Historial historial = new Historial();
-        historial.Puntaje = Score;
-        historial.AlumnoId = CredentialManager.Current.JwtCredential.id;
-        historial.CuestionarioId = _currentQuiz.Id;
-        historial.NumeroIntento = _numberOfAttempts;
+        Historial historial = new()
+        {
+            Puntaje = Score,
+            AlumnoId = CredentialManager.Current.JwtCredential.id,
+            CuestionarioId = _currentQuiz.Id,
+            NumeroIntento = _numberOfAttempts
+        };
 
         StartCoroutine(ServerMethods.Current.CreateHistorial(historial));
-        // _historialList.Add(historial);
-        // foreach (Historial item in _historialList)
-        // {
-        //     Debug.Log(JsonUtility.ToJson(item));
-        // }
     }
-    public string UnidadIdToText(int id)
+    public void ShowDebugInfo(string info)
     {
-        for (int i = 0; i < _unidades.Length; i++)
-        {
-            if (id == _unidades[i].Id) return _unidades[i].Abrev;
-        }
-        return "Unidad not find";
+        _infoText.text = info;
     }
-    public string VariableIdToText(int id)
+    public void SendChangePregunta(int id)
     {
-        for (int i = 0; i < _variables.Length; i++)
-        {
-            if (id == _variables[i].Id) return _variables[i].Abrev;
-        }
-        return "Variable not find";
+        string message = "{ \"Type\": \"ChangePregunta\", \"Params\": { \"ActualPreguntaId\": " + id + "}}";
+        WsClient.Instance.SendCommand(message);
+        Debug.Log(message);
     }
-
-
+    public void SendAnswer(int datoId, float answer)
+    {
+        string message = "{ \"Type\": \"SendAnswer\", \"Params\": { \"datoId\": " + datoId + ", \"respuesta\": " + answer + "}}";
+        WsClient.Instance.SendCommand(message);
+        Debug.Log(message);
+    }
 }

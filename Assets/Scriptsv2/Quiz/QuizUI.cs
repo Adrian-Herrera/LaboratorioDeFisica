@@ -88,6 +88,7 @@ public class QuizUI : MonoBehaviour
         {
             _activeTabBtn.SetActive(false);
         }
+        QuizManager.Current.SendChangePregunta(id);
         _activeTabBtn = _tabBtns[id];
         _activeTabBtn.SetActive(true);
         Pregunta Pregunta = _quiz.Preguntas[id];
@@ -133,8 +134,11 @@ public class QuizUI : MonoBehaviour
             bool questionAnswered = question.CheckAnswer();
             allQuestionsAnswered = allQuestionsAnswered && questionAnswered;
         }
-        if (allQuestionsAnswered) TabComplete();
-        WsClient.Instance.UpdateScore(CalculateScore());
+        if (allQuestionsAnswered)
+        {
+            TabComplete();
+            if (WsClient.Instance != null) WsClient.Instance.UpdateScore(CalculateScore());
+        }
     }
     public void TabComplete()
     {
@@ -177,6 +181,7 @@ public class QuizUI : MonoBehaviour
         while (_remainingTime.TotalSeconds > 0)
         {
             yield return new WaitForSecondsRealtime(1);
+            QuizManager.Current.CurrentTime++;
             _remainingTime -= new TimeSpan(0, 0, 1);
             _timer.text = _remainingTime.ToString(@"mm\:ss");
         }
