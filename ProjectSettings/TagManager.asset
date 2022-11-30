@@ -8,6 +8,9 @@ TagManager:
   - Ground
   - Ball
   - Checkpoint
+  - Floor
+  - DynamicObject
+  - Hook
   layers:
   - Default
   - TransparentFX
