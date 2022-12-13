@@ -31,7 +31,6 @@ public class Cuerda : MonoBehaviour
         {
             _lineRenderer.SetPosition(1, Hook.transform.position);
         }
-
     }
     public void SetObjects(GameObject go1, GameObject go2)
     {

@@ -32,10 +32,10 @@ public class DynamicObject : MonoBehaviour
     public Vector3 InitialPoint;
     public ForceVector _vectorGO;
     public List<Force> Forces = new();
-    public ForceList ForcesUp = new();
-    public ForceList ForcesDown = new();
-    public ForceList ForcesLeft = new();
-    public ForceList ForcesRight = new();
+    // public ForceList ForcesUp;
+    // public ForceList ForcesDown;
+    // public ForceList ForcesLeft;
+    // public ForceList ForcesRight;
     public Force Peso, Normal, Rozamiento, Tension;
     public bool isMoving = false;
     public bool firstMove = true;
@@ -212,7 +212,6 @@ public class DynamicObject : MonoBehaviour
     }
     public void CreateVectors()
     {
-        float space = 1;
 
     }
     public void Reset()
@@ -270,9 +269,10 @@ public class Force
     }
 }
 [Serializable]
-public class ForceList
+public class ForceList : MonoBehaviour
 {
     public List<Force> Forces = new();
+    public List<ForceVector> Vectors = new();
     public float Total;
     private void CalculateTotal()
     {
@@ -292,4 +292,22 @@ public class ForceList
         Forces.Remove(force);
         CalculateTotal();
     }
+    public void CreateVectors(ForceVector prefab, Transform parentTransform)
+    {
+        int index = 0;
+        foreach (ForceVector vector in Vectors)
+        {
+            int res = Forces.FindIndex(f => f == vector.force);
+            if (res < 0)
+            {
+                Destroy(vector.gameObject);
+            }
+            index++;
+        }
+        if (Forces.Count > index)
+        {
+
+        }
+    }
+
 }
