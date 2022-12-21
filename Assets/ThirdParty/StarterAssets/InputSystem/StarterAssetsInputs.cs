@@ -14,6 +14,7 @@ namespace StarterAssets
         public bool sprint;
         public bool grab;
         public bool menu;
+        public bool interact;
 
         [Header("Movement Settings")]
         public bool analogMovement;
@@ -52,8 +53,13 @@ namespace StarterAssets
         }
         public void OnMenu()
         {
-            Debug.Log("Tab presed");
+            // Debug.Log("Tab presed");
             SwitchMenu();
+        }
+        public void OnInteract(InputValue value)
+        {
+            // Debug.Log("Tab presed");
+            Interact(value.isPressed);
         }
 #endif
 
@@ -85,7 +91,11 @@ namespace StarterAssets
         public void SwitchMenu()
         {
             menu = !menu;
-			Debug.Log(menu);
+            // Debug.Log(menu);
+        }
+        public void Interact(bool newInteractState)
+        {
+            interact = newInteractState;
         }
 
         // private void OnApplicationFocus(bool hasFocus)
