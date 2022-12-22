@@ -54,7 +54,7 @@ public class Object3d : MonoBehaviour
     }
     private void Start()
     {
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 0;
         _onGround = false;
         _vel = 0;
     }

@@ -18,6 +18,7 @@ public class Car3d : MonoBehaviour
     public float Vel => _vel;
     public float TimeMoving => _timeMoving;
     public float DistanceFromStart => _distanceFromStart;
+    public bool IsMoving => _isMoving;
     // Events
     public event Action OnFinishMove;
     public void FinishMove() => OnFinishMove?.Invoke();

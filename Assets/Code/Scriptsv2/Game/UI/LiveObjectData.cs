@@ -12,8 +12,11 @@ public class LiveObjectData : MonoBehaviour
     [SerializeField] private TMP_Text _timeTxt;
     private void Update()
     {
-        _velocityTxt.text = _car.Vel.ToString();
-        _distanceTxt.text = _car.DistanceFromStart.ToString("F2");
-        _timeTxt.text = (_car.TimeMoving / 1000).ToString("F2");
+        if (_car.IsMoving)
+        {
+            _velocityTxt.text = _car.Vel.ToString();
+            _distanceTxt.text = _car.DistanceFromStart.ToString("F2");
+            _timeTxt.text = (_car.TimeMoving / 1000).ToString("F2");
+        }
     }
 }
