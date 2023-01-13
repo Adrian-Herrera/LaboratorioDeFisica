@@ -80,6 +80,22 @@ public class Tema
     public string Nombre;
 }
 [Serializable]
+public class Reto
+{
+    public int Id;
+    public int CodigoId;
+    public string Titulo;
+    public RetoDato[] RetoDatos;
+}
+[Serializable]
+public class RetoDato
+{
+    public Variable Variable;
+    public float Valor;
+    public string Descripcion;
+    public bool EsDato;
+}
+[Serializable]
 public class LogInfo
 {
     public int UserId;

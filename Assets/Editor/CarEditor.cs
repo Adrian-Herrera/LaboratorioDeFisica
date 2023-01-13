@@ -14,9 +14,9 @@ public class CarEditor : Editor
         {
             myScript.ResetAll();
         }
-        if (GUILayout.Button("Move"))
-        {
-            myScript.StartMovement(2);
-        }
+        // if (GUILayout.Button("Move"))
+        // {
+        //     myScript.StartMovement(2,0);
+        // }
     }
 }

@@ -9,42 +9,42 @@ public class VariableInput : MonoBehaviour
     public TMP_InputField _inputField;
     [SerializeField] private TMP_Text _label;
     [SerializeField] private TMP_Text _magnitude;
+    [SerializeField] private bool _isData = false;
+    [SerializeField] private Variable _variable;
+    public VariableEnum _enum;
     private float _value;
-    private VariableTemplate _variable;
-    public VariableHelper.VariableEnum _enum;
-    private void Start()
+    // Properties
+    public bool IsData => _isData;
+    public Variable Variable => _variable;
+    public float Value
     {
-        // _inputField.onValueChanged.AddListener((s) => { _value = float.Parse(s); });
-    }
-    public void Init(VariableHelper.VariableEnum type, float value, bool isData = false)
-    {
-        _enum = type;
-        switch (_enum)
+        get
         {
-            case VariableHelper.VariableEnum.Velocidad:
-                _variable = VariableHelper.Velocidad;
-                break;
-            case VariableHelper.VariableEnum.Distancia:
-                _variable = VariableHelper.Distancia;
-                break;
-            case VariableHelper.VariableEnum.Tiempo:
-                _variable = VariableHelper.Tiempo;
-                break;
-            default:
-                break;
+            if (_isData)
+            {
+                return _value;
+            }
+            else
+            {
+                return float.Parse(_inputField.text);
+            }
         }
-        _label.text = _variable.Name;
-        _magnitude.text = _variable.Abrev;
+    }
+    public void Init(Variable variable, float value, bool isData = false)
+    {
+        // _enum = variable;
+        // _variable = VariableHelper.VariablePairs[variable];
+        // Debug.Log(_variable);
+        _variable = variable;
+        _label.text = variable.Nombre;
+        _magnitude.text = variable.Abrev;
         _value = value;
+        _isData = isData;
         if (isData)
         {
             _inputField.text = value.ToString();
             _inputField.readOnly = true;
         }
-    }
-    public float GetValue()
-    {
-        return _value;
     }
     public bool CheckAnswer()
     {

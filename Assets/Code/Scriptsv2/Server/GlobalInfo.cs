@@ -3,12 +3,13 @@ using System;
 using System.IO;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Networking;
 
 public class GlobalInfo : MonoBehaviour
 {
     public static GlobalInfo Instance;
     public static Variable[] Variables;
-    public static List<Variable> VarList;
+    public Dictionary<string, Variable> VarDict = new();
     public static Unidad[] Unidades;
     private static string fileText;
     private void Awake()
@@ -18,37 +19,42 @@ public class GlobalInfo : MonoBehaviour
             Instance = this;
         }
     }
-    // public void Init()
-    // {
-    //     StartCoroutine(GetData());
-    // }
+    public void Start()
+    {
+        StartCoroutine(Init());
+    }
     public IEnumerator Init()
     {
         print("Global info start");
         // string filePath = Application.streamingAssetsPath + "/Variables.json";
         // fileText = File.ReadAllText(Application.streamingAssetsPath + "/Variables.json");
-        yield return StartCoroutine(loadStreamingAsset("Variables.json", res =>
+        yield return StartCoroutine(LoadStreamingAsset("Variables.json", res =>
         {
             fileText = res;
         }));
         Variables = JsonUtility.FromJson<ResourceData<Variable>>(fileText).Data;
-        VarList = new List<Variable>(Variables);
-        yield return StartCoroutine(loadStreamingAsset("Unidades.json", res =>
+        for (int i = 0; i < Variables.Length; i++)
+        {
+            VarDict.Add(Variables[i].Nombre, Variables[i]);
+        }
+        // VarDict = Dictionary<Variable>(Variables);
+        yield return StartCoroutine(LoadStreamingAsset("Unidades.json", res =>
         {
             fileText = res;
         }));
         // fileText = File.ReadAllText(Application.streamingAssetsPath + "/Unidades.json");
         Unidades = JsonUtility.FromJson<ResourceData<Unidad>>(fileText).Data;
     }
-    IEnumerator loadStreamingAsset(string fileName, Action<string> res)
+    IEnumerator LoadStreamingAsset(string fileName, Action<string> res)
     {
         string filePath = Application.streamingAssetsPath + $"/{fileName}";
 
         if (filePath.Contains("://") || filePath.Contains(":///"))
         {
-            WWW www = new WWW(filePath);
+            using UnityWebRequest www = UnityWebRequest.Get(filePath);
+            // WWW www = new WWW(filePath);
             yield return www;
-            res(www.text);
+            res(www.downloadHandler.text);
         }
         else
             res(File.ReadAllText(filePath));

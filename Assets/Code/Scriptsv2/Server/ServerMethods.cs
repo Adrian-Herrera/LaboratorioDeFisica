@@ -32,7 +32,8 @@ public class ServerMethods : MonoBehaviour
     {
         Debug.Log("GetRequest");
         using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
-        www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
+        // www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
+        www.SetRequestHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczMDUzMTc2LCJleHAiOjE2NzMxMzk1NzZ9.sUuINdj0SAAyTEMgZmaclZdEpLShMcuHRUshlNY3k04");
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -68,6 +69,22 @@ public class ServerMethods : MonoBehaviour
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Cuestionario>(json));
+        }));
+    }
+    public IEnumerator GetRetos(int codigoId, int temaId, Action<Reto[]> res)
+    {
+        Debug.Log("GetRetos");
+        string url = "/retos?codigo=" + codigoId + "&tema=" + temaId;
+        yield return StartCoroutine(GetJson(url, (json) =>
+        {
+            res(JsonHelper.FromJson<Reto>(json));
+        }));
+    }
+    public IEnumerator GetReto(int id, Action<Reto> res)
+    {
+        yield return StartCoroutine(GetJson("/reto/" + id, (json) =>
+        {
+            res(JsonUtility.FromJson<Reto>(json));
         }));
     }
     public IEnumerator GetUnidades(Action<Unidad[]> res)

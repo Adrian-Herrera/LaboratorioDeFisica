@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class Instruccion : MonoBehaviour
+public class InstructionUI : View
 {
     [Header("Components")]
     [SerializeField] private TMP_Text _titleText;
@@ -18,8 +18,8 @@ public class Instruccion : MonoBehaviour
     [Header("Variables")]
     [SerializeField] private int _index;
     // events
-    public event Action OnStartExercise;
-    public void StartExerciseEvent() => OnStartExercise?.Invoke();
+    public static event Action OnStartExercise;
+    // public void StartExerciseEvent() => OnStartExercise?.Invoke();
     private int Index
     {
         get { return _index; }
@@ -57,8 +57,8 @@ public class Instruccion : MonoBehaviour
     private void StartExercise()
     {
         gameObject.SetActive(false);
-        StartExerciseEvent();
         Debug.Log("Iniciar ejercicio");
+        OnStartExercise?.Invoke();
     }
     private void CheckInstructionSize()
     {

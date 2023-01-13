@@ -13,14 +13,6 @@ public class RetosSO : ScriptableObject
         {
             RetoTemplate reto = _questions[i];
             reto.IsData = false;
-            if (reto.VariableType == VariableHelper.VariableEnum.Distancia)
-            {
-                reto.IsData = true;
-            }
-            if (reto.VariableType == VariableHelper.VariableEnum.Tiempo)
-            {
-                reto.IsData = true;
-            }
         }
         // int rInt = Random.Range(0, _questions.Length);
         // Debug.Log("random:" + rInt);
@@ -31,7 +23,8 @@ public class RetosSO : ScriptableObject
 [Serializable]
 public struct RetoTemplate
 {
-    public VariableHelper.VariableEnum VariableType;
+    public VariableEnum VariableType;
+    public Variable Variable;
     public float value;
     public bool IsData;
 }

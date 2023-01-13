@@ -8,14 +8,16 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
     [SerializeField] private InstructionSO _activeInstruction;
+    private Station _nearStation;
+    public Station NearStation => _nearStation;
     private StarterAssetsInputs _input;
     //Events
-    public event Action<string> OnEnterStation;
-    public void EnterStation(string station) => OnEnterStation?.Invoke(station);
+    public event Action<Station> OnEnterStation;
+    // public void EnterStation(Station station) => OnEnterStation?.Invoke(station);
     public event Action OnExitStation;
-    public void ExitStation() => OnExitStation?.Invoke();
-    public event Action<InstructionSO> OnStartExercise;
-    public void StartExercise(InstructionSO instruction) => OnStartExercise?.Invoke(instruction);
+    // public void ExitStation() => OnExitStation?.Invoke();
+    public event Action OnStartExercise;
+    // public void StartExercise(InstructionSO instruction) => OnStartExercise?.Invoke();
     private void Awake()
     {
         if (Instance == null)
@@ -29,19 +31,29 @@ public class Player : MonoBehaviour
         if (_input.interact)
         {
             Debug.Log("Interact pressed");
-            StartExercise(_activeInstruction);
+            if (_nearStation != null && _nearStation.Status == StationStatus.Waiting)
+            {
+                OnStartExercise?.Invoke();
+            }
             _input.interact = false;
         }
     }
-    public void SetActiveStation(string station, InstructionSO instruction)
+    public void SetNearStation(Station station)
     {
-        EnterStation(station);
-        _activeInstruction = instruction;
+        _nearStation = station;
+        if (station != null)
+        {
+            OnEnterStation?.Invoke(_nearStation);
+        }
+        else
+        {
+            OnExitStation?.Invoke();
+        }
     }
     public void ClearStation()
     {
-        EnterStation(null);
-        _activeInstruction = null;
-        ExitStation();
+        // EnterStation(null);
+        // _activeInstruction = null;
+        // ExitStation();
     }
 }

@@ -14,17 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _questions:
   - VariableType: 3
-    value: 0
+    value: 10
     IsData: 0
   - VariableType: 4
     value: 20
-    IsData: 0
+    IsData: 1
   - VariableType: 5
-    value: 0
+    value: 15
     IsData: 0
   - VariableType: 1
-    value: 0
-    IsData: 0
+    value: 100
+    IsData: 1
   - VariableType: 2
-    value: 0
+    value: 3
     IsData: 0

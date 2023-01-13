@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-public class RetoInfo : MonoBehaviour
+public class RetoInfo : View
 {
     [Header("Prefabs")]
     [SerializeField] private VariableInput _inputPrefab;
@@ -18,29 +18,52 @@ public class RetoInfo : MonoBehaviour
     [SerializeField] private int _retoIntentos;
     private List<VariableInput> _inputList = new();
     private List<VariableInput> _dataList = new();
-    public void Init(RetoTemplate[] retos, int retoIndex, int retoIntentos)
+    // public void Init(RetoDato[] retoDatos, int retoIntentos)
+    // {
+    //     // Debug.Log("Creando con los datos: " + retoIndex);
+    //     Helpers.ClearListContent(_inputList);
+    //     Helpers.ClearListContent(_dataList);
+    //     foreach (RetoDato retoDato in retoDatos)
+    //     {
+    //         if (retoDato.EsDato)
+    //         {
+    //             VariableInput input = Instantiate(_inputPrefab, _infoDataContainer.transform);
+    //             input.Init(retoDato.Variable, retoDato.Valor, true);
+    //             _dataList.Add(input);
+    //         }
+    //         else
+    //         {
+    //             VariableInput input = Instantiate(_inputPrefab, _userDataContainer.transform);
+    //             input.Init(retoDato.Variable, retoDato.Valor, true);
+    //             _inputList.Add(input);
+    //         }
+    //     }
+
+    //     _title.text = "RETO " + retoIndex;
+    //     _intentos.text = "Intentos: " + retoIntentos;
+    // }
+    public void Init(Reto reto, int intentos)
     {
-        Debug.Log("Creando con los datos: " + retoIndex);
         Helpers.ClearListContent(_inputList);
         Helpers.ClearListContent(_dataList);
-        foreach (RetoTemplate reto in retos)
+        foreach (RetoDato retoDato in reto.RetoDatos)
         {
-            if (reto.IsData)
+            if (retoDato.EsDato)
             {
                 VariableInput input = Instantiate(_inputPrefab, _infoDataContainer.transform);
-                input.Init(reto.VariableType, reto.value, true);
+                input.Init(retoDato.Variable, retoDato.Valor, true);
                 _dataList.Add(input);
             }
             else
             {
                 VariableInput input = Instantiate(_inputPrefab, _userDataContainer.transform);
-                input.Init(reto.VariableType, reto.value, true);
+                input.Init(retoDato.Variable, retoDato.Valor, true);
                 _inputList.Add(input);
             }
         }
 
-        _title.text = "RETO " + retoIndex;
-        _intentos.text = "Intentos: " + retoIntentos;
+        _title.text = reto.Titulo;
+        _intentos.text = "Intentos: " + intentos;
     }
 
 }
