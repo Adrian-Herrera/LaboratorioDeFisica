@@ -36,7 +36,7 @@ public class InstructionUI : View
         _previousButton.onClick.AddListener(PreviousInstruction);
         _startButton.onClick.AddListener(StartExercise);
     }
-    public void StartExercise(InstructionSO instructionsSO)
+    public void Init(InstructionSO instructionsSO)
     {
         _instructionsSO = instructionsSO;
         Index = 0;

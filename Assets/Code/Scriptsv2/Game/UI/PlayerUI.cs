@@ -18,6 +18,7 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private TMP_Text _nearStationText;
     [Header("Canvas")]
     public RetoSelectorMenu _retoSelector;
+    public ModeSelector _modeSelector;
     [Header("Views")]
     public RetoFinalInfo _retoFinal;
     // [Header("Stations")]
@@ -39,7 +40,7 @@ public class PlayerUI : MonoBehaviour
             _player.OnExitStation += ExitStation;
             _player.OnStartExercise += StartExercise;
         }
-        InstructionUI.OnStartExercise += ShowStationUI;
+        InstructionUI.OnStartExercise += ShowModeSelector;
     }
     private void ShowStationName(Station station)
     {
@@ -67,36 +68,44 @@ public class PlayerUI : MonoBehaviour
         {
             _actualView.Hide();
         }
-        // _instructionUI.gameObject.SetActive(false);
-        // _station.StationUI.gameObject.SetActive(false);
         _station = null;
     }
     private void SetInstructions(InstructionSO instructions)
     {
-        _actualView = _instructionUI;
-        _actualView.Show();
-        // _instructionUI.gameObject.SetActive(true);
-        _instructionUI.StartExercise(instructions);
+        ChangeView(_instructionUI);
+        _instructionUI.Init(instructions);
     }
-    private void ShowStationUI()
+    private void ShowModeSelector()
     {
-        // _station.StationUI.gameObject.SetActive(true);
-        // _retoSelector.gameObject.SetActive(true);
-        _actualView.Hide();
-        _actualView = _retoSelector;
-        _actualView.Show();
-        _retoSelector.Init(1, _player.NearStation.TemaId);
-        // StartCoroutine(ServerMethods.Current.GetRetos((res) =>
-        // {
-        //     _station.StationUI.Init(res);
-        // }));
+        ChangeView(_modeSelector);
+    }
+    public void ShowStationUI(int mode)
+    {
+        switch (mode)
+        {
+            case 1:
+                ChangeView(_retoSelector);
+                _retoSelector.Init(1, _player.NearStation.TemaId);
+                break;
+            case 2:
+                ChangeView(_station.StationUI);
+                break;
+            default:
+                break;
+        }
     }
     public void StartActualStation(Reto reto)
     {
-        // _retoSelector.gameObject.SetActive(false);
-        _actualView.Hide();
-        _actualView = _station.StationUI;
-        _actualView.Show();
+        ChangeView(_station.StationUI);
         _station.StationUI.Init(reto);
+    }
+    private void ChangeView(View newView)
+    {
+        if (_actualView != null)
+        {
+            _actualView.Hide();
+        }
+        _actualView = newView;
+        _actualView.Show();
     }
 }

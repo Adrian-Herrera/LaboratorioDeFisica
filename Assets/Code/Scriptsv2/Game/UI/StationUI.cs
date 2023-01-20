@@ -31,7 +31,6 @@ public class StationUI : View
     public void Init(Reto reto)
     {
         Debug.Log("Init station");
-        gameObject.SetActive(true);
         _actualReto = reto;
         _intentos = 0;
         DrawInputs();

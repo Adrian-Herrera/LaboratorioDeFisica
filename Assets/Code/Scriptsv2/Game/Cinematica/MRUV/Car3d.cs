@@ -47,7 +47,7 @@ public class Car3d : MonoBehaviour
             if (_accX != 0)
             {
                 float scale = _maxVirtualDistance / _maxRealDistance;
-                _rb.AddForce(new Vector3(0, 0, _accX / scale), ForceMode.Acceleration);
+                _rb.AddRelativeForce(new Vector3(0, 0, _accX / scale), ForceMode.Acceleration);
             }
             if (_type == CinematicType.MRU)
             {
