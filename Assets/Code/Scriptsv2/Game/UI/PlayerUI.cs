@@ -9,21 +9,16 @@ public class PlayerUI : MonoBehaviour
     public static PlayerUI Instance;
     [SerializeField] private Player _player;
     public Player Player => _player;
-    [SerializeField] private Station _station;
+    // [SerializeField] private Station _activeStation;
     [SerializeField] private GameObject _userInfo;
     [SerializeField] private GameObject _generalInfo;
-    [SerializeField] private InstructionUI _instructionUI;
-    [Header("Near Station")]
-    [SerializeField] private GameObject _nearStationGameObject;
-    [SerializeField] private TMP_Text _nearStationText;
     [Header("Canvas")]
-    public RetoSelectorMenu _retoSelector;
+    public NearStationMessage _nearStationMessage;
+    [SerializeField] private InstructionUI _instructionUI;
     public ModeSelector _modeSelector;
-    [Header("Views")]
+    public RetoSelectorMenu _retoSelector;
     public RetoFinalInfo _retoFinal;
-    // [Header("Stations")]
-    // [SerializeField] private StationUI _stationUI;
-    // Views
+    public Tablet _tablet;
     public View _actualView;
     private void Awake()
     {
@@ -44,31 +39,21 @@ public class PlayerUI : MonoBehaviour
     }
     private void ShowStationName(Station station)
     {
-        _station = station;
-        _nearStationText.text = _station.Name;
-        _nearStationGameObject.SetActive(true);
-    }
-    private void HideStationName()
-    {
-        _nearStationText.text = "";
-        _nearStationGameObject.SetActive(false);
+        // _activeStation = station;
+        ChangeView(_nearStationMessage);
+        _nearStationMessage.Init(Player.NearStation);
     }
     private void StartExercise()
     {
-        HideStationName();
-        SetInstructions(_station.Instructions);
+        SetInstructions(Player.NearStation.Instructions);
     }
     private void ExitStation()
     {
-        if (_station.Status == StationStatus.Waiting)
-        {
-            HideStationName();
-        }
         if (_actualView != null)
         {
             _actualView.Hide();
         }
-        _station = null;
+        // _activeStation = null;
     }
     private void SetInstructions(InstructionSO instructions)
     {
@@ -85,10 +70,11 @@ public class PlayerUI : MonoBehaviour
         {
             case 1:
                 ChangeView(_retoSelector);
-                _retoSelector.Init(1, _player.NearStation.TemaId);
+                _retoSelector.Init(1, Player.NearStation.TemaId);
                 break;
             case 2:
-                ChangeView(_station.StationUI);
+                ChangeView(_tablet);
+                _tablet.Init(Player.NearStation);
                 break;
             default:
                 break;
@@ -96,8 +82,14 @@ public class PlayerUI : MonoBehaviour
     }
     public void StartActualStation(Reto reto)
     {
-        ChangeView(_station.StationUI);
-        _station.StationUI.Init(reto);
+        ChangeView(_tablet);
+        _tablet.Init(Player.NearStation);
+        Player.NearStation.SetTableroData(reto);
+    }
+    public void ShowFinalInfo(Reto reto, int intentos)
+    {
+        ChangeView(_retoFinal);
+        _retoFinal.Init(reto, intentos);
     }
     private void ChangeView(View newView)
     {

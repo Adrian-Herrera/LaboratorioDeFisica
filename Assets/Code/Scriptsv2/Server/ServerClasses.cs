@@ -90,10 +90,10 @@ public class Reto
 [Serializable]
 public class RetoDato
 {
-    public Variable Variable;
     public float Valor;
-    public string Descripcion;
     public bool EsDato;
+    public Variable Variable;
+    // public string Descripcion;
 }
 [Serializable]
 public class LogInfo

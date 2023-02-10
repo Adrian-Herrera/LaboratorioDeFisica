@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class DropDown : MonoBehaviour
 {
-    private static Variable[] _variables;
+    [SerializeField] private Variable[] _variables;
     [SerializeField] TMP_Text _headerLabel;
     [SerializeField] Button _arrow;
     [SerializeField] GameObject _content;

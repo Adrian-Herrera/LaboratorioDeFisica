@@ -46,6 +46,24 @@ public class VariableInput : MonoBehaviour
             _inputField.readOnly = true;
         }
     }
+    public VariableInput Init(VariableLocal variable)
+    {
+        _label.text = variable.Nombre;
+        _inputField.onEndEdit.AddListener((newValue) =>
+        {
+            if (string.IsNullOrEmpty(newValue) || string.IsNullOrWhiteSpace(newValue))
+            {
+                _inputField.text = "";
+                variable.Valor = 0;
+            }
+            else
+            {
+                variable.Valor = float.Parse(newValue);
+            }
+        });
+        return this;
+        // _magnitude.text = variable.Abrev;
+    }
     public bool CheckAnswer()
     {
         Debug.Log(_inputField.text);

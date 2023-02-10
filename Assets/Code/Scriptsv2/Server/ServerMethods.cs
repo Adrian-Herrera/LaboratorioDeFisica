@@ -32,8 +32,8 @@ public class ServerMethods : MonoBehaviour
     {
         Debug.Log("GetRequest");
         using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
-        // www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
-        www.SetRequestHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczMDUzMTc2LCJleHAiOjE2NzMxMzk1NzZ9.sUuINdj0SAAyTEMgZmaclZdEpLShMcuHRUshlNY3k04");
+        www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
+        // www.SetRequestHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczMDUzMTc2LCJleHAiOjE2NzMxMzk1NzZ9.sUuINdj0SAAyTEMgZmaclZdEpLShMcuHRUshlNY3k04");
         yield return www.SendWebRequest();
         if (www.result != UnityWebRequest.Result.Success)
         {
@@ -57,6 +57,7 @@ public class ServerMethods : MonoBehaviour
 
     public IEnumerator GetCuestionario(int id, Action<Cuestionario> res)
     {
+        Debug.Log("/cuestionario/" + id);
         yield return StartCoroutine(GetJson("/cuestionario/" + id, (json) =>
         {
             res(JsonUtility.FromJson<Cuestionario>(json));

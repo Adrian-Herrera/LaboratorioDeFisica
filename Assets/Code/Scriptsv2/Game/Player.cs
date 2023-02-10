@@ -8,16 +8,13 @@ public class Player : MonoBehaviour
 {
     public static Player Instance;
     [SerializeField] private InstructionSO _activeInstruction;
-    private Station _nearStation;
+    [SerializeField] private Station _nearStation;
     public Station NearStation => _nearStation;
     private StarterAssetsInputs _input;
     //Events
     public event Action<Station> OnEnterStation;
-    // public void EnterStation(Station station) => OnEnterStation?.Invoke(station);
     public event Action OnExitStation;
-    // public void ExitStation() => OnExitStation?.Invoke();
     public event Action OnStartExercise;
-    // public void StartExercise(InstructionSO instruction) => OnStartExercise?.Invoke();
     private void Awake()
     {
         if (Instance == null)
@@ -49,11 +46,5 @@ public class Player : MonoBehaviour
         {
             OnExitStation?.Invoke();
         }
-    }
-    public void ClearStation()
-    {
-        // EnterStation(null);
-        // _activeInstruction = null;
-        // ExitStation();
     }
 }

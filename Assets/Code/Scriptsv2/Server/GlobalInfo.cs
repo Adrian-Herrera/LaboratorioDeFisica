@@ -9,9 +9,11 @@ public class GlobalInfo : MonoBehaviour
 {
     public static GlobalInfo Instance;
     public static Variable[] Variables;
-    public Dictionary<string, Variable> VarDict = new();
+    public Variable[] _localVariables;
+    // public Dictionary<string, Variable> VarDict = new();
     public static Unidad[] Unidades;
-    private static string fileText;
+    private static string fileText1;
+    private static string fileText2;
     private void Awake()
     {
         if (Instance == null)
@@ -30,20 +32,21 @@ public class GlobalInfo : MonoBehaviour
         // fileText = File.ReadAllText(Application.streamingAssetsPath + "/Variables.json");
         yield return StartCoroutine(LoadStreamingAsset("Variables.json", res =>
         {
-            fileText = res;
+            fileText1 = res;
         }));
-        Variables = JsonUtility.FromJson<ResourceData<Variable>>(fileText).Data;
-        for (int i = 0; i < Variables.Length; i++)
-        {
-            VarDict.Add(Variables[i].Nombre, Variables[i]);
-        }
+        Variables = JsonUtility.FromJson<ResourceData<Variable>>(fileText1).Data;
+        _localVariables = Variables;
+        // for (int i = 0; i < Variables.Length; i++)
+        // {
+        //     VarDict.Add(Variables[i].Nombre, Variables[i]);
+        // }
         // VarDict = Dictionary<Variable>(Variables);
         yield return StartCoroutine(LoadStreamingAsset("Unidades.json", res =>
         {
-            fileText = res;
+            fileText2 = res;
         }));
         // fileText = File.ReadAllText(Application.streamingAssetsPath + "/Unidades.json");
-        Unidades = JsonUtility.FromJson<ResourceData<Unidad>>(fileText).Data;
+        Unidades = JsonUtility.FromJson<ResourceData<Unidad>>(fileText2).Data;
     }
     IEnumerator LoadStreamingAsset(string fileName, Action<string> res)
     {
