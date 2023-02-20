@@ -5,81 +5,55 @@ using UnityEngine;
 [Serializable]
 public class ExerciseTemplate
 {
-    public Dictionary<int, VariableLocal> Variables = new();
+    // public Dictionary<int, TipoVariable> Variables = new();
+    public List<VariableUnity> Variables = new();
+    public VariableUnity FindVarById(int id)
+    {
+        return Variables.Find(e => id == e.TipoVariable.Id);
+    }
+    public VariableUnity FindVarByType(TipoVariable tipo)
+    {
+        return Variables.Find(e => tipo == e.TipoVariable);
+    }
     // POR SEGMENTO
-    public VariableLocal Velocidad = new(1, "Velocidad");
-    public VariableLocal Distancia = new(2, "Distancia");
-    public VariableLocal Tiempo = new(3, "Tiempo");
-    public VariableLocal VelocidadInicial = new(4, "Velocidad Inicial");
-    public VariableLocal VelocidadFinal = new(5, "Velocidad Final");
-    public VariableLocal Aceleracion = new(6, "Aceleracion");
-    public VariableLocal Altura;
-    // TOTALES
-    public VariableLocal TiempoTotal;
-    public VariableLocal DistanciaTotal;
-    public VariableLocal Gravedad;
-    public VariableLocal AlturaMaxima;
-    public VariableLocal AlturaInicial;
-    public VariableLocal AlturaTotal;
-    public VariableLocal DistanciaMaxima;
-    public VariableLocal TiempoDeVuelo;
-    public VariableLocal TiempoDeSubida;
-    public VariableLocal TiempoDeBajada;
+    // public TipoVariable Velocidad = new(1, "Velocidad");
+    // public TipoVariable Distancia = new(2, "Distancia");
+    // public TipoVariable Tiempo = new(3, "Tiempo");
+    // public TipoVariable VelocidadInicial = new(4, "Velocidad Inicial");
+    // public TipoVariable VelocidadFinal = new(5, "Velocidad Final");
+    // public TipoVariable Aceleracion = new(6, "Aceleracion");
+    // public TipoVariable Altura;
+    // // TOTALES
+    // public TipoVariable TiempoTotal;
+    // public TipoVariable DistanciaTotal;
+    // public TipoVariable Gravedad;
+    // public TipoVariable AlturaMaxima;
+    // public TipoVariable AlturaInicial;
+    // public TipoVariable AlturaTotal;
+    // public TipoVariable DistanciaMaxima;
+    // public TipoVariable TiempoDeVuelo;
+    // public TipoVariable TiempoDeSubida;
+    // public TipoVariable TiempoDeBajada;
     public void ActivarMru()
     {
         Variables.Clear();
-        ActivateVariable(Velocidad);
-        ActivateVariable(Distancia);
-        ActivateVariable(Tiempo);
+        ActivateVariable(BaseVariable.Velocidad);
+        ActivateVariable(BaseVariable.Distancia);
+        ActivateVariable(BaseVariable.Tiempo);
     }
     public void ActivarMruv()
     {
         Variables.Clear();
-        ActivateVariable(Distancia);
-        ActivateVariable(Tiempo);
-        ActivateVariable(VelocidadInicial);
-        ActivateVariable(VelocidadFinal);
-        ActivateVariable(Aceleracion);
+        ActivateVariable(BaseVariable.Distancia);
+        ActivateVariable(BaseVariable.Tiempo);
+        ActivateVariable(BaseVariable.VelocidadInicial);
+        ActivateVariable(BaseVariable.VelocidadFinal);
+        ActivateVariable(BaseVariable.Aceleracion);
     }
-    private void ActivateVariable(VariableLocal variable)
+    private void ActivateVariable(TipoVariable variable)
     {
-        Variables.Add(variable.Id, variable);
-        variable.Activo = true;
-    }
-}
-[Serializable]
-public class VariableLocal
-{
-    [SerializeField] private int _id;
-    [SerializeField] private string _nombre;
-    [SerializeField] private float _valor;
-    public bool Activo = false;
-    public int Id
-    {
-        get { return _id; }
-        private set { _id = value; }
-    }
-    public string Nombre
-    {
-        get { return _nombre; }
-        private set { _nombre = value; }
-    }
-    public float Valor
-    {
-        get { return _valor; }
-        set
-        {
-            if (Activo == false)
-            {
-                Debug.LogWarning("La variable " + Nombre + " no esta activada");
-                return;
-            }
-            _valor = value;
-        }
-    }
-    public VariableLocal(int id, string nombre)
-    {
-        Id = id;
-        Nombre = nombre;
+        VariableUnity varUnity = new(variable);
+        Variables.Add(varUnity);
+        // variable.Activo = true;
     }
 }

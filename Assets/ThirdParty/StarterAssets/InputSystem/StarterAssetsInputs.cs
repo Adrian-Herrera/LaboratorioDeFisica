@@ -33,6 +33,7 @@ namespace StarterAssets
         {
             if (cursorInputForLook)
             {
+                if (menu) return;
                 LookInput(value.Get<Vector2>());
             }
         }
@@ -91,6 +92,7 @@ namespace StarterAssets
         public void SwitchMenu()
         {
             menu = !menu;
+            SetCursorState(!menu);
             // Debug.Log(menu);
         }
         public void Interact(bool newInteractState)

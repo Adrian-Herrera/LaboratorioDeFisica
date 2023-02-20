@@ -33,7 +33,7 @@ public class RetoSelectorUI : MonoBehaviour, IPointerClickHandler
         Debug.Log("Reto: " + _idReto);
         StartCoroutine(ServerMethods.Current.GetReto(_idReto, (res) =>
         {
-            PlayerUI.Instance.StartActualStation(res);
+            PlayerUI.Instance.SetStationReto(res);
         }));
     }
     public void OnPointerClick(PointerEventData eventData)

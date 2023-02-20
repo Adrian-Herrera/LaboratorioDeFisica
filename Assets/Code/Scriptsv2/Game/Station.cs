@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,7 +20,7 @@ public class Station : MonoBehaviour
     private Reto _activeReto;
     private int _intentos;
     public ExerciseTemplate Template = new();
-    private ControlPoints _controlPoint = new();
+    private ControlPoints _controlPoint;
     // ATRIBUTTES
     public CinematicObject CinematicObject => _cinematicObject;
     public string Name => _name;
@@ -29,9 +30,15 @@ public class Station : MonoBehaviour
     public int Intentos => _intentos;
     // public StationUI StationUI => _stationUI;
     public int TemaId => _temaId;
+    // EVENTS
+    public event Action OnStartStation;
     private void Start()
     {
         CinematicObject.OnFinishMove += CheckFinalPoint;
+    }
+    public void Init()
+    {
+        OnStartStation?.Invoke();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -74,7 +81,6 @@ public class Station : MonoBehaviour
     }
     private void CheckFinalPoint()
     {
-        SaveLastVariables();
         bool allAnswered = true;
         if (_activeReto != null)
         {
@@ -82,8 +88,8 @@ public class Station : MonoBehaviour
             {
                 if (_activeReto.RetoDatos[i].EsDato)
                 {
-                    Debug.Log(_activeReto.RetoDatos[i].Valor + " = " + Template.Variables[_activeReto.RetoDatos[i].Variable.Id].Valor);
-                    if (_activeReto.RetoDatos[i].Valor != Template.Variables[_activeReto.RetoDatos[i].Variable.Id].Valor)
+                    Debug.Log(_activeReto.RetoDatos[i].Valor + " = " + Template.FindVarById(_activeReto.RetoDatos[i].Variable.Id)._value);
+                    if (_activeReto.RetoDatos[i].Valor != Template.FindVarById(_activeReto.RetoDatos[i].Variable.Id)._value)
                     {
                         allAnswered = false;
                     }
@@ -98,17 +104,6 @@ public class Station : MonoBehaviour
         else
         {
             CinematicObject.ResetAll(3);
-        }
-    }
-    private void SaveLastVariables()
-    {
-        if (Template.Distancia.Activo)
-        {
-            Template.Distancia.Valor = CinematicObject.DistanceFromStart;
-        }
-        if (Template.Tiempo.Activo)
-        {
-            Template.Tiempo.Valor = CinematicObject.TimeMoving;
         }
     }
 }

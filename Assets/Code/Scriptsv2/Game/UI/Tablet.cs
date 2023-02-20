@@ -15,12 +15,16 @@ public class Tablet : View
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _resetButton;
     [SerializeField] private Button _switchViewButton;
+    [Header("Control Point")]
+    // [SerializeField] private ControlPoints _controlPoints;
+    private ControlPointsUI _controlPointsUI;
     private readonly List<VariableInput> _inputList = new();
     private RectTransform _rt;
     private bool _isHidden;
     private void Awake()
     {
         _rt = GetComponent<RectTransform>();
+        _controlPointsUI = GetComponent<ControlPointsUI>();
     }
     private void Start()
     {
@@ -29,6 +33,8 @@ public class Tablet : View
     }
     public void Init(Station station)
     {
+        // _controlPoints = station.GetComponent<ControlPoints>();
+        _controlPointsUI.Init(station.GetComponent<ControlPoints>());
         // ca _car = station.Car;
         _isHidden = false;
         _activeStation = station;
@@ -36,15 +42,16 @@ public class Tablet : View
         switch (station.CinematicObject.Type)
         {
             case CinematicType.MRU:
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.Velocidad));
+                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
                 break;
             case CinematicType.MRUV:
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.VelocidadInicial));
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.Aceleracion));
+                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
+                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Aceleracion)));
                 break;
             default:
                 break;
         }
+
     }
     public void StartMoveCar()
     {
@@ -53,11 +60,11 @@ public class Tablet : View
         switch (_car.Type)
         {
             case CinematicType.MRU:
-                _car.SetHorizontalVel(_activeStation.Template.Velocidad.Valor, 0);
+                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad)._value, 0);
                 _car.StartMovement();
                 break;
             case CinematicType.MRUV:
-                _car.SetHorizontalVel(_activeStation.Template.VelocidadInicial.Valor, _activeStation.Template.Aceleracion.Valor);
+                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial)._value, _activeStation.Template.FindVarByType(BaseVariable.Aceleracion)._value);
                 _car.StartMovement();
                 break;
             case CinematicType.CaidaLibre:
@@ -68,11 +75,6 @@ public class Tablet : View
                 Debug.Log("No existe este tipo de cinematica");
                 break;
         }
-    }
-    public IEnumerator ResetCar()
-    {
-        yield return new WaitForSeconds(3);
-        _activeStation.CinematicObject.ResetAll();
     }
     public void ShowFinalInfo(Reto reto, int intentos)
     {

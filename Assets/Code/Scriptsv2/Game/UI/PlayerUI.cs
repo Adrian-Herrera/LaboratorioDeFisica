@@ -73,18 +73,22 @@ public class PlayerUI : MonoBehaviour
                 _retoSelector.Init(1, Player.NearStation.TemaId);
                 break;
             case 2:
-                ChangeView(_tablet);
-                _tablet.Init(Player.NearStation);
+                StartActualStation();
                 break;
             default:
                 break;
         }
     }
-    public void StartActualStation(Reto reto)
+    public void SetStationReto(Reto reto)
     {
+        Player.NearStation.SetTableroData(reto);
+        StartActualStation();
+    }
+    public void StartActualStation()
+    {
+        Player.NearStation.Init();
         ChangeView(_tablet);
         _tablet.Init(Player.NearStation);
-        Player.NearStation.SetTableroData(reto);
     }
     public void ShowFinalInfo(Reto reto, int intentos)
     {

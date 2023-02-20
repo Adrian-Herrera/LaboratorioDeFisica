@@ -20,13 +20,11 @@ public class WorldRuler : MonoBehaviour
     }
     private void Start()
     {
-        float temp = 0;
-        while (temp <= 10)
+        for (float i = 0; i <= 10; i++)
         {
             RulerSeparationLine sepLine = Instantiate(_separationLine, _separationLineContainer.transform);
-            sepLine.Init(Mathf.Lerp(0, _object.MaxVirtualDistance, temp / 10));
-            sepLine.SetPosition(Mathf.Lerp(0, _rt.sizeDelta.x, temp / 10));
-            temp += 1;
+            sepLine.Init(Mathf.Lerp(0, _object.MaxVirtualDistance, i / 10));
+            sepLine.SetPosition(Mathf.Lerp(0, _rt.sizeDelta.x, i / 10));
         }
     }
     private void FixedUpdate()

@@ -7,12 +7,11 @@ using TMPro;
 public class VariableInput : MonoBehaviour
 {
     public TMP_InputField _inputField;
-    [SerializeField] private TMP_Text _label;
+    [SerializeField] protected TMP_Text _label;
     [SerializeField] private TMP_Text _magnitude;
     [SerializeField] private bool _isData = false;
-    [SerializeField] private Variable _variable;
-    public VariableEnum _enum;
-    private float _value;
+    [SerializeField] protected Variable _variable;
+    protected float _value;
     // Properties
     public bool IsData => _isData;
     public Variable Variable => _variable;
@@ -46,19 +45,23 @@ public class VariableInput : MonoBehaviour
             _inputField.readOnly = true;
         }
     }
-    public VariableInput Init(VariableLocal variable)
+    public VariableInput Init(VariableUnity variable, bool showValue = false)
     {
-        _label.text = variable.Nombre;
+        _label.text = variable.TipoVariable.Nombre;
+        if (showValue)
+        {
+            _inputField.text = variable._value.ToString();
+        }
         _inputField.onEndEdit.AddListener((newValue) =>
         {
             if (string.IsNullOrEmpty(newValue) || string.IsNullOrWhiteSpace(newValue))
             {
                 _inputField.text = "";
-                variable.Valor = 0;
+                variable._value = 0;
             }
             else
             {
-                variable.Valor = float.Parse(newValue);
+                variable._value = float.Parse(newValue);
             }
         });
         return this;
