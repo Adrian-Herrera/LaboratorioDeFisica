@@ -10,6 +10,7 @@ public class ControlPointsUI : MonoBehaviour
     [SerializeField] private ControlPoints _controlPoints;
     [SerializeField] private ControlPointInput _controlPointInput;
     [SerializeField] private GameObject _controlPointsContainer;
+    [SerializeField] private Tablet _tablet;
     // [SerializeField] private List<VariableInput> _listControlPoint = new();
     [SerializeField] private List<ControlPointInput> _listControlPoint = new();
     // private List<Button> _listDeleteButton = new();

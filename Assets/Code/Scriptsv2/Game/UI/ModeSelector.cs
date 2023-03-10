@@ -12,11 +12,11 @@ public class ModeSelector : View
     {
         _retoButton.onClick.AddListener(() =>
         {
-            PlayerUI.Instance.ShowStationUI(1);
+            PlayerUI.Instance.ShowStationUI(Station.ModeEnum.Reto);
         });
         _libreButton.onClick.AddListener(() =>
         {
-            PlayerUI.Instance.ShowStationUI(2);
+            PlayerUI.Instance.ShowStationUI(Station.ModeEnum.Libre);
         });
     }
 

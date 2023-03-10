@@ -50,18 +50,18 @@ public class VariableInput : MonoBehaviour
         _label.text = variable.TipoVariable.Nombre;
         if (showValue)
         {
-            _inputField.text = variable._value.ToString();
+            _inputField.text = variable.Value.ToString();
         }
         _inputField.onEndEdit.AddListener((newValue) =>
         {
             if (string.IsNullOrEmpty(newValue) || string.IsNullOrWhiteSpace(newValue))
             {
                 _inputField.text = "";
-                variable._value = 0;
+                variable.Value = 0;
             }
             else
             {
-                variable._value = float.Parse(newValue);
+                variable.Value = float.Parse(newValue);
             }
         });
         return this;

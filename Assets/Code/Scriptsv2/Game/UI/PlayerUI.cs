@@ -64,15 +64,17 @@ public class PlayerUI : MonoBehaviour
     {
         ChangeView(_modeSelector);
     }
-    public void ShowStationUI(int mode)
+    public void ShowStationUI(Station.ModeEnum mode)
     {
         switch (mode)
         {
-            case 1:
+            case Station.ModeEnum.Reto:
+                Player.NearStation.ActualMode = Station.ModeEnum.Reto;
                 ChangeView(_retoSelector);
                 _retoSelector.Init(1, Player.NearStation.TemaId);
                 break;
-            case 2:
+            case Station.ModeEnum.Libre:
+                Player.NearStation.ActualMode = Station.ModeEnum.Libre;
                 StartActualStation();
                 break;
             default:
@@ -81,7 +83,7 @@ public class PlayerUI : MonoBehaviour
     }
     public void SetStationReto(Reto reto)
     {
-        Player.NearStation.SetTableroData(reto);
+        Player.NearStation.SetReto(reto);
         StartActualStation();
     }
     public void StartActualStation()

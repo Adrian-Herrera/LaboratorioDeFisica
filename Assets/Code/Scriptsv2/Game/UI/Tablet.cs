@@ -14,30 +14,33 @@ public class Tablet : View
     [Header("Buttons")]
     [SerializeField] private Button _startButton;
     [SerializeField] private Button _resetButton;
-    [SerializeField] private Button _switchViewButton;
+    // [SerializeField] private Button _switchViewButton;
     [Header("Control Point")]
     // [SerializeField] private ControlPoints _controlPoints;
     private ControlPointsUI _controlPointsUI;
     private readonly List<VariableInput> _inputList = new();
-    private RectTransform _rt;
-    private bool _isHidden;
+    public Station ActiveStation => _activeStation;
+    // private RectTransform _rt;
+    // private bool _isHidden;
     private void Awake()
     {
-        _rt = GetComponent<RectTransform>();
+        // _rt = GetComponent<RectTransform>();
         _controlPointsUI = GetComponent<ControlPointsUI>();
     }
     private void Start()
     {
         _startButton.onClick.AddListener(StartMoveCar);
-        _switchViewButton.onClick.AddListener(SwitchView);
+        Player.Instance.OnExitStation += ExitStation;
+        // _switchViewButton.onClick.AddListener(SwitchView);
     }
     public void Init(Station station)
     {
         // _controlPoints = station.GetComponent<ControlPoints>();
-        _controlPointsUI.Init(station.GetComponent<ControlPoints>());
         // ca _car = station.Car;
-        _isHidden = false;
+        // _isHidden = false;
+        _controlPointsUI.Init(station.GetComponent<ControlPoints>());
         _activeStation = station;
+        _activeStation.CinematicObject.OnFinishMove += Show;
         Helpers.ClearListContent(_inputList);
         switch (station.CinematicObject.Type)
         {
@@ -51,20 +54,28 @@ public class Tablet : View
             default:
                 break;
         }
-
+    }
+    public void ExitStation()
+    {
+        if (_activeStation != null)
+        {
+            _activeStation.CinematicObject.OnFinishMove -= Show;
+            _activeStation = null;
+        }
     }
     public void StartMoveCar()
     {
         CinematicObject _car = _activeStation.CinematicObject;
         Debug.Log("Move with " + _car.Type + " type");
+        _car.ResetAll();
         switch (_car.Type)
         {
             case CinematicType.MRU:
-                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad)._value, 0);
+                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad).Value, 0);
                 _car.StartMovement();
                 break;
             case CinematicType.MRUV:
-                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial)._value, _activeStation.Template.FindVarByType(BaseVariable.Aceleracion)._value);
+                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial).Value, _activeStation.Template.FindVarByType(BaseVariable.Aceleracion).Value);
                 _car.StartMovement();
                 break;
             case CinematicType.CaidaLibre:
@@ -75,6 +86,7 @@ public class Tablet : View
                 Debug.Log("No existe este tipo de cinematica");
                 break;
         }
+        Hide();
     }
     public void ShowFinalInfo(Reto reto, int intentos)
     {
@@ -83,18 +95,5 @@ public class Tablet : View
         // PlayerUI.Instance._actualView.Show();
         PlayerUI.Instance.ShowFinalInfo(reto, intentos);
         // PlayerUI.Instance._retoFinal.Init(_actualReto, _intentos);
-    }
-    private void SwitchView()
-    {
-        float heigth = _rt.sizeDelta.y;
-        if (_isHidden)
-        {
-            _rt.anchoredPosition = new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y + heigth);
-        }
-        else
-        {
-            _rt.anchoredPosition = new Vector2(_rt.anchoredPosition.x, _rt.anchoredPosition.y - heigth);
-        }
-        _isHidden = !_isHidden;
     }
 }

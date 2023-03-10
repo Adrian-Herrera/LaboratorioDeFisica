@@ -3,38 +3,48 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum StationStatus
-{
-    Waiting, Running
-}
 public class Station : MonoBehaviour
 {
+    public enum StatusEnum
+    {
+        Waiting, Running
+    }
+    public enum ModeEnum
+    {
+        Reto, Libre, Prueba
+    }
     [SerializeField] private string _name;
     [SerializeField] private InstructionSO _instructions;
-    [SerializeField] private StationStatus _status;
-    // [SerializeField] private StationUI _stationUI;
+    [SerializeField] private StatusEnum _status;
+    public ModeEnum ActualMode;
     [SerializeField] private int _temaId;
-    [SerializeField] private TableroReto _tableroReto;
     [Header("Car")]
     [SerializeField] private CinematicObject _cinematicObject;
-    private Reto _activeReto;
-    private int _intentos;
+    // public Reto ActiveReto { get; private set; }
+    public int Intentos { get; private set; }
     public ExerciseTemplate Template = new();
     private ControlPoints _controlPoint;
+    private RetoManager _retoManager;
     // ATRIBUTTES
     public CinematicObject CinematicObject => _cinematicObject;
     public string Name => _name;
     public InstructionSO Instructions => _instructions;
-    public StationStatus Status => _status;
-    public Reto ActiveReto => _activeReto;
-    public int Intentos => _intentos;
-    // public StationUI StationUI => _stationUI;
+    public StatusEnum Status => _status;
+    // public ModeEnum ActualMode => _actualMode;
     public int TemaId => _temaId;
     // EVENTS
     public event Action OnStartStation;
-    private void Start()
+    private void OnEnable()
     {
-        CinematicObject.OnFinishMove += CheckFinalPoint;
+        _cinematicObject.OnFinishMove += SaveDataTemplate;
+    }
+    private void OnDisable()
+    {
+        _cinematicObject.OnFinishMove -= SaveDataTemplate;
+    }
+    private void Awake()
+    {
+        _retoManager = GetComponent<RetoManager>();
     }
     public void Init()
     {
@@ -55,13 +65,13 @@ public class Station : MonoBehaviour
         {
             Debug.Log("Algo salio");
             player.SetNearStation(null);
-            _status = StationStatus.Waiting;
+            _status = StatusEnum.Waiting;
             InstructionUI.OnStartExercise -= Activate;
         }
     }
     private void Activate()
     {
-        _status = StationStatus.Running;
+        _status = StatusEnum.Running;
         switch (CinematicObject.Type)
         {
             case CinematicType.MRU:
@@ -74,36 +84,18 @@ public class Station : MonoBehaviour
                 break;
         }
     }
-    public void SetTableroData(Reto reto)
+    public void SetReto(Reto reto)
     {
-        _activeReto = reto;
-        _tableroReto.SetNewReto(reto);
+        _retoManager.Init(reto);
     }
-    private void CheckFinalPoint()
+    private void SaveDataTemplate()
     {
-        bool allAnswered = true;
-        if (_activeReto != null)
+        Template.FindVarByType(BaseVariable.Distancia).Value = _cinematicObject.DistanceFromStart;
+        Template.FindVarByType(BaseVariable.Tiempo).Value = _cinematicObject.TimeMoving;
+        Template.FindVarByType(BaseVariable.VelocidadInicial).Value = _cinematicObject.VelX;
+        if (ActualMode == ModeEnum.Reto)
         {
-            for (int i = 0; i < _activeReto.RetoDatos.Length; i++)
-            {
-                if (_activeReto.RetoDatos[i].EsDato)
-                {
-                    Debug.Log(_activeReto.RetoDatos[i].Valor + " = " + Template.FindVarById(_activeReto.RetoDatos[i].Variable.Id)._value);
-                    if (_activeReto.RetoDatos[i].Valor != Template.FindVarById(_activeReto.RetoDatos[i].Variable.Id)._value)
-                    {
-                        allAnswered = false;
-                    }
-                }
-            }
-            Debug.Log(allAnswered);
-            if (allAnswered == false)
-            {
-                CinematicObject.ResetAll(3);
-            }
-        }
-        else
-        {
-            CinematicObject.ResetAll(3);
+            _retoManager.CheckAnswer();
         }
     }
 }

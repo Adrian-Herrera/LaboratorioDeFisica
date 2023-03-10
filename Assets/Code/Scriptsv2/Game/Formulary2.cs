@@ -22,6 +22,10 @@ public class Formulary2 : MonoBehaviour
     {
         return vo + (a * t);
     }
+    public static float Formula_2(float vo, float vf, float t)
+    {
+        return (vo + vf) * t / 2;
+    }
     public static float Formula_4(float vo, float a, float t)
     {
         return (vo * t) + (a * Mathf.Pow(t, 2) / 2);

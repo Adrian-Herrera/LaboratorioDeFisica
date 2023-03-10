@@ -14,4 +14,8 @@ public abstract class View : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+    public void SwitchView()
+    {
+        gameObject.SetActive(!gameObject.activeSelf);
+    }
 }

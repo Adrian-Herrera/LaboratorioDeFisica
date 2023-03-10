@@ -17,6 +17,14 @@ public class Helpers : MonoBehaviour
         }
         list.Clear();
     }
+    public static void ClearListContent(List<GameObject> list)
+    {
+        foreach (GameObject item in list)
+        {
+            Destroy(item);
+        }
+        list.Clear();
+    }
     public static Color HexColor(string hex)
     {
         if (ColorUtility.TryParseHtmlString(hex, out Color newColor)) return newColor;

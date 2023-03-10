@@ -5,11 +5,16 @@ using UnityEngine;
 [Serializable]
 public class VariableUnity
 {
-    public float _value;
+    public float Value;
     public TipoVariable TipoVariable;
     public VariableUnity(TipoVariable tipo)
     {
         TipoVariable = tipo;
+    }
+    public VariableUnity(TipoVariable tipo, float value)
+    {
+        TipoVariable = tipo;
+        Value = value;
     }
 }
 [Serializable]

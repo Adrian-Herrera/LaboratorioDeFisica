@@ -28,7 +28,7 @@ public class Player : MonoBehaviour
         if (_input.interact)
         {
             Debug.Log("Interact pressed");
-            if (_nearStation != null && _nearStation.Status == StationStatus.Waiting)
+            if (_nearStation != null && _nearStation.Status == Station.StatusEnum.Waiting)
             {
                 OnStartExercise?.Invoke();
             }

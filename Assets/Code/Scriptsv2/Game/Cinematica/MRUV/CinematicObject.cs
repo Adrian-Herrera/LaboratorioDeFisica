@@ -28,6 +28,7 @@ public class CinematicObject : MonoBehaviour
     private Vector3 _initialPos;
     public CinematicType Type;
     public float VelX => _velX;
+    public float AccX => _accX;
     public float ActualVelX => _actualVelX;
     public float VelY => _velY;
     public float TimeMoving => _timeMoving / 1000;
@@ -56,9 +57,9 @@ public class CinematicObject : MonoBehaviour
             if (_distanceFromStart >= _maxVirtualDistance)
             {
                 _distanceFromStart = _maxVirtualDistance;
-                StopMovement();
                 _timeMoving = CalculateTime(_distanceFromStart) * 1000;
                 _actualVelX = CalculateActualVelocity(TimeMoving);
+                StopMovement();
             }
             else
             {
@@ -104,7 +105,6 @@ public class CinematicObject : MonoBehaviour
         else if (Type == CinematicType.MRUV)
         {
             _distanceFromStart = Formulary2.Formula_4(_velX, _accX, TimeMoving);
-            // _distanceFromStart = _velX * TimeMoving + _accX * Mathf.Pow(TimeMoving, 2) / 2;
         }
     }
     public float CalculateActualVelocity(float time)
@@ -157,7 +157,7 @@ public class CinematicObject : MonoBehaviour
     {
         StartCoroutine(ResetCar(seconds));
     }
-    public IEnumerator ResetCar(int seconds)
+    private IEnumerator ResetCar(int seconds)
     {
         if (seconds != 0)
         {
