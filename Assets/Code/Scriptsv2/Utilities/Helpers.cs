@@ -30,4 +30,9 @@ public class Helpers : MonoBehaviour
         if (ColorUtility.TryParseHtmlString(hex, out Color newColor)) return newColor;
         else return Color.black;
     }
+    public static float RoundFloat(float number, int NumberOfDigits = 2)
+    {
+        float mult = Mathf.Pow(10, NumberOfDigits);
+        return Mathf.Round(number * mult) / mult;
+    }
 }

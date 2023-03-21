@@ -5,24 +5,23 @@ using UnityEngine;
 public class Object3d : MonoBehaviour
 {
     [Header("Variables")]
-    [Range(1, 10)]
-    [SerializeField] private float _masa = 1;
+    public VariableUnity _masa;
     [Header("Fuerzas")]
-    [SerializeField] private float _tension;
-    [SerializeField] private float _peso;
-    [SerializeField] private float _normal;
+    public VariableUnity _tension;
+    public VariableUnity _peso;
+    public VariableUnity _normal;
     public float Masa
     {
-        get { return _masa; }
+        get { return _masa.Value; }
         set
         {
-            _masa = value;
-            _peso = _masa * 10;
+            _masa.Value = value;
+            _peso.Value = _masa.Value * 10;
         }
     }
     [Header("Datos")]
-    [SerializeField] private float _acc;
-    [SerializeField] private float _vel;
+    public VariableUnity _acc;
+    public VariableUnity _vel;
     [SerializeField] private float _yForces;
     [SerializeField] private bool _debug = false;
     public bool _onGround;
@@ -54,18 +53,23 @@ public class Object3d : MonoBehaviour
     }
     private void Start()
     {
-        Application.targetFrameRate = 0;
+        _masa = new(BaseVariable.Masa, 1);
+        _tension = new(BaseVariable.Tension);
+        _peso = new(BaseVariable.Peso);
+        _normal = new(BaseVariable.Normal);
+        _acc = new(BaseVariable.Aceleracion);
+        _vel = new(BaseVariable.Velocidad, 0);
         _onGround = false;
-        _vel = 0;
+        // _vel = 0;
     }
     private void FixedUpdate()
     {
-        if (_masa != _tempMasa)
+        if (_masa.Value != _tempMasa)
         {
-            if (_tension != _tempTension)
+            if (_tension.Value != _tempTension)
             {
-                _tempMasa = _masa;
-                _tempTension = _tension;
+                _tempMasa = _masa.Value;
+                _tempTension = _tension.Value;
             }
             else
             {
@@ -73,22 +77,12 @@ public class Object3d : MonoBehaviour
             }
         }
 
-
-        // _acc = StopMovement ? 0 : _yForces / Masa;
-
-        // Debug.Log(_tension + " - " + _peso + " / " + Masa + " = " + _a);
-        // _rb.velocity += new Vector3(0, _acc * Time.deltaTime, 0);
-        // if (StopMovement)
-        // {
-        //     _rb.velocity = Vector3.zero;
-        //     return;
-        // }
-        if (_acc != 0)
+        if (_acc.Value != 0)
         {
-            _vel = _acc * Time.fixedDeltaTime;
+            _vel.Value = _acc.Value * Time.fixedDeltaTime;
             // _rb.AddForce(0, _acc, 0, ForceMode.Acceleration);
             // _rb.AddForce(_acc * _masa * Vector3.down);
-            _rb.velocity += new Vector3(0, _vel, 0);
+            _rb.velocity += new Vector3(0, _vel.Value, 0);
             if (_debug)
             {
                 Debug.Log(gameObject.name + " velocity: " + _rb.velocity + " onGround: " + _onGround);
@@ -104,7 +98,7 @@ public class Object3d : MonoBehaviour
     }
     public void SetTension(float newTension)
     {
-        _tension = newTension;
+        _tension.Value = newTension;
         _onGround = false;
         CalculateAcc();
     }
@@ -113,7 +107,7 @@ public class Object3d : MonoBehaviour
         float normal;
         if (_onGround)
         {
-            normal = _peso - _tension;
+            normal = _peso.Value - _tension.Value;
             if (normal < 0) normal = 0;
         }
         else
@@ -133,7 +127,7 @@ public class Object3d : MonoBehaviour
         // else
         // {
         // }
-        _acc = Mathf.Round(_yForces / Masa * 100) / 100;
+        _acc.Value = Mathf.Round(_yForces / Masa * 100) / 100;
         if (_debug)
         {
             Debug.Log("acc: " + _acc);
@@ -142,16 +136,16 @@ public class Object3d : MonoBehaviour
     private float CalculateYForces()
     {
         float total;
-        _peso = Masa * 10;
+        _peso.Value = Masa * 10;
         if (_onGround)
         {
-            _normal = CalculateNormal();
-            total = _normal + _tension - _peso;
+            _normal.Value = CalculateNormal();
+            total = _normal.Value + _tension.Value - _peso.Value;
             // return total;
         }
         else
         {
-            total = _tension - _peso;
+            total = _tension.Value - _peso.Value;
         }
         if (_debug)
         {
@@ -181,45 +175,5 @@ public class Object3d : MonoBehaviour
         {
             Debug.DrawRay(contact.point, contact.normal * 10, Color.white);
         }
-    }
-    // private enum HitDirection { None, Top, Bottom, Forward, Back, Left, Right }
-    //  private HitDirection ReturnDirection( GameObject Object, GameObject ObjectHit ){
-
-    //      HitDirection hitDirection = HitDirection.None;
-    //      RaycastHit MyRayHit;
-    //      Vector3 direction = ( Object.transform.position - ObjectHit.transform.position ).normalized;
-    //      Ray MyRay = new Ray( ObjectHit.transform.position, direction );
-
-    //      if ( Physics.Raycast( MyRay, out MyRayHit ) ){
-
-    //          if ( MyRayHit.collider != null ){
-
-    //              Vector3 MyNormal = MyRayHit.normal;
-    //              MyNormal = MyRayHit.transform.TransformDirection( MyNormal );
-
-    //              if( MyNormal == MyRayHit.transform.up ){ hitDirection = HitDirection.Top; }
-    //              if( MyNormal == -MyRayHit.transform.up ){ hitDirection = HitDirection.Bottom; }
-    //              if( MyNormal == MyRayHit.transform.forward ){ hitDirection = HitDirection.Forward; }
-    //              if( MyNormal == -MyRayHit.transform.forward ){ hitDirection = HitDirection.Back; }
-    //              if( MyNormal == MyRayHit.transform.right ){ hitDirection = HitDirection.Right; }
-    //              if( MyNormal == -MyRayHit.transform.right ){ hitDirection = HitDirection.Left; }
-    //          }    
-    //      }
-    //      return hitDirection;
-    //  }
-}
-public class Forces
-{
-    public float[] AllForces;
-    public float TotalForce;
-    public float SumForces()
-    {
-        TotalForce = 0;
-        if (AllForces.Length == 0) return 0;
-        foreach (float force in AllForces)
-        {
-            TotalForce += force;
-        }
-        return TotalForce;
     }
 }

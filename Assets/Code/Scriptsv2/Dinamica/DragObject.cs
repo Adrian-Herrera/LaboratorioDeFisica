@@ -59,7 +59,7 @@ public class DragObject : MonoBehaviour
             if (CompareTag("Hook") && targetCollider.CompareTag("DynamicObject"))
             {
                 transform.SetParent(targetCollider.transform);
-                targetCollider.GetComponent<DynamicObject>()._hasRope = true;
+                targetCollider.GetComponent<DynamicObject2d>()._hasRope = true;
             }
             AttachedObject = targetCollider.transform.gameObject;
             // transform.localPosition = new Vector3(0, transform.localPosition.y, 0);
@@ -69,7 +69,7 @@ public class DragObject : MonoBehaviour
         {
             if (CompareTag("Hook") && targetCollider.CompareTag("DynamicObject"))
             {
-                targetCollider.GetComponent<DynamicObject>()._hasRope = false;
+                targetCollider.GetComponent<DynamicObject2d>()._hasRope = false;
             }
             AttachedObject = null;
             transform.SetParent(null);

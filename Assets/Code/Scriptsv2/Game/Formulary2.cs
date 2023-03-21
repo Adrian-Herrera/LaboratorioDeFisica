@@ -39,6 +39,16 @@ public class Formulary2 : MonoBehaviour
         }
         return 0;
     }
+    public static float Altura(float x, float y, float dist, float grav)
+    {
+        float c = Mathf.Sqrt((x * x) + (y * y));
+        float angulo = Mathf.Asin(y / c);
+        Debug.Log($"c: {c} angulo: {angulo * Mathf.Rad2Deg}");
+        // Trayectoria
+        Debug.Log($"tan: {Mathf.Tan(angulo)} dist: {dist}");
+        float altura = (Mathf.Tan(angulo) * dist) - (grav / (2 * (c * c) * Mathf.Pow(Mathf.Cos(angulo), 2)) * (dist * dist));
+        return altura;
+    }
     private static float? QuadraticFormula(float a, float b, float c)
     {
         float insideSquare = Mathf.Pow(b, 2) - (4 * a * c);
@@ -64,5 +74,6 @@ public class Formulary2 : MonoBehaviour
         Debug.Log($"La raiz saldra negativa: {insideSquare}");
         return null;
     }
+
 
 }

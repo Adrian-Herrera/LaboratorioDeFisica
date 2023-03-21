@@ -24,13 +24,16 @@ public class CinematicObject : MonoBehaviour
     [SerializeField] private float _actualVelY;
     [SerializeField] private float _timeMoving;
     [SerializeField] private float _distanceFromStart;
+    [SerializeField] private float _actualHeight;
+    [SerializeField] private float _initialHeight;
     [SerializeField] private bool _isMoving = false;
     private Vector3 _initialPos;
     public CinematicType Type;
     public float VelX => _velX;
-    public float AccX => _accX;
-    public float ActualVelX => _actualVelX;
     public float VelY => _velY;
+    public float AccX => _accX;
+    public float AccY => _accY;
+    public float ActualVelX => _actualVelX;
     public float TimeMoving => _timeMoving / 1000;
     public float DistanceFromStart => _distanceFromStart;
     public float MaxVirtualDistance => _maxVirtualDistance;
@@ -54,21 +57,45 @@ public class CinematicObject : MonoBehaviour
         if (_isMoving)
         {
             _timeMoving += 10;
-            if (_distanceFromStart >= _maxVirtualDistance)
+            if (Type == CinematicType.MRUV || Type == CinematicType.MRU)
             {
-                _distanceFromStart = _maxVirtualDistance;
-                _timeMoving = CalculateTime(_distanceFromStart) * 1000;
-                _actualVelX = CalculateActualVelocity(TimeMoving);
-                StopMovement();
-            }
-            else
-            {
-                if (_accX != 0 || _accY != 0)
+                if (_distanceFromStart >= _maxVirtualDistance)
                 {
-                    Accelerate(_accX, _accY);
+                    _distanceFromStart = _maxVirtualDistance;
+                    _timeMoving = CalculateTime(_distanceFromStart) * 1000;
+                    _actualVelX = CalculateActualVelocityX(TimeMoving);
+                    StopMovement();
                 }
-                CalculateDistance();
-                _actualVelX = CalculateActualVelocity(TimeMoving);
+                else
+                {
+                    if (_accX != 0 || _accY != 0)
+                    {
+                        Accelerate(_accX, _accY);
+                    }
+                    CalculateDistance();
+                    _actualVelX = CalculateActualVelocityX(TimeMoving);
+                }
+            }
+            else if (Type == CinematicType.Parabolico)
+            {
+                if (transform.localPosition.y < _initialHeight)
+                {
+                    CalculateDistance();
+                    _timeMoving = CalculateTime(_distanceFromStart) * 1000;
+                    _actualVelX = CalculateActualVelocityX(TimeMoving);
+                    _actualVelY = CalculateActualVelocityY(TimeMoving);
+                    StopMovement();
+                }
+                else
+                {
+                    if (_accX != 0 || _accY != 0)
+                    {
+                        Accelerate(_accX, _accY);
+                    }
+                    CalculateDistance();
+                    _actualVelX = CalculateActualVelocityX(TimeMoving);
+                    _actualVelY = CalculateActualVelocityY(TimeMoving);
+                }
             }
         }
 
@@ -76,6 +103,7 @@ public class CinematicObject : MonoBehaviour
     public void StartMovement()
     {
         _timeMoving = 0;
+        _initialHeight = transform.localPosition.y;
         _rb.velocity = Vector3.zero;
         _rb.velocity += transform.forward * (_velX / _scale);
         _rb.velocity += transform.up * (_velY / _scale);
@@ -94,20 +122,36 @@ public class CinematicObject : MonoBehaviour
     }
     private void Accelerate(float xAcc, float yAcc)
     {
-        _rb.AddRelativeForce(new Vector3(0, yAcc / _scale, xAcc / _scale), ForceMode.Acceleration);
+        _rb.AddRelativeForce(new Vector3(0, -yAcc / _scale, xAcc / _scale), ForceMode.Acceleration);
     }
     private void CalculateDistance()
     {
-        if (Type == CinematicType.MRU)
+        switch (Type)
         {
-            _distanceFromStart = Formulary2.Formula_mru_x(_velX, TimeMoving);
+            case CinematicType.MRU:
+                _distanceFromStart = Formulary2.Formula_mru_x(_velX, TimeMoving);
+                break;
+            case CinematicType.MRUV:
+                _distanceFromStart = Formulary2.Formula_4(_velX, _accX, TimeMoving);
+                break;
+            case CinematicType.Parabolico:
+                _distanceFromStart = Formulary2.Formula_mru_x(_velX, TimeMoving);
+                // _actualHeight = Formulary2.Formula_4(_velY, _accY, TimeMoving);
+                _actualHeight = Formulary2.Altura(x: _velX, y: _velY, dist: _distanceFromStart, grav: _accY);
+                break;
+            default:
+                break;
         }
-        else if (Type == CinematicType.MRUV)
-        {
-            _distanceFromStart = Formulary2.Formula_4(_velX, _accX, TimeMoving);
-        }
+        // if (Type == CinematicType.MRU || Type == CinematicType.Parabolico)
+        // {
+        //     _distanceFromStart = Formulary2.Formula_mru_x(_velX, TimeMoving);
+        // }
+        // else if (Type == CinematicType.MRUV)
+        // {
+        //     _distanceFromStart = Formulary2.Formula_4(_velX, _accX, TimeMoving);
+        // }
     }
-    public float CalculateActualVelocity(float time)
+    public float CalculateActualVelocityX(float time)
     {
         float actualVel = 0;
         switch (Type)
@@ -118,6 +162,23 @@ public class CinematicObject : MonoBehaviour
             case CinematicType.MRUV:
                 actualVel = Formulary2.Formula_1(_velX, _accX, time);
                 // _actualVelX = _velX + _accX * TimeMoving;
+                break;
+            case CinematicType.Parabolico:
+                actualVel = _velX;
+                break;
+            default:
+                Debug.Log("No se encontro el tipo de ejercicio");
+                break;
+        }
+        return actualVel;
+    }
+    public float CalculateActualVelocityY(float time)
+    {
+        float actualVel = 0;
+        switch (Type)
+        {
+            case CinematicType.Parabolico:
+                actualVel = Formulary2.Formula_1(_velY, _accY, time);
                 break;
             default:
                 Debug.Log("No se encontro el tipo de ejercicio");
@@ -135,7 +196,17 @@ public class CinematicObject : MonoBehaviour
                 // _timeMoving = _maxVirtualDistance / VelX;
                 break;
             case CinematicType.MRUV:
-                calculatedTime = Formulary2.Formula_4_t(distance, _velX, _accX);
+                if (_accX == 0)
+                {
+                    calculatedTime = Formulary2.Formula_mru_t(distance, _velX);
+                }
+                else
+                {
+                    calculatedTime = Formulary2.Formula_4_t(distance, _velX, _accX);
+                }
+                break;
+            case CinematicType.Parabolico:
+                calculatedTime = Formulary2.Formula_mru_t(distance, _velX);
                 break;
             default:
                 Debug.Log("No se encontro el tipo de ejercicio");

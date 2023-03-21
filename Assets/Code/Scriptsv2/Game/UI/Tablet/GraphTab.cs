@@ -37,10 +37,12 @@ public class GraphTab : MonoBehaviour, ITab
     }
     private void CreateValueList(float totalTime, float numberOfValues)
     {
+        Debug.Log("Create Value List");
         // float totalTime = 3;
         // float numberOfValues = 10;
         _values = new();
         CinematicObject _cinematic = _tablet.ActiveStation.CinematicObject;
+
         switch (_cinematic.Type)
         {
             case CinematicType.MRUV:
@@ -56,6 +58,28 @@ public class GraphTab : MonoBehaviour, ITab
                 }
                 _values.Add(BaseVariable.VelocidadFinal, valuesVel);
                 _values.Add(BaseVariable.Distancia, valuesDist);
+                break;
+            case CinematicType.Parabolico:
+                List<float> valuesVelX = new();
+                List<float> valuesVelY = new();
+                List<float> valuesDistX = new();
+                List<float> valuesHeight = new();
+                for (int i = 0; i <= numberOfValues; i++)
+                {
+                    float time = Mathf.Lerp(0, totalTime, i / numberOfValues);
+                    float velY = Formulary2.Formula_1(vo: _cinematic.VelY, a: -_cinematic.AccY, t: time);
+                    float velX = _cinematic.VelX;
+                    float dist = Formulary2.Formula_mru_x(v: _cinematic.VelX, t: time);
+                    float altura = Formulary2.Altura(x: _cinematic.VelX, y: _cinematic.VelY, dist: dist, grav: _cinematic.AccY);
+                    valuesVelX.Add(velX);
+                    valuesVelY.Add(Mathf.Abs(velY));
+                    valuesDistX.Add(dist);
+                    valuesHeight.Add(altura);
+                }
+                _values.Add(BaseVariable.Velocidad, valuesVelX);
+                _values.Add(BaseVariable.VelocidadFinal, valuesVelY);
+                _values.Add(BaseVariable.Distancia, valuesDistX);
+                _values.Add(BaseVariable.Altura, valuesHeight);
                 break;
             default:
                 break;

@@ -50,6 +50,19 @@ public class ExerciseTemplate
         ActivateVariable(BaseVariable.VelocidadFinal);
         ActivateVariable(BaseVariable.Aceleracion);
     }
+    public void ActivarParabolico()
+    {
+        Variables.Clear();
+        // Eje x
+        ActivateVariable(BaseVariable.Velocidad);
+        ActivateVariable(BaseVariable.Distancia);
+        // Eje y
+        ActivateVariable(BaseVariable.Altura);
+        ActivateVariable(BaseVariable.Tiempo);
+        ActivateVariable(BaseVariable.VelocidadInicial);
+        ActivateVariable(BaseVariable.VelocidadFinal);
+        ActivateVariable(BaseVariable.Gravedad);
+    }
     private void ActivateVariable(TipoVariable variable)
     {
         VariableUnity varUnity = new(variable);

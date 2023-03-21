@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-public class DynamicObject : MonoBehaviour
+public class DynamicObject2d : MonoBehaviour
 {
     [Header("Datos Panel")]
     public int Masa;

@@ -12,8 +12,8 @@ public class Polea : MonoBehaviour
     public float AccForces1;
     public float AccForces2;
     // public List<DynamicObject> AttachedObjects = new();
-    public DynamicObject Object1;
-    public DynamicObject Object2;
+    public DynamicObject2d Object1;
+    public DynamicObject2d Object2;
     public float masa1, masa2;
     public Cuerda Cuerda1;
     public Cuerda Cuerda2;
@@ -34,7 +34,7 @@ public class Polea : MonoBehaviour
     {
         if (Cuerda1.AttachedObject != null && Cuerda1.AttachedObject.CompareTag("DynamicObject"))
         {
-            Object1 = Cuerda1.AttachedObject.GetComponent<DynamicObject>();
+            Object1 = Cuerda1.AttachedObject.GetComponent<DynamicObject2d>();
         }
         else
         {
@@ -42,7 +42,7 @@ public class Polea : MonoBehaviour
         }
         if (Cuerda2.AttachedObject != null && Cuerda2.AttachedObject.CompareTag("DynamicObject"))
         {
-            Object2 = Cuerda2.AttachedObject.GetComponent<DynamicObject>();
+            Object2 = Cuerda2.AttachedObject.GetComponent<DynamicObject2d>();
         }
         else
         {

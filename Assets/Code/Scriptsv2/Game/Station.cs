@@ -36,11 +36,17 @@ public class Station : MonoBehaviour
     public event Action OnStartStation;
     private void OnEnable()
     {
-        _cinematicObject.OnFinishMove += SaveDataTemplate;
+        if (_cinematicObject != null)
+        {
+            _cinematicObject.OnFinishMove += SaveDataTemplate;
+        }
     }
     private void OnDisable()
     {
-        _cinematicObject.OnFinishMove -= SaveDataTemplate;
+        if (_cinematicObject != null)
+        {
+            _cinematicObject.OnFinishMove -= SaveDataTemplate;
+        }
     }
     private void Awake()
     {
@@ -72,6 +78,7 @@ public class Station : MonoBehaviour
     private void Activate()
     {
         _status = StatusEnum.Running;
+        if (_cinematicObject == null) return;
         switch (CinematicObject.Type)
         {
             case CinematicType.MRU:
@@ -79,6 +86,9 @@ public class Station : MonoBehaviour
                 break;
             case CinematicType.MRUV:
                 Template.ActivarMruv();
+                break;
+            case CinematicType.Parabolico:
+                Template.ActivarParabolico();
                 break;
             default:
                 break;

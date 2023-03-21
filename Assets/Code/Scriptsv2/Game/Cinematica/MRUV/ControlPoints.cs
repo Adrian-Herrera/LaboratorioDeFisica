@@ -78,7 +78,7 @@ public class ControlPoints : MonoBehaviour
         // Create variable point
         VariableUnity distancePoint = new(BaseVariable.Distancia, distance);
         float tiempo = _cinematicObject.CalculateTime(distance);
-        float velocidad = _cinematicObject.CalculateActualVelocity(tiempo);
+        float velocidad = _cinematicObject.CalculateActualVelocityX(tiempo);
         List<VariableUnity> datos = new()
         {
             new(BaseVariable.Tiempo, tiempo),

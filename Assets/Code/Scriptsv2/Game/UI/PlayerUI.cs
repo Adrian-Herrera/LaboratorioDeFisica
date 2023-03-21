@@ -19,6 +19,7 @@ public class PlayerUI : MonoBehaviour
     public RetoSelectorMenu _retoSelector;
     public RetoFinalInfo _retoFinal;
     public Tablet _tablet;
+    public TabletDinamica _tabletDinamica;
     public View _actualView;
     private void Awake()
     {
@@ -37,7 +38,7 @@ public class PlayerUI : MonoBehaviour
         }
         InstructionUI.OnStartExercise += ShowModeSelector;
     }
-    private void ShowStationName(Station station)
+    private void ShowStationName()
     {
         // _activeStation = station;
         ChangeView(_nearStationMessage);
@@ -89,8 +90,16 @@ public class PlayerUI : MonoBehaviour
     public void StartActualStation()
     {
         Player.NearStation.Init();
-        ChangeView(_tablet);
-        _tablet.Init(Player.NearStation);
+        if (Player.NearStation.CinematicObject != null)
+        {
+            ChangeView(_tablet);
+            _tablet.Init(Player.NearStation);
+        }
+        else
+        {
+            ChangeView(_tabletDinamica);
+            _tabletDinamica.Init(Player.NearStation);
+        }
     }
     public void ShowFinalInfo(Reto reto, int intentos)
     {

@@ -29,7 +29,7 @@ public class VariableInput : MonoBehaviour
             }
         }
     }
-    public void Init(Variable variable, float value, bool isData = false)
+    public void Init(Variable variable, float value, bool isData = false) // Eliminar
     {
         // _enum = variable;
         // _variable = VariableHelper.VariablePairs[variable];

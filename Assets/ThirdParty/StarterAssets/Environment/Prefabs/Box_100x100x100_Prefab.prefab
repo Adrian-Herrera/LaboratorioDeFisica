@@ -12,8 +12,8 @@ GameObject:
   - component: {fileID: 3418225732042694151}
   - component: {fileID: 4043535580645081189}
   - component: {fileID: 6023149417776915991}
-  - component: {fileID: 5081387036179201645}
   - component: {fileID: 2534180526743729993}
+  - component: {fileID: 9059869437073110225}
   m_Layer: 6
   m_Name: Box_100x100x100_Prefab
   m_TagString: Untagged
@@ -100,28 +100,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5081387036179201645
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 899428459418414007}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d94a53c4e784a1447a15b8519c7c3c20, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _masa: 1
-  _tension: 0
-  _peso: 0
-  _normal: 0
-  _acc: 0
-  _vel: 0
-  _yForces: 0
-  _debug: 0
-  _onGround: 0
-  _stopMovement: 0
 --- !u!114 &2534180526743729993
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -134,8 +112,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9a514bda6f6bdb1438e3774c079395f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _object: {fileID: 5081387036179201645}
+  _object: {fileID: 9059869437073110225}
   _pesoTxt: {fileID: 1104213827572329394}
+--- !u!114 &9059869437073110225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 899428459418414007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d94a53c4e784a1447a15b8519c7c3c20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _masa:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _tension:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _peso:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _normal:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _acc:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _vel:
+    Value: 0
+    TipoVariable:
+      _id: 0
+      _nombre: 
+  _yForces: 0
+  _debug: 0
+  _onGround: 0
+  _stopMovement: 0
 --- !u!1 &2120094385209280576
 GameObject:
   m_ObjectHideFlags: 0

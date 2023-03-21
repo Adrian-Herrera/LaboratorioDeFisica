@@ -17,7 +17,7 @@ public class TabController : MonoBehaviour
     private void Start()
     {
         ResetTabs();
-        OnTabSelected(_tabs[2]);
+        OnTabSelected(_tabs[0]);
     }
     public void OnTabEnter(TabButtonUI button)
     {

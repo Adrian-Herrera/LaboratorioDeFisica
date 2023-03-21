@@ -47,4 +47,11 @@ public class BaseVariable
     public static TipoVariable VelocidadInicial = new(4, "Velocidad Inicial");
     public static TipoVariable VelocidadFinal = new(5, "Velocidad Final");
     public static TipoVariable Aceleracion = new(6, "Aceleracion");
+    public static TipoVariable Altura = new(7, "Altura");
+    public static TipoVariable Gravedad = new(8, "Gravedad");
+    // Dinamica
+    public static TipoVariable Masa = new(9, "Masa");
+    public static TipoVariable Tension = new(10, "Tension");
+    public static TipoVariable Peso = new(11, "Peso");
+    public static TipoVariable Normal = new(12, "Normal");
 }

@@ -35,24 +35,29 @@ public class Tablet : View
     }
     public void Init(Station station)
     {
-        // _controlPoints = station.GetComponent<ControlPoints>();
-        // ca _car = station.Car;
-        // _isHidden = false;
-        _controlPointsUI.Init(station.GetComponent<ControlPoints>());
         _activeStation = station;
-        _activeStation.CinematicObject.OnFinishMove += Show;
-        Helpers.ClearListContent(_inputList);
-        switch (station.CinematicObject.Type)
+        if (_activeStation.CinematicObject != null)
         {
-            case CinematicType.MRU:
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
-                break;
-            case CinematicType.MRUV:
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
-                _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Aceleracion)));
-                break;
-            default:
-                break;
+            _controlPointsUI.Init(station.GetComponent<ControlPoints>());
+            _activeStation.CinematicObject.OnFinishMove += Show;
+            Helpers.ClearListContent(_inputList);
+            switch (station.CinematicObject.Type)
+            {
+                case CinematicType.MRU:
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
+                    break;
+                case CinematicType.MRUV:
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Aceleracion)));
+                    break;
+                case CinematicType.Parabolico:
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Gravedad)));
+                    break;
+                default:
+                    break;
+            }
         }
     }
     public void ExitStation()
@@ -65,22 +70,25 @@ public class Tablet : View
     }
     public void StartMoveCar()
     {
-        CinematicObject _car = _activeStation.CinematicObject;
-        Debug.Log("Move with " + _car.Type + " type");
-        _car.ResetAll();
-        switch (_car.Type)
+        CinematicObject cinematicObject = _activeStation.CinematicObject;
+        Debug.Log("Move with " + cinematicObject.Type + " type");
+        cinematicObject.ResetAll();
+        switch (cinematicObject.Type)
         {
             case CinematicType.MRU:
-                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad).Value, 0);
-                _car.StartMovement();
+                cinematicObject.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad).Value, 0);
+                cinematicObject.StartMovement();
                 break;
             case CinematicType.MRUV:
-                _car.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial).Value, _activeStation.Template.FindVarByType(BaseVariable.Aceleracion).Value);
-                _car.StartMovement();
+                cinematicObject.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial).Value, _activeStation.Template.FindVarByType(BaseVariable.Aceleracion).Value);
+                cinematicObject.StartMovement();
                 break;
             case CinematicType.CaidaLibre:
                 break;
             case CinematicType.Parabolico:
+                cinematicObject.SetHorizontalVel(_activeStation.Template.FindVarByType(BaseVariable.Velocidad).Value, 0);
+                cinematicObject.SetVerticalVel(_activeStation.Template.FindVarByType(BaseVariable.VelocidadInicial).Value, _activeStation.Template.FindVarByType(BaseVariable.Gravedad).Value);
+                cinematicObject.StartMovement();
                 break;
             default:
                 Debug.Log("No existe este tipo de cinematica");

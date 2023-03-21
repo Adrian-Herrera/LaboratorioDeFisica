@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public Station NearStation => _nearStation;
     private StarterAssetsInputs _input;
     //Events
-    public event Action<Station> OnEnterStation;
+    public event Action OnEnterStation;
     public event Action OnExitStation;
     public event Action OnStartExercise;
     private void Awake()
@@ -40,7 +40,7 @@ public class Player : MonoBehaviour
         _nearStation = station;
         if (station != null)
         {
-            OnEnterStation?.Invoke(_nearStation);
+            OnEnterStation?.Invoke();
         }
         else
         {
