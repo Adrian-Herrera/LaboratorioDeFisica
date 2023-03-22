@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public class VariableInput : MonoBehaviour
 {
@@ -12,6 +13,7 @@ public class VariableInput : MonoBehaviour
     [SerializeField] private bool _isData = false;
     [SerializeField] protected Variable _variable;
     protected float _value;
+    public event Action OnChangeValue;
     // Properties
     public bool IsData => _isData;
     public Variable Variable => _variable;
@@ -63,6 +65,7 @@ public class VariableInput : MonoBehaviour
             {
                 variable.Value = float.Parse(newValue);
             }
+            OnChangeValue?.Invoke();
         });
         return this;
         // _magnitude.text = variable.Abrev;

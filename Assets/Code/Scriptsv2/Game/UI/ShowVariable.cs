@@ -17,5 +17,9 @@ public class ShowVariable : MonoBehaviour
         _titleText.text = variable.TipoVariable.Nombre;
         float value = Mathf.Round(variable.Value * 100) / 100;
         _valueText.text = value.ToString();
+        variable.OnChangeValue += () =>
+        {
+            _valueText.text = (Mathf.Round(variable.Value * 100) / 100).ToString();
+        };
     }
 }

@@ -1,10 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class PolipastoController : MonoBehaviour
 {
     // [SerializeField] private Polea2 _poleaTemplate;
+    [Header("Buttons")]
+    [SerializeField] private Button _startButton;
+    [SerializeField] private Button _resetButton;
+    [SerializeField] private Button _addPoleaButton;
+    [SerializeField] private Button _removePoleaButton;
+    [Header("Objetos")]
     [SerializeField] private DynamicObject _box;
     [SerializeField] private DynamicObject _balance;
     [SerializeField] private Polea2 _extraPulley;
@@ -24,6 +30,14 @@ public class PolipastoController : MonoBehaviour
 
         _box.OnChangeMass += CalculateTension;
         _balance.OnChangeMass += CalculateTension;
+
+        _box.OnStopMovement += StopAllMovement;
+        _balance.OnStopMovement += StopAllMovement;
+
+        _startButton.onClick.AddListener(() => StartAllMovement());
+        _resetButton.onClick.AddListener(() => ResetAllPosition());
+        _addPoleaButton.onClick.AddListener(() => AddPulley());
+        _removePoleaButton.onClick.AddListener(() => RemovePulley());
 
     }
     private void ActivatePulleys(int numberActivePulleys)
@@ -51,7 +65,7 @@ public class PolipastoController : MonoBehaviour
     {
         Rope rope = Instantiate(_ropeTemplate, _ropeContainer);
         rope.gameObject.SetActive(true);
-        rope.SetPoints(start.position, end.position);
+        rope.SetPoints(start, end);
         _listRopes.Add(rope);
     }
     private void InstanceRopes()
@@ -94,8 +108,8 @@ public class PolipastoController : MonoBehaviour
     }
     private void CalculateTension()
     {
-        Debug.Log($"num: {(Mathf.Abs(_box.Peso) - (_numberActivePulleys * _balance.Peso))}");
-        Debug.Log($"den: {(_box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa * (_numberActivePulleys > 1 ? -1 : 1)))}");
+        // Debug.Log($"num: {(Mathf.Abs(_box.Peso) - (_numberActivePulleys * _balance.Peso))}");
+        // Debug.Log($"den: {(_box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa * (_numberActivePulleys > 1 ? -1 : 1)))}");
         float acc = Helpers.RoundFloat((Mathf.Abs(_box.Peso) - (_numberActivePulleys * _balance.Peso)) / (_box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa * (_numberActivePulleys > 1 ? -1 : 1))));
         float tension;
         if (acc >= 0)
@@ -118,9 +132,27 @@ public class PolipastoController : MonoBehaviour
         }
         tension = Helpers.RoundFloat(tension);
         Debug.Log($"acc: {acc}, tension: {tension}");
-        VariableUnity tensionFuerzaBox = new(BaseVariable.Tension, tension * _numberActivePulleys);
-        VariableUnity tensionFuerzaBalance = new(BaseVariable.Tension, tension);
+        VariableUnity tensionFuerzaBox = new(BaseVariable.Tension, tension);
+        VariableUnity tensionFuerzaBalance = new(BaseVariable.Tension, tension / _numberActivePulleys);
         _box.AddYForce(tensionFuerzaBox);
         _balance.AddYForce(tensionFuerzaBalance);
+
+        _box.SetAcc(_numberActivePulleys > 1 ? acc : -acc);
+        _balance.SetAcc(_numberActivePulleys > 1 ? -acc * _numberActivePulleys : acc);
+    }
+    public void StartAllMovement()
+    {
+        _box.StartMovement();
+        _balance.StartMovement();
+    }
+    public void StopAllMovement()
+    {
+        _box.StopMovement();
+        _balance.StopMovement();
+    }
+    public void ResetAllPosition()
+    {
+        _box.ResetPosition();
+        _balance.ResetPosition();
     }
 }

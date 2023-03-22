@@ -5,8 +5,18 @@ using UnityEngine;
 [Serializable]
 public class VariableUnity
 {
-    public float Value;
+    [SerializeField] private float _value;
+    public float Value
+    {
+        get { return _value; }
+        set
+        {
+            _value = value;
+            OnChangeValue?.Invoke();
+        }
+    }
     public TipoVariable TipoVariable;
+    public event Action OnChangeValue;
     public VariableUnity(TipoVariable tipo)
     {
         TipoVariable = tipo;

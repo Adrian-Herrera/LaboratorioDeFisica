@@ -15,24 +15,24 @@ public class DinamicData : MonoBehaviour
     // Lists
     private readonly List<GameObject> _listGameObject = new();
 
-    public void Init(Object3d[] _objects)
+    public void Init(DynamicObject[] _objects)
     {
         Helpers.ClearListContent(_listGameObject);
-        foreach (Object3d item in _objects)
+        foreach (DynamicObject item in _objects)
         {
             VariableInput vi = Instantiate(_input, _containerInfo);
             vi.Init(item._masa, true);
             _listGameObject.Add(vi.gameObject);
             vi.GetComponent<RectTransform>().sizeDelta = new Vector2(vi.GetComponent<RectTransform>().sizeDelta.x, 40);
-
-            InstantiateReadVariable(item._tension);
-            InstantiateReadVariable(item._peso);
-            InstantiateReadVariable(item._normal);
-            InstantiateReadVariable(item._acc);
-            InstantiateReadVariable(item._vel);
+            foreach (VariableUnity force in item.YForces)
+            {
+                InstantiateReadOnlyVariable(force);
+            }
+            InstantiateReadOnlyVariable(item._acc);
+            InstantiateReadOnlyVariable(item._vel);
         }
     }
-    private void InstantiateReadVariable(VariableUnity input)
+    private void InstantiateReadOnlyVariable(VariableUnity input)
     {
         ShowVariable vi = Instantiate(_show, _containerInfo);
         vi.Init(input);

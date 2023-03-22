@@ -19,5 +19,13 @@ public class PolipastoControllerEditor : Editor
         {
             myScript.RemovePulley();
         }
+        if (GUILayout.Button("Start All Movement"))
+        {
+            myScript.StartAllMovement();
+        }
+        if (GUILayout.Button("Reset All Position"))
+        {
+            myScript.ResetAllPosition();
+        }
     }
 }

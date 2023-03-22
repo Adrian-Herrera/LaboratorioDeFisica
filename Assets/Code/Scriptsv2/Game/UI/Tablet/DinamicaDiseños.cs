@@ -53,5 +53,5 @@ public struct DiseñoPolea
 {
     public GameObject Diseño;
     public GameObject Modelo;
-    public Object3d[] Objetos;
+    public DynamicObject[] Objetos;
 }
