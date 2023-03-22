@@ -111,6 +111,9 @@ public class PolipastoController : MonoBehaviour
         // Debug.Log($"num: {(Mathf.Abs(_box.Peso) - (_numberActivePulleys * _balance.Peso))}");
         // Debug.Log($"den: {(_box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa * (_numberActivePulleys > 1 ? -1 : 1)))}");
         float acc = Helpers.RoundFloat((Mathf.Abs(_box.Peso) - (_numberActivePulleys * _balance.Peso)) / (_box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa * (_numberActivePulleys > 1 ? -1 : 1))));
+        // float num = (_box.Masa - _numberActivePulleys * _balance.Masa) * 10;
+        // float den = _box.Masa + (Mathf.Pow(_numberActivePulleys, 2) * _balance.Masa);
+        // float acc2 = num / den;
         float tension;
         if (acc >= 0)
         {
