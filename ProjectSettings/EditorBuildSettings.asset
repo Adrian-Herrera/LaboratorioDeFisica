@@ -9,7 +9,7 @@ EditorBuildSettings:
     path: Assets/Scenes/WebSocket.unity
     guid: b0b0488bb92afd24fa475ccd4d75683c
   - enabled: 1
-    path: Assets/Scenes/Menus/MainMenu v2.unity
+    path: Assets/Scenes/Menus/MainMenu.unity
     guid: b261d0f14b7d0534a905f7a7cc8ce854
   - enabled: 0
     path: Assets/Scenes/Simulator.unity
