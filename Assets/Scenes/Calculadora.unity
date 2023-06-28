@@ -3220,6 +3220,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: Steps
       objectReference: {fileID: 0}
+    - target: {fileID: 5088362960032183226, guid: 2b10ea6ee37a5984c968010e05b65377,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5088362961458168634, guid: 2b10ea6ee37a5984c968010e05b65377,
         type: 3}
       propertyPath: m_SizeDelta.x
