@@ -9,9 +9,9 @@ public class TableroDato : MonoBehaviour
     [SerializeField] private TMP_Text NombreText;
     [SerializeField] private TMP_Text ValorText;
     [SerializeField] private TMP_Text MagnitudText;
-    public void Init(RetoDato dato)
+    public void Init(Dato dato)
     {
-        NombreText.text = dato.Variable.Nombre;
+        NombreText.text = dato.TipoVariable.Nombre;
         ValorText.text = dato.Valor.ToString();
         // MagnitudText.text = dato.
     }

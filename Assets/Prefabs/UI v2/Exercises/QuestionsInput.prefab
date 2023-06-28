@@ -576,13 +576,18 @@ MonoBehaviour:
   _unidad: {fileID: 8356323063160569015}
   _texto: {fileID: 6468761740055168492}
   _questionData:
+    Id: 0
     Valor: 0
     Text: 
     Segmento: 0
-    VariableId: 0
+    TipoVariableId: 0
     TipoDatoId: 0
-    UnidadId: 0
+    MagnitudId: 0
     Variable:
+      Id: 0
+      Nombre: 
+      Abrev: 
+    Unidad:
       Id: 0
       Nombre: 
       Abrev: 
@@ -1119,7 +1124,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 122.09, y: 0}
+  m_AnchoredPosition: {x: 50, y: 0}
   m_SizeDelta: {x: 0, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &6394087746321241877

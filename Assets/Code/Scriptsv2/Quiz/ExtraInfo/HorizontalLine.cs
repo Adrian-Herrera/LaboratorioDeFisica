@@ -26,7 +26,7 @@ public class HorizontalLine : MonoBehaviour
         _vText.gameObject.SetActive(false);
         for (int i = 0; i < datos.Length; i++)
         {
-            switch (datos[i].VariableId)
+            switch (datos[i].TipoVariableId)
             {
                 case 4: // Velocidad Inicial
                     _VoText.gameObject.SetActive(true);
@@ -63,8 +63,8 @@ public class HorizontalLine : MonoBehaviour
 
     public string GetDatoInfo(Dato dato)
     {
-        string variable = QuizManager.Current._variables[dato.VariableId - 1].Abrev;
-        string unidad = QuizManager.Current._unidades[dato.UnidadId - 1].Abrev;
+        string variable = QuizManager.Current._variables[dato.TipoVariableId - 1].Abrev;
+        string unidad = QuizManager.Current._unidades[dato.MagnitudId - 1].Abrev;
         string segmento = $"<sub>{dato.Segmento}</sub>";
         string newText = variable;
         if (dato.Segmento > 0) newText += segmento;

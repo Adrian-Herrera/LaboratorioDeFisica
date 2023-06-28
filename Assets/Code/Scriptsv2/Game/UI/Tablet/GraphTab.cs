@@ -45,6 +45,20 @@ public class GraphTab : MonoBehaviour, ITab
 
         switch (_cinematic.Type)
         {
+            case CinematicType.MRU:
+                List<float> MRUvaluesVel = new();
+                List<float> MRUvaluesDist = new();
+                for (int i = 0; i < numberOfValues; i++)
+                {
+                    float time = Mathf.Lerp(0, totalTime, i / numberOfValues);
+                    float vel = _cinematic.VelX;
+                    float dist = Formulary2.Formula_mru_x(v: vel, t: time);
+                    MRUvaluesVel.Add(vel);
+                    MRUvaluesDist.Add(dist);
+                }
+                _values.Add(BaseVariable.Velocidad, MRUvaluesVel);
+                _values.Add(BaseVariable.Distancia, MRUvaluesDist);
+                break;
             case CinematicType.MRUV:
                 List<float> valuesVel = new();
                 List<float> valuesDist = new();

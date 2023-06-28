@@ -60,7 +60,7 @@ public class Playground : MonoBehaviour
                 if (i < _mainObject._activeSegments)
                 {
                     _lines[i].gameObject.SetActive(true);
-                    Dato dato = _mainObject._segmentos[i].datos.Find(dato => dato.VariableId == 2); // Distancia
+                    Dato dato = _mainObject._segmentos[i].datos.Find(dato => dato.TipoVariableId == 2); // Distancia
                     if (dato != null && dato.Valor > 0)
                     {
                         print("Dato existe en segmneto " + i);
@@ -88,7 +88,7 @@ public class Playground : MonoBehaviour
         }
         else if (LevelManager.Instance.temaId == 3 || LevelManager.Instance.temaId == 4)
         {
-            Dato alturaInicial = _mainObject._segmentos[0].datos.Find(dato => dato.VariableId == 12); // Altura inicial
+            Dato alturaInicial = _mainObject._segmentos[0].datos.Find(dato => dato.TipoVariableId == 12); // Altura inicial
             if (alturaInicial != null && alturaInicial.Valor >= 0)
             {
                 _building.gameObject.SetActive(true);
@@ -106,7 +106,7 @@ public class Playground : MonoBehaviour
     {
         if (LevelManager.Instance.temaId == 3 || LevelManager.Instance.temaId == 4)
         {
-            Dato alturaInicial = _mainObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+            Dato alturaInicial = _mainObject._segmentos[0].datos.Find(dato => dato.TipoVariableId == 12);
             _alturaMaxima.gameObject.SetActive(true);
             if (alturaInicial != null)
             {

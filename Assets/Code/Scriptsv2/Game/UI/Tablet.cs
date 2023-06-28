@@ -96,7 +96,7 @@ public class Tablet : View
         }
         Hide();
     }
-    public void ShowFinalInfo(Reto reto, int intentos)
+    public void ShowFinalInfo(Cuestionario reto, int intentos)
     {
         // PlayerUI.Instance._actualView.Hide();
         // PlayerUI.Instance._actualView = PlayerUI.Instance._retoFinal;

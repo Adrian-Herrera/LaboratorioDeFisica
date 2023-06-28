@@ -23,7 +23,7 @@ public class RetoFinalInfo : View
         });
     }
     // Start is called before the first frame update
-    public void Init(Reto actualReto, int intentos)
+    public void Init(Cuestionario actualReto, int intentos)
     {
         Debug.Log("Creando instancias");
         RetoInfo info = Instantiate(_retoInfoPrefab, _container.transform);

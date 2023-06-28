@@ -34,17 +34,17 @@ public class CaidaLibreGraphic : MonoBehaviour
         _TbText.gameObject.SetActive(false);
 
         _building.gameObject.SetActive(false);
-        for (int i = 0; i < pregunta.Datos.Length; i++)
+        for (int i = 0; i < pregunta.Variables.Length; i++)
         {
-            switch (pregunta.Datos[i].VariableId)
+            switch (pregunta.Variables[i].TipoVariableId)
             {
                 case 4: // Velocidad Inicial
                     _VoText.gameObject.SetActive(true);
-                    _VoText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _VoText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 5: // Velocidad Final
                     _VfText.gameObject.SetActive(true);
-                    _VfText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _VfText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 // case 6: // Aceleración
                 //     _aText.gameObject.SetActive(true);
@@ -52,28 +52,28 @@ public class CaidaLibreGraphic : MonoBehaviour
                 //     break;
                 case 11: // Altura Maxima
                     _hMaxText.gameObject.SetActive(true);
-                    _hMaxText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _hMaxText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 12: // Altura Inicial
                     _building.gameObject.SetActive(true);
                     _hInicialText.gameObject.SetActive(true);
-                    _hInicialText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _hInicialText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 13: // Altura Total
                     _HText.gameObject.SetActive(true);
-                    _HText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _HText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 15: // Tiempo de vuelo
                     _TvText.gameObject.SetActive(true);
-                    _TvText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _TvText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 16: // Tiempo de subida
                     _TsText.gameObject.SetActive(true);
-                    _TsText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _TsText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 case 17: // Tiempo de bajada
                     _TbText.gameObject.SetActive(true);
-                    _TbText.text = GetDatoInfo(pregunta.Datos[i]);
+                    _TbText.text = GetDatoInfo(pregunta.Variables[i]);
                     break;
                 default:
                     break;
@@ -91,8 +91,8 @@ public class CaidaLibreGraphic : MonoBehaviour
     }
     public string GetDatoInfo(Dato dato)
     {
-        string variable = QuizManager.Current._variables[dato.VariableId - 1].Abrev;
-        string unidad = QuizManager.Current._unidades[dato.UnidadId - 1].Abrev;
+        string variable = QuizManager.Current._variables[dato.TipoVariableId - 1].Abrev;
+        string unidad = QuizManager.Current._unidades[dato.MagnitudId - 1].Abrev;
         // string segmento = $"<sub>{dato.Segmento}</sub>";
         string newText = variable;
         // if (dato.Segmento > 0) newText += segmento;

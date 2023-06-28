@@ -104,7 +104,7 @@ public class MainObject : MonoBehaviour
     }
     public void RemoveDato(int segmentId, int variableId)
     {
-        Dato dt = _segmentos[segmentId].datos.Find(dato => dato.VariableId == variableId);
+        Dato dt = _segmentos[segmentId].datos.Find(dato => dato.TipoVariableId == variableId);
         if (dt == null) return;
         _segmentos[segmentId].datos.Remove(dt);
         RemoveSegmentData(segmentId);
@@ -128,12 +128,12 @@ public class MainObject : MonoBehaviour
     public void StartMovement()
     {
 
-        Velo = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 4)?.Valor ?? 0f;
-        Velf = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 5)?.Valor;
-        Acc = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 6)?.Valor ?? 0f;
-        Timer = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 3)?.Valor;
-        Distance = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 2)?.Valor;
-        Velx = _segmentos[_actualSegmentId].datos.Find(dato => dato.VariableId == 1)?.Valor;
+        Velo = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 4)?.Valor ?? 0f;
+        Velf = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 5)?.Valor;
+        Acc = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 6)?.Valor ?? 0f;
+        Timer = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 3)?.Valor;
+        Distance = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 2)?.Valor;
+        Velx = _segmentos[_actualSegmentId].datos.Find(dato => dato.TipoVariableId == 1)?.Valor;
 
         Vel = Velo.Value;
         _segmentStart = _rb.position.x;
@@ -191,7 +191,7 @@ public class MainObject : MonoBehaviour
                 break;
             case 3:
                 Helpers.ClearListContent(InterestPoints);
-                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.TipoVariableId == 12);
                 if (dato != null && dato.Valor >= 0)
                 {
                     _rb.position = new Vector2(0f, 0f + dato.Valor);
@@ -204,7 +204,7 @@ public class MainObject : MonoBehaviour
                 break;
             case 4:
                 Helpers.ClearListContent(InterestPoints);
-                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.VariableId == 12);
+                dato = SimulatorManager._selectedObject._segmentos[0].datos.Find(dato => dato.TipoVariableId == 12);
                 if (dato != null && dato.Valor >= 0)
                 {
                     _rb.position = new Vector2(0f, 0f + dato.Valor);

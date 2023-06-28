@@ -16,9 +16,9 @@ public class QuestionsInput : MonoBehaviour
     public void SetData(Dato data)
     {
         _questionData = data;
-        _name.text = data.Variable.Abrev + "=";
+        _name.text = data.TipoVariable.Abrev + "=";
         _answer = _questionData.Valor;
-        _unidad.text = data.Unidad.Abrev;
+        _unidad.text = data.Magnitud.Abrev;
         if (_questionData.IsAnswered)
         {
             _input.interactable = false;

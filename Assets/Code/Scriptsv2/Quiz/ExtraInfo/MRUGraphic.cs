@@ -26,7 +26,7 @@ public class MRUGraphic : MonoBehaviour
         _totalSize.gameObject.SetActive(false);
         _totalTime.gameObject.SetActive(false);
         _totalLine.SetActive(false);
-        foreach (Dato dato in pregunta.Datos)
+        foreach (Dato dato in pregunta.Variables)
         {
             switch (dato.Segmento)
             {
@@ -62,7 +62,7 @@ public class MRUGraphic : MonoBehaviour
             _totalLine.SetActive(true);
             for (int i = 0; i < segmento0.Count; i++)
             {
-                switch (segmento0[i].VariableId)
+                switch (segmento0[i].TipoVariableId)
                 {
                     case 7: // Tiempo Total
                         _totalTime.gameObject.SetActive(true);
@@ -82,8 +82,8 @@ public class MRUGraphic : MonoBehaviour
     }
     public string GetDatoInfo(Dato dato)
     {
-        string variable = QuizManager.Current._variables[dato.VariableId - 1].Abrev;
-        string unidad = QuizManager.Current._unidades[dato.UnidadId - 1].Abrev;
+        string variable = QuizManager.Current._variables[dato.TipoVariableId - 1].Abrev;
+        string unidad = QuizManager.Current._unidades[dato.MagnitudId - 1].Abrev;
         string segmento = $"<sub>{dato.Segmento}</sub>";
         string newText = variable;
         if (dato.Segmento > 0) newText += segmento;

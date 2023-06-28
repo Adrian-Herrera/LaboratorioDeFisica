@@ -82,7 +82,7 @@ public class PlayerUI : MonoBehaviour
                 break;
         }
     }
-    public void SetStationReto(Reto reto)
+    public void SetStationReto(Cuestionario reto)
     {
         Player.NearStation.SetReto(reto);
         StartActualStation();
@@ -101,7 +101,7 @@ public class PlayerUI : MonoBehaviour
             _tabletDinamica.Init(Player.NearStation);
         }
     }
-    public void ShowFinalInfo(Reto reto, int intentos)
+    public void ShowFinalInfo(Cuestionario reto, int intentos)
     {
         ChangeView(_retoFinal);
         _retoFinal.Init(reto, intentos);

@@ -30,7 +30,7 @@ public class LevelManager : MonoBehaviour
     }
     private void Start()
     {
-        Application.targetFrameRate = 30;
+        Application.targetFrameRate = -1;
     }
 
     public void LoadScene(string sceneName)

@@ -13,6 +13,7 @@ public class VariableInput : MonoBehaviour
     [SerializeField] private bool _isData = false;
     [SerializeField] protected Variable _variable;
     protected float _value;
+    public VariableUnity varUnity;
     public event Action OnChangeValue;
     // Properties
     public bool IsData => _isData;
@@ -49,6 +50,7 @@ public class VariableInput : MonoBehaviour
     }
     public VariableInput Init(VariableUnity variable, bool showValue = false)
     {
+        varUnity = variable;
         _label.text = variable.TipoVariable.Nombre;
         if (showValue)
         {

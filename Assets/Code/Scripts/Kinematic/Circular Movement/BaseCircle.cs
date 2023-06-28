@@ -12,8 +12,6 @@ public class BaseCircle : MonoBehaviour
 
     void Start()
     {
-        Application.targetFrameRate = 30;
-
         // Draw();
         lineRenderer = GetComponent<LineRenderer>();
         DrawPolygon(_vertexNumber, _radius, centerPos, 0.15f, 0.15f);

@@ -94,7 +94,7 @@ public class Station : MonoBehaviour
                 break;
         }
     }
-    public void SetReto(Reto reto)
+    public void SetReto(Cuestionario reto)
     {
         _retoManager.Init(reto);
     }
@@ -102,7 +102,10 @@ public class Station : MonoBehaviour
     {
         Template.FindVarByType(BaseVariable.Distancia).Value = _cinematicObject.DistanceFromStart;
         Template.FindVarByType(BaseVariable.Tiempo).Value = _cinematicObject.TimeMoving;
-        Template.FindVarByType(BaseVariable.VelocidadInicial).Value = _cinematicObject.VelX;
+        if (Template.FindVarByType(BaseVariable.VelocidadInicial) != null)
+        {
+            Template.FindVarByType(BaseVariable.VelocidadInicial).Value = _cinematicObject.VelX;
+        }
         if (ActualMode == ModeEnum.Reto)
         {
             _retoManager.CheckAnswer();

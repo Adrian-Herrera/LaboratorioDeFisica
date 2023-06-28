@@ -14,8 +14,6 @@ public class UI_Manager : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-        QualitySettings.vSyncCount = 1;
-        Application.targetFrameRate = 30;
     }
     private void Update()
     {

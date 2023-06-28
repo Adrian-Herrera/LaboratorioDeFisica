@@ -27,7 +27,7 @@ public class AuthBtns : MonoBehaviour
     {
         bool isAuth = CredentialManager.Current ? CredentialManager.Current.isAuth : false;
         LoginBtn.SetActive(!isAuth);
-        RegisterBtn.SetActive(!isAuth);
+        // RegisterBtn.SetActive(!isAuth);
         LogoutBtn.SetActive(isAuth);
         UserName.gameObject.SetActive(isAuth);
         if (isAuth)

@@ -13,7 +13,7 @@ public class RetoSelectorMenu : View
         Helpers.ClearListContent(_menuItems);
         StartCoroutine(ServerMethods.Current.GetRetos(codigoId, temaId, (res) =>
         {
-            foreach (Reto reto in res)
+            foreach (Cuestionario reto in res)
             {
                 RetoSelectorUI rs = Instantiate(_selectorPrefab, _selectorContainer.transform);
                 rs.Init(reto.Id, reto.Titulo);

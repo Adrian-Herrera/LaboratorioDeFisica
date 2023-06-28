@@ -94,11 +94,11 @@ public class QuizUI : MonoBehaviour
         Pregunta Pregunta = _quiz.Preguntas[id];
         Helpers.ClearListContent(_questionList);
         Helpers.ClearListContent(_dataList);
-        _enunciado.text = Pregunta.Texto;
+        _enunciado.text = Pregunta.Enunciado;
 
         _graphic.Init(Pregunta);
         // Debug.Log("childCount: " + _dataSpace.transform.childCount);
-        foreach (Dato item in Pregunta.Datos)
+        foreach (Dato item in Pregunta.Variables)
         {
             if (!_activeTabBtn._isAnswer) item.IsAnswered = false;
             QuestionsInput q;

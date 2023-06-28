@@ -42,22 +42,22 @@ public class RetoInfo : View
     //     _title.text = "RETO " + retoIndex;
     //     _intentos.text = "Intentos: " + retoIntentos;
     // }
-    public void Init(Reto reto, int intentos)
+    public void Init(Cuestionario reto, int intentos)
     {
         Helpers.ClearListContent(_inputList);
         Helpers.ClearListContent(_dataList);
-        foreach (RetoDato retoDato in reto.RetoDatos)
+        foreach (Dato retoDato in reto.Preguntas[0].Variables)
         {
-            if (retoDato.EsDato)
+            if (retoDato.TipoDatoId == 1)
             {
                 VariableInput input = Instantiate(_inputPrefab, _infoDataContainer.transform);
-                input.Init(retoDato.Variable, retoDato.Valor, true);
+                input.Init(retoDato.TipoVariable, retoDato.Valor, true);
                 _dataList.Add(input);
             }
             else
             {
                 VariableInput input = Instantiate(_inputPrefab, _userDataContainer.transform);
-                input.Init(retoDato.Variable, retoDato.Valor, true);
+                input.Init(retoDato.TipoVariable, retoDato.Valor, true);
                 _inputList.Add(input);
             }
         }

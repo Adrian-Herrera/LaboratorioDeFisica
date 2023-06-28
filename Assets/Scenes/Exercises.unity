@@ -2353,6 +2353,7 @@ MonoBehaviour:
     UserId: 0
     ActivePregunta: 0
     Preguntas: []
+  tiempos: []
 --- !u!114 &341116447
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5515,8 +5516,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 470, y: -199.00647}
-  m_SizeDelta: {x: 940, y: 398.01294}
+  m_AnchoredPosition: {x: 470, y: -198.85892}
+  m_SizeDelta: {x: 940, y: 397.71783}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1019904811
 MonoBehaviour:

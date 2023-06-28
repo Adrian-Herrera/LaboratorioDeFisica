@@ -31,7 +31,7 @@ public class LoginForm : MonoBehaviour
         }
         CredentialManager.Current.JwtCredential = JsonUtility.FromJson<JwtCredential>(www.downloadHandler.text);
 
-        using UnityWebRequest www2 = UnityWebRequest.Get("http://localhost:4000/usuario/" + CredentialManager.Current.JwtCredential.userId);
+        using UnityWebRequest www2 = UnityWebRequest.Get("http://localhost:4000/usuario/" + CredentialManager.Current.JwtCredential.id);
         www2.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www2.SendWebRequest();
         if (www2.result != UnityWebRequest.Result.Success)
@@ -39,9 +39,10 @@ public class LoginForm : MonoBehaviour
             Helpers.LogNetworkError(www2);
             yield break;
         }
+        Debug.Log(www2.downloadHandler.text);
         CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(www2.downloadHandler.text);
         CredentialManager.Current.isAuth = true;
-        Debug.Log("Login with " + CredentialManager.Current.JwtCredential.userId);
+        Debug.Log("Login with " + CredentialManager.Current.JwtCredential.id);
         if (MainMenuCanvasSelector.Instance != null) MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
         if (WsClient.Instance != null) WsClient.Instance.Init();
     }

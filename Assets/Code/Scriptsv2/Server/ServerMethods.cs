@@ -12,22 +12,22 @@ public class ServerMethods : MonoBehaviour
     private void Awake()
     {
         Current = this;
-        GetLocalIPAddress();
+        // GetLocalIPAddress();
     }
     private readonly string baseUrl = "http://localhost:4000";
-    public string GetLocalIPAddress()
-    {
-        var host = Dns.GetHostEntry(Dns.GetHostName());
-        foreach (var ip in host.AddressList)
-        {
-            if (ip.AddressFamily == AddressFamily.InterNetwork)
-            {
-                Debug.Log(ip.ToString());
-                return ip.ToString();
-            }
-        }
-        throw new System.Exception("No network adapters with an IPv4 address in the system!");
-    }
+    // public string GetLocalIPAddress()
+    // {
+    //     var host = Dns.GetHostEntry(Dns.GetHostName());
+    //     foreach (var ip in host.AddressList)
+    //     {
+    //         if (ip.AddressFamily == AddressFamily.InterNetwork)
+    //         {
+    //             Debug.Log(ip.ToString());
+    //             return ip.ToString();
+    //         }
+    //     }
+    //     throw new System.Exception("No network adapters with an IPv4 address in the system!");
+    // }
     private IEnumerator GetJson(string url, Action<string> res)
     {
         Debug.Log("GetRequest");
@@ -66,32 +66,33 @@ public class ServerMethods : MonoBehaviour
     public IEnumerator GetCuestionarios(Action<Cuestionario[]> res)
     {
         Debug.Log("GetCuestionarios");
-        string url = "/alumno/" + CredentialManager.Current.JwtCredential.id + "/cuestionario?temaId=" + LevelManager.Instance.temaId;
+        string url = "/cuestionarios?colegioId=1&gestion=2023&tipo=1&usuario=" + CredentialManager.Current.JwtCredential.id + "&temaId=" + LevelManager.Instance.temaId;
+        Debug.Log(url);
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Cuestionario>(json));
         }));
     }
-    public IEnumerator GetRetos(int codigoId, int temaId, Action<Reto[]> res)
+    public IEnumerator GetRetos(int codigoId, int temaId, Action<Cuestionario[]> res)
     {
         Debug.Log("GetRetos");
-        string url = "/retos?codigo=" + codigoId + "&tema=" + temaId;
+        string url = "/cuestionarios?colegioId=1&gestion=2023&tipo=3&usuario=" + CredentialManager.Current.JwtCredential.id + "&temaId=" + temaId;
         yield return StartCoroutine(GetJson(url, (json) =>
         {
-            res(JsonHelper.FromJson<Reto>(json));
+            res(JsonHelper.FromJson<Cuestionario>(json));
         }));
     }
-    public IEnumerator GetReto(int id, Action<Reto> res)
+    public IEnumerator GetReto(int id, Action<Cuestionario> res)
     {
-        yield return StartCoroutine(GetJson("/reto/" + id, (json) =>
+        yield return StartCoroutine(GetJson("/cuestionario/" + id, (json) =>
         {
-            res(JsonUtility.FromJson<Reto>(json));
+            res(JsonUtility.FromJson<Cuestionario>(json));
         }));
     }
     public IEnumerator GetUnidades(Action<Unidad[]> res)
     {
-        Debug.Log("GetUnidades");
-        string url = "/unidad";
+        Debug.Log("GetMagnitudes");
+        string url = "/magnitud";
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Unidad>(json));
@@ -100,7 +101,7 @@ public class ServerMethods : MonoBehaviour
     public IEnumerator GetVariables(Action<Variable[]> res)
     {
         Debug.Log("GetVariables");
-        string url = "/variable";
+        string url = "/tipoVariable";
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Variable>(json));
@@ -109,7 +110,7 @@ public class ServerMethods : MonoBehaviour
     public IEnumerator GetAlumnoHistorial(int CuestionarioID, Action<Historial[]> res)
     {
         Debug.Log("GetAlumnoHistorial");
-        string url = "/alumno/" + CredentialManager.Current.JwtCredential.id + "/historial?cuestionarioId=" + CuestionarioID;
+        string url = "/historial?usuarioId=" + CredentialManager.Current.JwtCredential.id + "&cuestionarioId=" + CuestionarioID;
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Historial>(json));
@@ -119,9 +120,10 @@ public class ServerMethods : MonoBehaviour
     {
         WWWForm form = new();
         form.AddField("Puntaje", historial.Puntaje);
-        form.AddField("AlumnoId", historial.AlumnoId);
-        form.AddField("CuestionarioId", historial.CuestionarioId);
+        form.AddField("UsuarioId", historial.UsuarioId);
+        form.AddField("EjercicioId", historial.EjercicioId);
         form.AddField("NumeroIntento", historial.NumeroIntento);
+        form.AddField("TiempoEmpleado", historial.TiempoEmpleado);
 
         using UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/historial", form);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
@@ -140,7 +142,8 @@ public class ServerMethods : MonoBehaviour
     public IEnumerator GetAlumnoEjercicios(int TemaId, Action<Ejercicio[]> res)
     {
         Debug.Log($"GetAlumnoEjercicios alumno Id = {CredentialManager.Current.JwtCredential.id} temaId = {TemaId}");
-        string url = "/alumno/" + CredentialManager.Current.JwtCredential.id + "/ejercicios?temaId=" + TemaId;
+        string url = "/cuestionarios?colegioId=1&gestion=2023&tipo=1&usuario=" + CredentialManager.Current.JwtCredential.id + "&temaId=" + TemaId;
+        // string url = "/alumno/" + CredentialManager.Current.JwtCredential.id + "/ejercicios?temaId=" + TemaId;
         yield return StartCoroutine(GetJson(url, (json) =>
         {
             res(JsonHelper.FromJson<Ejercicio>(json));

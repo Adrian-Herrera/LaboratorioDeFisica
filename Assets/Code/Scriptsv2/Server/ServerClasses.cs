@@ -19,8 +19,8 @@ public class Cuestionario
 public class Pregunta
 {
     public int Id;
-    public string Texto;
-    public Dato[] Datos;
+    public string Enunciado;
+    public Dato[] Variables;
 }
 [Serializable]
 public class Dato
@@ -29,11 +29,11 @@ public class Dato
     public float Valor;
     public string Text;
     public int Segmento;
-    public int VariableId;
+    public int TipoVariableId;
     public int TipoDatoId;
-    public int UnidadId;
-    public Variable Variable;
-    public Unidad Unidad;
+    public int MagnitudId;
+    public Variable TipoVariable;
+    public Unidad Magnitud;
     public bool IsAnswered = false;
     public DataPropertie dataPropertie;
     public void ChangeValor(float newValue)
@@ -43,10 +43,10 @@ public class Dato
     }
     public Dato(int variableId, float valor, int tipoDatoId, int unidadId)
     {
-        VariableId = variableId;
+        TipoVariableId = variableId;
         Valor = valor;
         TipoDatoId = tipoDatoId;
-        UnidadId = unidadId;
+        MagnitudId = unidadId;
     }
 
 }
@@ -62,6 +62,7 @@ public class Variable
 public class Unidad
 {
     public int Id;
+    public string Nombre;
     public string Abrev;
 }
 [Serializable]
@@ -69,9 +70,18 @@ public class Historial
 {
     public int Id;
     public int Puntaje;
-    public int AlumnoId;
-    public int CuestionarioId;
+    public int UsuarioId;
+    public int EjercicioId;
     public int NumeroIntento;
+    public int TiempoEmpleado;
+    public TiempoPreguntas TiempoPreguntas;
+}
+[Serializable]
+public class TiempoPreguntas
+{
+    public int TiempoEmpleado;
+    public bool Respondido;
+    public int PreguntaId;
 }
 [Serializable]
 public class Tema
@@ -79,22 +89,22 @@ public class Tema
     public int Id;
     public string Nombre;
 }
-[Serializable]
-public class Reto
-{
-    public int Id;
-    public int CodigoId;
-    public string Titulo;
-    public RetoDato[] RetoDatos;
-}
-[Serializable]
-public class RetoDato
-{
-    public float Valor;
-    public bool EsDato;
-    public Variable Variable;
-    // public string Descripcion;
-}
+// [Serializable]
+// public class Reto
+// {
+//     public int Id;
+//     public int CodigoId;
+//     public string Titulo;
+//     public RetoDato[] RetoDatos;
+// }
+// [Serializable]
+// public class RetoDato
+// {
+//     public float Valor;
+//     public bool EsDato;
+//     public Variable Variable;
+//     // public string Descripcion;
+// }
 [Serializable]
 public class LogInfo
 {

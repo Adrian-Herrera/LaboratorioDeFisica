@@ -28,6 +28,7 @@ public class CinematicObject : MonoBehaviour
     [SerializeField] private float _initialHeight;
     [SerializeField] private bool _isMoving = false;
     private Vector3 _initialPos;
+    private Quaternion _initialRot;
     public CinematicType Type;
     public float VelX => _velX;
     public float VelY => _velY;
@@ -49,6 +50,7 @@ public class CinematicObject : MonoBehaviour
     {
         _scale = _maxVirtualDistance / _maxRealDistance;
         _initialPos = transform.localPosition;
+        _initialRot = transform.localRotation;
         SetHorizontalVel(0, 0);
         SetVerticalVel(0, 0);
     }
@@ -244,6 +246,6 @@ public class CinematicObject : MonoBehaviour
         _timeMoving = 0;
         _distanceFromStart = 0;
         transform.localPosition = _initialPos;
-        transform.localEulerAngles = Vector3.zero;
+        transform.localRotation = _initialRot;
     }
 }

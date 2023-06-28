@@ -41,7 +41,7 @@ public class Formulary : MonoBehaviour
             bool dataExist = false;
             for (int j = 0; j < formulaList[i].Requirements.Count; j++)
             {
-                dataExist = allData.Exists(data => data.VariableId == formulaList[i].Requirements[j].Id);
+                dataExist = allData.Exists(data => data.TipoVariableId == formulaList[i].Requirements[j].Id);
                 print($"El requisito {formulaList[i].Requirements[j].Nombre} = {dataExist}");
                 if (!dataExist) break;
             }
@@ -50,7 +50,7 @@ public class Formulary : MonoBehaviour
                 print("Se cumplen todos los requisitos");
                 if (formulaList[i].IsEnumerator)
                 {
-                    StartCoroutine(formulaList[i].Calculate2(GlobalInfo.Variables[dataToAnswer.VariableId - 1], actualData, (res) =>
+                    StartCoroutine(formulaList[i].Calculate2(GlobalInfo.Variables[dataToAnswer.TipoVariableId - 1], actualData, (res) =>
                     {
                         dataToAnswer.Valor = res;
                         // dataToAnswer.ChangeValor(res);
@@ -58,7 +58,7 @@ public class Formulary : MonoBehaviour
                 }
                 else
                 {
-                    dataToAnswer.Valor = formulaList[i].Calculate(GlobalInfo.Variables[dataToAnswer.VariableId - 1], actualData);
+                    dataToAnswer.Valor = formulaList[i].Calculate(GlobalInfo.Variables[dataToAnswer.TipoVariableId - 1], actualData);
                 }
                 return true;
             }
@@ -158,19 +158,19 @@ public class Formula_1 : Formula
         Debug.Log("Se uso Formula 1 con " + variableToAnswer.Nombre);
         foreach (Dato dato in datos)
         {
-            if (dato.VariableId == _Vo.Id)
+            if (dato.TipoVariableId == _Vo.Id)
             {
                 Vo = dato.Valor;
             }
-            else if (dato.VariableId == _Vf.Id)
+            else if (dato.TipoVariableId == _Vf.Id)
             {
                 Vf = dato.Valor;
             }
-            else if (dato.VariableId == _a.Id)
+            else if (dato.TipoVariableId == _a.Id)
             {
                 a = dato.Valor;
             }
-            else if (dato.VariableId == _t.Id)
+            else if (dato.TipoVariableId == _t.Id)
             {
                 t = dato.Valor;
             }
@@ -237,19 +237,19 @@ public class Formula_2 : Formula
         Debug.Log("Se uso Formula 2 con " + variableToAnswer.Nombre);
         foreach (Dato dato in datos)
         {
-            if (dato.VariableId == _Vo.Id)
+            if (dato.TipoVariableId == _Vo.Id)
             {
                 Vo = dato.Valor;
             }
-            else if (dato.VariableId == _Vf.Id)
+            else if (dato.TipoVariableId == _Vf.Id)
             {
                 Vf = dato.Valor;
             }
-            else if (dato.VariableId == _x.Id)
+            else if (dato.TipoVariableId == _x.Id)
             {
                 x = dato.Valor;
             }
-            else if (dato.VariableId == _t.Id)
+            else if (dato.TipoVariableId == _t.Id)
             {
                 t = dato.Valor;
             }
@@ -316,19 +316,19 @@ public class Formula_3 : Formula
         Debug.Log("Se uso Formula 3 con " + variableToAnswer.Nombre);
         foreach (Dato dato in datos)
         {
-            if (dato.VariableId == _Vo.Id)
+            if (dato.TipoVariableId == _Vo.Id)
             {
                 Vo = dato.Valor;
             }
-            else if (dato.VariableId == _Vf.Id)
+            else if (dato.TipoVariableId == _Vf.Id)
             {
                 Vf = dato.Valor;
             }
-            else if (dato.VariableId == _x.Id)
+            else if (dato.TipoVariableId == _x.Id)
             {
                 x = dato.Valor;
             }
-            else if (dato.VariableId == _a.Id)
+            else if (dato.TipoVariableId == _a.Id)
             {
                 a = dato.Valor;
             }
@@ -399,19 +399,19 @@ public class Formula_4 : Formula
         Debug.Log("Se uso Formula 4 con " + variableToAnswer.Nombre);
         foreach (Dato dato in datos)
         {
-            if (dato.VariableId == _Vo.Id)
+            if (dato.TipoVariableId == _Vo.Id)
             {
                 Vo = dato.Valor;
             }
-            else if (dato.VariableId == _t.Id)
+            else if (dato.TipoVariableId == _t.Id)
             {
                 t = dato.Valor;
             }
-            else if (dato.VariableId == _x.Id)
+            else if (dato.TipoVariableId == _x.Id)
             {
                 x = dato.Valor;
             }
-            else if (dato.VariableId == _a.Id)
+            else if (dato.TipoVariableId == _a.Id)
             {
                 a = dato.Valor;
             }
@@ -492,19 +492,19 @@ public class Formula_5 : Formula
         Debug.Log("Se uso Formula 5 con " + variableToAnswer.Nombre);
         foreach (Dato dato in datos)
         {
-            if (dato.VariableId == _Vf.Id)
+            if (dato.TipoVariableId == _Vf.Id)
             {
                 Vf = dato.Valor;
             }
-            else if (dato.VariableId == _t.Id)
+            else if (dato.TipoVariableId == _t.Id)
             {
                 t = dato.Valor;
             }
-            else if (dato.VariableId == _x.Id)
+            else if (dato.TipoVariableId == _x.Id)
             {
                 x = dato.Valor;
             }
-            else if (dato.VariableId == _a.Id)
+            else if (dato.TipoVariableId == _a.Id)
             {
                 a = dato.Valor;
             }

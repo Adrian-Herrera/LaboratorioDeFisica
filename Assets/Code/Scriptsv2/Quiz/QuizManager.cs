@@ -18,23 +18,24 @@ public class QuizManager : MonoBehaviour
     private int _numberOfAttempts;
     public int Score;
     public int CurrentTime;
+    
     public bool isRunning = false;
     [SerializeField] private TMP_Text _infoText;
     public LogInfo _logInfo;
+    public TiempoPreguntas[] tiempos;
     private void Start()
     {
         StartCoroutine(GetData());
     }
     private void Update()
     {
-
-
+        
     }
     private IEnumerator GetData()
     {
-        // LevelManager.Instance.temaId = 1;
-        // yield return StartCoroutine(LoginForm.Login("adrian", "123456"));
-        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(2, (res) =>
+        // LevelManager.Instance.temaId = 2;
+        // yield return StartCoroutine(LoginForm.Login("BlancheDelao", "123456"));
+        // yield return StartCoroutine(ServerMethods.Current.GetCuestionario(1, (res) =>
         //     {
         //         _currentQuiz = res;
         //     }));
@@ -63,34 +64,12 @@ public class QuizManager : MonoBehaviour
             _numberOfAttempts = _historial.Length;
             Debug.Log(_historial.Length);
         }));
-        // _logInfo = new()
-        // {
-        //     Preguntas = new LogPregunta[_currentQuiz.Preguntas.Length]
-        // };
-        // for (int i = 0; i < _currentQuiz.Preguntas.Length; i++)
-        // {
-        //     Pregunta pregunta = _currentQuiz.Preguntas[i];
-        //     LogPregunta nuevaP = new()
-        //     {
-        //         PreguntaId = pregunta.Id,
-        //         Tiempo = 0,
-        //         Datos = new LogDato[pregunta.Datos.Length]
-        //     };
-        //     for (int j = 0; j < pregunta.Datos.Length; j++)
-        //     {
-        //         LogDato nuevoD = new()
-        //         {
-        //             DatoId = pregunta.Datos[j].Id
-        //         };
-        //         nuevaP.Datos[j] = nuevoD;
-        //     }
-        //     _logInfo.Preguntas[i] = nuevaP;
-        // }
-
+        tiempos = new TiempoPreguntas[_currentQuiz.Preguntas.Length];
         _quizUI.Init(_currentQuiz);
     }
     public void GoExercise(int id)
     {
+        Debug.Log(id);
         _quizUI.SetQuestion(id);
     }
     public void StartQuiz()
@@ -107,9 +86,10 @@ public class QuizManager : MonoBehaviour
         Historial historial = new()
         {
             Puntaje = Score,
-            AlumnoId = CredentialManager.Current.JwtCredential.id,
-            CuestionarioId = _currentQuiz.Id,
-            NumeroIntento = _numberOfAttempts
+            UsuarioId = CredentialManager.Current.JwtCredential.id,
+            EjercicioId = _currentQuiz.Id,
+            NumeroIntento = _numberOfAttempts,
+            TiempoEmpleado = CurrentTime
         };
 
         StartCoroutine(ServerMethods.Current.CreateHistorial(historial));
@@ -120,12 +100,14 @@ public class QuizManager : MonoBehaviour
     }
     public void SendChangePregunta(int id)
     {
+        if (WsClient.Instance == null) return;
         string message = "{ \"Type\": \"ChangePregunta\", \"Params\": { \"ActualPreguntaId\": " + id + "}}";
         WsClient.Instance.SendCommand(message);
         Debug.Log(message);
     }
     public void SendAnswer(int datoId, float answer)
     {
+        if (WsClient.Instance == null) return;
         string message = "{ \"Type\": \"SendAnswer\", \"Params\": { \"datoId\": " + datoId + ", \"respuesta\": " + answer + "}}";
         WsClient.Instance.SendCommand(message);
         Debug.Log(message);

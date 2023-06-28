@@ -14,7 +14,7 @@ public class DataPropertie : MonoBehaviour
     public void Init(Dato dato)
     {
         _dato = dato;
-        _label.text = GlobalInfo.Variables[dato.VariableId - 1].Abrev + "= ";
+        _label.text = GlobalInfo.Variables[dato.TipoVariableId - 1].Abrev + "= ";
         _drop.ClearOptions();
         List<string> options = new();
         foreach (Unidad option in GlobalInfo.Unidades)
@@ -35,7 +35,7 @@ public class DataPropertie : MonoBehaviour
         else
         {
             _dato.Valor = float.Parse(newValue);
-            if (_dato.VariableId == 2 || _dato.VariableId == 12)
+            if (_dato.TipoVariableId == 2 || _dato.TipoVariableId == 12)
             {
                 Playground.Instance.DrawLines();
             }
