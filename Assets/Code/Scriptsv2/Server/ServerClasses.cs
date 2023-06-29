@@ -35,12 +35,12 @@ public class Dato
     public Variable TipoVariable;
     public Unidad Magnitud;
     public bool IsAnswered = false;
-    public DataPropertie dataPropertie;
-    public void ChangeValor(float newValue)
-    {
-        Valor = newValue;
-        if (dataPropertie != null) dataPropertie.ChangeText(newValue);
-    }
+    // public DataPropertie dataPropertie;
+    // public void ChangeValor(float newValue)
+    // {
+    //     Valor = newValue;
+    //     if (dataPropertie != null) dataPropertie.ChangeText(newValue);
+    // }
     public Dato(int variableId, float valor, int tipoDatoId, int unidadId)
     {
         TipoVariableId = variableId;

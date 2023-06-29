@@ -26803,6 +26803,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: HomeButton
       objectReference: {fileID: 0}
+    - target: {fileID: 5324474731729693868, guid: 52463641277c6954392893959959c4e6,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1102032184368326314, guid: 52463641277c6954392893959959c4e6, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 52463641277c6954392893959959c4e6, type: 3}
