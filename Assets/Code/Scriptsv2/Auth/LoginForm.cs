@@ -41,7 +41,7 @@ public class LoginForm : MonoBehaviour
         }
         Debug.Log(www2.downloadHandler.text);
         CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(www2.downloadHandler.text);
-        CredentialManager.Current.isAuth = true;
+        CredentialManager.Current.IsAuth = true;
         Debug.Log("Login with " + CredentialManager.Current.JwtCredential.id);
         if (MainMenuCanvasSelector.Instance != null) MainMenuCanvasSelector.Instance.GoToCanvas(MainMenuCanvasSelector.SelectCanvas.MainMenu);
         if (WsClient.Instance != null) WsClient.Instance.Init();

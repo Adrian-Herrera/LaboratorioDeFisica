@@ -8,8 +8,12 @@ public class ModeSelector : View
     [SerializeField] private Button _retoButton;
     [SerializeField] private Button _libreButton;
     [SerializeField] private Button _pruebaButton;
-    private void Start()
+    protected override void Init()
     {
+        if (CredentialManager.Current != null)
+        {
+            _retoButton.interactable = CredentialManager.Current.IsAuth;
+        }
         _retoButton.onClick.AddListener(() =>
         {
             PlayerUI.Instance.ShowStationUI(Station.ModeEnum.Reto);

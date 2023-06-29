@@ -10,7 +10,7 @@ public class CredentialManager : MonoBehaviour
     public int SendId;
     public JwtCredential JwtCredential;
     public UserInfo UserInfo;
-    public bool isAuth = false;
+    public bool IsAuth = false;
     private void Awake()
     {
         if (Current == null)
@@ -23,10 +23,11 @@ public class CredentialManager : MonoBehaviour
             Destroy(gameObject);
         }
     }
-    public void CleanData(){
+    public void CleanData()
+    {
         JwtCredential = null;
         UserInfo = null;
-        isAuth = false;
+        IsAuth = false;
     }
 }
 [Serializable]

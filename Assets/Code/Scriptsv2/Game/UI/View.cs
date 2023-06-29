@@ -6,11 +6,13 @@ using TMPro;
 
 public abstract class View : MonoBehaviour
 {
-    public virtual void Show()
+    protected virtual void Init() { }
+    public void Show()
     {
         gameObject.SetActive(true);
+        Init();
     }
-    public virtual void Hide()
+    public void Hide()
     {
         gameObject.SetActive(false);
     }

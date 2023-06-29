@@ -25,7 +25,7 @@ public class AuthBtns : MonoBehaviour
     }
     private void CheckAuth()
     {
-        bool isAuth = CredentialManager.Current ? CredentialManager.Current.isAuth : false;
+        bool isAuth = CredentialManager.Current ? CredentialManager.Current.IsAuth : false;
         LoginBtn.SetActive(!isAuth);
         // RegisterBtn.SetActive(!isAuth);
         LogoutBtn.SetActive(isAuth);
