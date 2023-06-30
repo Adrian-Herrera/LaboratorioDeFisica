@@ -14,24 +14,11 @@ public class ServerMethods : MonoBehaviour
         Current = this;
         // GetLocalIPAddress();
     }
-    private readonly string baseUrl = "http://localhost:4000";
-    // public string GetLocalIPAddress()
-    // {
-    //     var host = Dns.GetHostEntry(Dns.GetHostName());
-    //     foreach (var ip in host.AddressList)
-    //     {
-    //         if (ip.AddressFamily == AddressFamily.InterNetwork)
-    //         {
-    //             Debug.Log(ip.ToString());
-    //             return ip.ToString();
-    //         }
-    //     }
-    //     throw new System.Exception("No network adapters with an IPv4 address in the system!");
-    // }
+    private const string BASEURL = "http://localhost:4000";
     private IEnumerator GetJson(string url, Action<string> res)
     {
         Debug.Log("GetRequest");
-        using UnityWebRequest www = UnityWebRequest.Get(baseUrl + url);
+        using UnityWebRequest www = UnityWebRequest.Get(BASEURL + url);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         // www.SetRequestHeader("Authorization", "Bearer " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MiwiaWF0IjoxNjczMDUzMTc2LCJleHAiOjE2NzMxMzk1NzZ9.sUuINdj0SAAyTEMgZmaclZdEpLShMcuHRUshlNY3k04");
         yield return www.SendWebRequest();
@@ -53,6 +40,36 @@ public class ServerMethods : MonoBehaviour
                 res(www.downloadHandler.text);
             }
         }
+    }
+
+    public IEnumerator Login(string username, string password, Action<bool> res)
+    {
+        WWWForm form = new();
+        form.AddField("LoginUser", username);
+        form.AddField("LoginPassword", password);
+
+        using UnityWebRequest www = UnityWebRequest.Post(BASEURL + "/ingresar", form);
+        yield return www.SendWebRequest();
+        if (www.result != UnityWebRequest.Result.Success)
+        {
+            Helpers.LogNetworkError(www);
+            res(false);
+            yield break;
+        }
+        CredentialManager.Current.JwtCredential = JsonUtility.FromJson<JwtCredential>(www.downloadHandler.text);
+        CredentialManager.Current.IsAuth = true;
+
+        yield return StartCoroutine(SetActiveUser());
+        res(true);
+    }
+
+    public IEnumerator SetActiveUser()
+    {
+        Debug.Log("/usuario/" + CredentialManager.Current.JwtCredential.id);
+        yield return StartCoroutine(GetJson("/usuario/" + CredentialManager.Current.JwtCredential.id, (json) =>
+        {
+            CredentialManager.Current.UserInfo = JsonUtility.FromJson<UserInfo>(json);
+        }));
     }
 
     public IEnumerator GetCuestionario(int id, Action<Cuestionario> res)
@@ -125,7 +142,7 @@ public class ServerMethods : MonoBehaviour
         form.AddField("NumeroIntento", historial.NumeroIntento);
         form.AddField("TiempoEmpleado", historial.TiempoEmpleado);
 
-        using UnityWebRequest www = UnityWebRequest.Post(baseUrl + "/historial", form);
+        using UnityWebRequest www = UnityWebRequest.Post(BASEURL + "/historial", form);
         www.SetRequestHeader("Authorization", "Bearer " + CredentialManager.Current.JwtCredential.token);
         yield return www.SendWebRequest();
 

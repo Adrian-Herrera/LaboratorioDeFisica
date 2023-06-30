@@ -11,6 +11,8 @@ public class CredentialManager : MonoBehaviour
     public JwtCredential JwtCredential;
     public UserInfo UserInfo;
     public bool IsAuth = false;
+    [SerializeField] private string username;
+    [SerializeField] private string password;
     private void Awake()
     {
         if (Current == null)
@@ -28,6 +30,13 @@ public class CredentialManager : MonoBehaviour
         JwtCredential = null;
         UserInfo = null;
         IsAuth = false;
+    }
+    public void Login()
+    {
+        StartCoroutine(ServerMethods.Current.Login(username, password, (isAuth) =>
+       {
+           Debug.Log(isAuth);
+       }));
     }
 }
 [Serializable]
