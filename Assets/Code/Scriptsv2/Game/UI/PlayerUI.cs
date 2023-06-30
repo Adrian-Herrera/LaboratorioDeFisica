@@ -22,6 +22,7 @@ public class PlayerUI : MonoBehaviour
     public Tablet _tablet;
     public TabletDinamica _tabletDinamica;
     public View _actualView;
+    public bool IsStationActive = false;
     // Events
     public Action<bool> isMenuOpen;
     private void Awake()
@@ -44,12 +45,13 @@ public class PlayerUI : MonoBehaviour
     private void ShowStationName()
     {
         // _activeStation = station;
-        ChangeView(_nearStationMessage);
+        ChangeView(_nearStationMessage, false);
         _nearStationMessage.Init(Player.NearStation);
     }
     private void StartExercise()
     {
         SetInstructions(Player.NearStation.Instructions);
+        IsStationActive = true;
     }
     private void ExitStation()
     {
@@ -57,7 +59,8 @@ public class PlayerUI : MonoBehaviour
         {
             _actualView.Hide();
         }
-        // _activeStation = null;
+        _actualView = null;
+        IsStationActive = false;
     }
     private void SetInstructions(InstructionSO instructions)
     {
@@ -109,13 +112,13 @@ public class PlayerUI : MonoBehaviour
         ChangeView(_retoFinal);
         _retoFinal.Init(reto, intentos);
     }
-    private void ChangeView(View newView)
+    private void ChangeView(View newView, bool ShowCursor = true)
     {
         if (_actualView != null)
         {
             _actualView.Hide();
         }
         _actualView = newView;
-        _actualView.Show();
+        _actualView.Show(ShowCursor);
     }
 }

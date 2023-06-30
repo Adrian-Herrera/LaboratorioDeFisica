@@ -60,7 +60,7 @@ namespace StarterAssets
         public void OnMenu()
         {
             // Debug.Log("Tab presed");
-            if (PlayerUI.Instance._actualView != null)
+            if (PlayerUI.Instance.IsStationActive == true)
                 PlayerUI.Instance._actualView.SwitchView();
             // SwitchMenu();
         }
