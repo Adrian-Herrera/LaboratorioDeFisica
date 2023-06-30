@@ -5,7 +5,6 @@ using UnityEngine.UI;
 
 public class SwitchPanelButton : MonoBehaviour
 {
-    [SerializeField] private View _view;
     private Button _button;
     private void Awake()
     {
@@ -13,6 +12,10 @@ public class SwitchPanelButton : MonoBehaviour
     }
     private void Start()
     {
-        _button.onClick.AddListener(_view.SwitchView);
+        _button.onClick.AddListener(SwitchView);
+    }
+    private void SwitchView()
+    {
+        PlayerUI.Instance._actualView.SwitchView();
     }
 }

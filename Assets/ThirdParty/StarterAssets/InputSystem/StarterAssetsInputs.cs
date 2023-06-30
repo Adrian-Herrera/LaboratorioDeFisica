@@ -22,6 +22,11 @@ namespace StarterAssets
         [Header("Mouse Cursor Settings")]
         public bool cursorLocked = true;
         public bool cursorInputForLook = true;
+        private void Start()
+        {
+            ShowCursor(false);
+            PlayerUI.Instance.isMenuOpen += ShowCursor;
+        }
 
 #if ENABLE_INPUT_SYSTEM && STARTER_ASSETS_PACKAGES_CHECKED
         public void OnMove(InputValue value)
@@ -55,7 +60,9 @@ namespace StarterAssets
         public void OnMenu()
         {
             // Debug.Log("Tab presed");
-            SwitchMenu();
+            if (PlayerUI.Instance._actualView != null)
+                PlayerUI.Instance._actualView.SwitchView();
+            // SwitchMenu();
         }
         public void OnInteract(InputValue value)
         {
@@ -92,7 +99,7 @@ namespace StarterAssets
         public void SwitchMenu()
         {
             menu = !menu;
-            SetCursorState(!menu);
+            ShowCursor(menu);
             // Debug.Log(menu);
         }
         public void Interact(bool newInteractState)
@@ -105,9 +112,10 @@ namespace StarterAssets
         //     SetCursorState(false);
         // }
 
-        public void SetCursorState(bool newState)
+        public void ShowCursor(bool newState)
         {
-            Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+            menu = newState;
+            Cursor.lockState = newState ? CursorLockMode.None : CursorLockMode.Locked;
         }
     }
 

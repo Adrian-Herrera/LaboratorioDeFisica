@@ -10,14 +10,17 @@ public abstract class View : MonoBehaviour
     public void Show()
     {
         gameObject.SetActive(true);
+        PlayerUI.Instance.isMenuOpen?.Invoke(true);
         Init();
     }
     public void Hide()
     {
         gameObject.SetActive(false);
+        PlayerUI.Instance.isMenuOpen?.Invoke(false);
     }
     public void SwitchView()
     {
+        PlayerUI.Instance.isMenuOpen?.Invoke(!gameObject.activeSelf);
         gameObject.SetActive(!gameObject.activeSelf);
     }
 }

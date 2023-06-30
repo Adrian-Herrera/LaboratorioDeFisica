@@ -1,4 +1,5 @@
 using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -21,6 +22,8 @@ public class PlayerUI : MonoBehaviour
     public Tablet _tablet;
     public TabletDinamica _tabletDinamica;
     public View _actualView;
+    // Events
+    public Action<bool> isMenuOpen;
     private void Awake()
     {
         if (Instance == null)
