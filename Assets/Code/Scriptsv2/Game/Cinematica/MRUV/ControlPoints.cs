@@ -6,35 +6,44 @@ using UnityEngine;
 
 public class ControlPoints : MonoBehaviour
 {
-    private Station _station;
-    private CinematicObject _cinematicObject;
+    public static ControlPoints Instance;
+    // private Station _station;
+    [SerializeField] private CinematicObject _cinematicObject;
     [SerializeField] private float _nearPoint;
-    // [SerializeField] private List<float> _distancePoints = new();
     [SerializeField] private List<VariableUnity> _distancePoints = new();
     private readonly Dictionary<VariableUnity, List<VariableUnity>> _pointsInfo = new();
     private int pointIndex;
     public List<VariableUnity> DistancePoints => _distancePoints;
     public Dictionary<VariableUnity, List<VariableUnity>> PointsInfo => _pointsInfo;
-    // EVENTS
-    public event Action OnChangeList;
     private void Awake()
     {
-        _station = GetComponent<Station>();
-        _cinematicObject = _station.CinematicObject;
+        if (Instance == null)
+        {
+            Instance = this;
+        }
+        else
+        {
+            Destroy(this);
+        }
     }
-    private void OnEnable()
+    private void Start()
     {
-        if (_station == null) return;
-        _station.OnStartStation += Init;
+        Player.Instance.OnExitStation += CleanCinematicObject;
+    }
+    public void SetCinematicObject(CinematicObject cObject)
+    {
+        _cinematicObject = cObject;
         _cinematicObject.OnFinishMove += LogPoints;
         _cinematicObject.OnStartMove += ResetPoints;
     }
-    private void OnDisable()
+    private void CleanCinematicObject()
     {
-        if (_station == null) return;
-        _station.OnStartStation -= Init;
-        _cinematicObject.OnFinishMove -= LogPoints;
-        _cinematicObject.OnStartMove -= ResetPoints;
+        if (_cinematicObject != null)
+        {
+            _cinematicObject.OnFinishMove -= LogPoints;
+            _cinematicObject.OnStartMove -= ResetPoints;
+            _cinematicObject = null;
+        }
     }
     public void Init()
     {
@@ -48,6 +57,7 @@ public class ControlPoints : MonoBehaviour
     }
     private void FixedUpdate()
     {
+        if (_cinematicObject == null) return;
         if (_cinematicObject.IsMoving == false) return;
         if (pointIndex < _distancePoints.Count)
         {
@@ -87,19 +97,6 @@ public class ControlPoints : MonoBehaviour
         // Save point
         _pointsInfo.Add(distancePoint, datos);
     }
-    // public ControlPointsVariables? GetPoint(float distance)
-    // {
-    //     VariableUnity varUnity = _distancePoints.Find(e => e.Value == distance);
-    //     if (varUnity != null)
-    //     {
-    //         return _pointsInfo[varUnity];
-    //     }
-    //     else
-    //     {
-    //         Debug.Log("No existe el punto de control");
-    //         return null;
-    //     }
-    // }
     public bool AddControlPointAt(float value)
     {
         int indexValue = _distancePoints.FindIndex(e => e.Value == value);
@@ -111,7 +108,6 @@ public class ControlPoints : MonoBehaviour
             };
             _distancePoints.Add(varUnity);
             SortDistancePointsList();
-            OnChangeList?.Invoke();
             return true;
         }
         else
@@ -126,7 +122,6 @@ public class ControlPoints : MonoBehaviour
         if (oldVariable != null)
         {
             _distancePoints.Remove(oldVariable);
-            OnChangeList?.Invoke();
             return true;
         }
         else

@@ -38,7 +38,7 @@ public class Tablet : View
         _activeStation = station;
         if (_activeStation.CinematicObject != null)
         {
-            _controlPointsUI.Init(station.GetComponent<ControlPoints>());
+            _controlPointsUI.Init();
             _activeStation.CinematicObject.OnFinishMove += Show;
             Helpers.ClearListContent(_inputList);
             switch (station.CinematicObject.Type)

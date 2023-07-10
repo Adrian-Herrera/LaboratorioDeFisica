@@ -17,7 +17,7 @@ public class FinalData : MonoBehaviour, ITab
         Debug.Log("FinalData Init");
         if (_tablet.ActiveStation != null)
         {
-            _controlPoints = _tablet.ActiveStation.GetComponent<ControlPoints>();
+            _controlPoints = ControlPoints.Instance;
             ShowPointsInfo(_controlPoints.PointsInfo);
         }
     }
