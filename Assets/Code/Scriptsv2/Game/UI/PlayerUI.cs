@@ -14,7 +14,6 @@ public class PlayerUI : MonoBehaviour
     [SerializeField] private GameObject _userInfo;
     [SerializeField] private GameObject _generalInfo;
     [Header("Canvas")]
-    public NearStationMessage _nearStationMessage;
     [SerializeField] private InstructionUI _instructionUI;
     public ModeSelector _modeSelector;
     public RetoSelectorMenu _retoSelector;
@@ -27,6 +26,7 @@ public class PlayerUI : MonoBehaviour
     public Action<bool> isMenuOpen;
     private void Awake()
     {
+        Application.targetFrameRate = 60;
         if (Instance == null)
         {
             Instance = this;
@@ -45,16 +45,19 @@ public class PlayerUI : MonoBehaviour
     private void ShowStationName()
     {
         // _activeStation = station;
-        ChangeView(_nearStationMessage, false);
-        _nearStationMessage.Init(Player.NearStation);
+        NotificationMessage.Instance.Show("Estación Cerca", Player.NearStation.Name + "\n Presione E para continuar");
+        // ChangeView(_nearStationMessage, false);
+        // _nearStationMessage.Init(Player.NearStation);
     }
     private void StartExercise()
     {
+        NotificationMessage.Instance.Hide();
         SetInstructions(Player.NearStation.Instructions);
         IsStationActive = true;
     }
     private void ExitStation()
     {
+        NotificationMessage.Instance.Hide();
         if (_actualView != null)
         {
             _actualView.Hide();

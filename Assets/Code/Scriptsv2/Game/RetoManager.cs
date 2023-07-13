@@ -59,6 +59,7 @@ public class RetoManager : MonoBehaviour
         }
         else
         {
+            NotificationMessage.Instance.Show("Reto", "Respuesta Incorrecta", 5);
             _station.CinematicObject.ResetAll(3);
 
         }
