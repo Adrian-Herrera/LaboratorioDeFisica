@@ -36,7 +36,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &4023901938156102056
 CanvasRenderer:
@@ -68,8 +68,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d3f9ec9f2becfea41bfe06682bab4c91, type: 2}
-  m_sharedMaterial: {fileID: -4409798954506633520, guid: d3f9ec9f2becfea41bfe06682bab4c91,
+  m_fontAsset: {fileID: 11400000, guid: a3821536e6ccd4449a5fdd21a328c337, type: 2}
+  m_sharedMaterial: {fileID: -7095412403672817017, guid: a3821536e6ccd4449a5fdd21a328c337,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -145,8 +145,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 724936099897626402}
-  - component: {fileID: 435860304768951484}
   - component: {fileID: 4342199932474143685}
+  - component: {fileID: 5464636502537123659}
   m_Layer: 0
   m_Name: DatoTablero
   m_TagString: Untagged
@@ -177,32 +177,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 10}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &435860304768951484
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3544641567226246643}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Padding:
-    m_Left: 0
-    m_Right: 0
-    m_Top: 0
-    m_Bottom: 0
-  m_ChildAlignment: 3
-  m_Spacing: 0
-  m_ChildForceExpandWidth: 1
-  m_ChildForceExpandHeight: 1
-  m_ChildControlWidth: 1
-  m_ChildControlHeight: 1
-  m_ChildScaleWidth: 0
-  m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
 --- !u!114 &4342199932474143685
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -218,6 +192,32 @@ MonoBehaviour:
   NombreText: {fileID: 776407689085348398}
   ValorText: {fileID: 6236959306546674927}
   MagnitudText: {fileID: 5995081888944933372}
+--- !u!114 &5464636502537123659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3544641567226246643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 30649d3a9faa99c48a7b1166b86bf2a0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Padding:
+    m_Left: 10
+    m_Right: 0
+    m_Top: 0
+    m_Bottom: 0
+  m_ChildAlignment: 0
+  m_Spacing: 0
+  m_ChildForceExpandWidth: 1
+  m_ChildForceExpandHeight: 1
+  m_ChildControlWidth: 0
+  m_ChildControlHeight: 1
+  m_ChildScaleWidth: 0
+  m_ChildScaleHeight: 0
+  m_ReverseArrangement: 0
 --- !u!1 &4350657237990888260
 GameObject:
   m_ObjectHideFlags: 0
@@ -254,7 +254,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 70, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &805266826052002875
 CanvasRenderer:
@@ -286,8 +286,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Distancia
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d3f9ec9f2becfea41bfe06682bab4c91, type: 2}
-  m_sharedMaterial: {fileID: -4409798954506633520, guid: d3f9ec9f2becfea41bfe06682bab4c91,
+  m_fontAsset: {fileID: 11400000, guid: a3821536e6ccd4449a5fdd21a328c337, type: 2}
+  m_sharedMaterial: {fileID: -7095412403672817017, guid: a3821536e6ccd4449a5fdd21a328c337,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
@@ -319,7 +319,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 2
+  m_HorizontalAlignment: 1
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -390,7 +390,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_SizeDelta: {x: 50, y: 0}
   m_Pivot: {x: 0, y: 1}
 --- !u!222 &7324335688529274603
 CanvasRenderer:
@@ -422,8 +422,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: (m)
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: d3f9ec9f2becfea41bfe06682bab4c91, type: 2}
-  m_sharedMaterial: {fileID: -4409798954506633520, guid: d3f9ec9f2becfea41bfe06682bab4c91,
+  m_fontAsset: {fileID: 11400000, guid: a3821536e6ccd4449a5fdd21a328c337, type: 2}
+  m_sharedMaterial: {fileID: -7095412403672817017, guid: a3821536e6ccd4449a5fdd21a328c337,
     type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}

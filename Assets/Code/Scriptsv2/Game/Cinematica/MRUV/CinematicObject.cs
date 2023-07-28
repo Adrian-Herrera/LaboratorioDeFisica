@@ -35,9 +35,11 @@ public class CinematicObject : MonoBehaviour
     public float AccX => _accX;
     public float AccY => _accY;
     public float ActualVelX => _actualVelX;
+    public float ActualVelY => _actualVelY;
     public float TimeMoving => _timeMoving / 1000;
     public float DistanceFromStart => _distanceFromStart;
     public float MaxVirtualDistance => _maxVirtualDistance;
+    public float ActualHeight => _actualHeight;
     public bool IsMoving => _isMoving;
     // Events
     public event Action OnFinishMove;

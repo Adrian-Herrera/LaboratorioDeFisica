@@ -7,10 +7,10 @@ using UnityEngine.Networking;
 
 public class GlobalInfo : MonoBehaviour
 {
+
     public static GlobalInfo Instance;
     public static Variable[] Variables;
     public Variable[] _localVariables;
-    // public Dictionary<string, Variable> VarDict = new();
     public static Unidad[] Unidades;
     private static string fileText1;
     private static string fileText2;
