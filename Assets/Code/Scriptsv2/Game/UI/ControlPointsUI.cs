@@ -25,7 +25,7 @@ public class ControlPointsUI : MonoBehaviour
     {
         ControlPoints.Instance.SetCinematicObject(_tablet.ActiveStation.CinematicObject);
         InstanceInputs();
-        _tablet.ActiveStation.CinematicObject.OnFinishMove += CalculateExtraInfo;
+        // _tablet.ActiveStation.CinematicObject.OnFinishMove += CalculateExtraInfo;
     }
     private void InstanceInputs()
     {
@@ -59,9 +59,9 @@ public class ControlPointsUI : MonoBehaviour
             Destroy(pointInput.gameObject);
         }
     }
-    private void CalculateExtraInfo()
-    {
-        Debug.Log("Calculate Extra Info");
-        _finalData.Init();
-    }
+    // private void CalculateExtraInfo()
+    // {
+    //     Debug.Log("Calculate Extra Info");
+    //     _finalData.Init();
+    // }
 }

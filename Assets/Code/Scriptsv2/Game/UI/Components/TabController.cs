@@ -36,6 +36,7 @@ public class TabController : MonoBehaviour
         {
             _activeTab.Background.sprite = _normalState;
         }
+        button.Background.sprite = _activeState;
         if (_activeTab == button) return;
         _activeTab = button;
         int index = _tabs.FindIndex(e => e == button);
@@ -55,7 +56,7 @@ public class TabController : MonoBehaviour
                 _pages[i].SetActive(false);
             }
         }
-        button.Background.sprite = _activeState;
+
     }
     private void ResetTabs()
     {
