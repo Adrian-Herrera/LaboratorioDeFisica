@@ -36,6 +36,7 @@ public class TabController : MonoBehaviour
         {
             _activeTab.Background.sprite = _normalState;
         }
+        if (_activeTab == button) return;
         _activeTab = button;
         int index = _tabs.FindIndex(e => e == button);
         for (int i = 0; i < _pages.Count; i++)

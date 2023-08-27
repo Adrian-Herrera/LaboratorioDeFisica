@@ -19,7 +19,9 @@ public class Tablet : View
     // [SerializeField] private ControlPoints _controlPoints;
     private ControlPointsUI _controlPointsUI;
     private readonly List<VariableInput> _inputList = new();
+    public List<VariableUnity> _lastAttempt = new();
     public Station ActiveStation => _activeStation;
+    public List<VariableInput> InputList => _inputList;
     // private RectTransform _rt;
     // private bool _isHidden;
     private void Awake()
@@ -44,16 +46,16 @@ public class Tablet : View
             switch (station.CinematicObject.Type)
             {
                 case CinematicType.MRU:
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad), true));
                     break;
                 case CinematicType.MRUV:
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Aceleracion)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial), true));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Aceleracion), true));
                     break;
                 case CinematicType.Parabolico:
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad)));
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial)));
-                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Gravedad)));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Velocidad), true));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.VelocidadInicial), true));
+                    _inputList.Add(Instantiate(_inputPrefab, _container.transform).Init(station.Template.FindVarByType(BaseVariable.Gravedad), true));
                     break;
                 default:
                     break;
@@ -73,6 +75,13 @@ public class Tablet : View
         CinematicObject cinematicObject = _activeStation.CinematicObject;
         Debug.Log("Move with " + cinematicObject.Type + " type");
         cinematicObject.ResetAll();
+        ControlPoints.Instance._oldStartValues.Clear();
+        ControlPoints.Instance._oldStartValues = new List<VariableUnity>(ControlPoints.Instance._newStartValues);
+        ControlPoints.Instance._newStartValues.Clear();
+        foreach (VariableInput item in _inputList)
+        {
+            ControlPoints.Instance._newStartValues.Add((VariableUnity)item.varUnity.Clone());
+        }
         switch (cinematicObject.Type)
         {
             case CinematicType.MRU:
@@ -95,13 +104,5 @@ public class Tablet : View
                 break;
         }
         Hide();
-    }
-    public void ShowFinalInfo(Cuestionario reto, int intentos)
-    {
-        // PlayerUI.Instance._actualView.Hide();
-        // PlayerUI.Instance._actualView = PlayerUI.Instance._retoFinal;
-        // PlayerUI.Instance._actualView.Show();
-        PlayerUI.Instance.ShowFinalInfo(reto, intentos);
-        // PlayerUI.Instance._retoFinal.Init(_actualReto, _intentos);
     }
 }

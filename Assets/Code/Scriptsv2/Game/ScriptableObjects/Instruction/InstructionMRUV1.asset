@@ -13,9 +13,7 @@ MonoBehaviour:
   m_Name: InstructionMRUV1
   m_EditorClassIdentifier: 
   Instructions:
-  - Title: Bienvenido a MRUV
-    Description: "Bienvenido al laboratorio de movimiento rectilineo uniforme, aqui
-      aprenderas el concepto de movimiento con velocidad constante, y la relaci\xF3n
-      de velocidad, tiempo y distancia."
-  - Title: Bienvenido a MRUV
-    Description: Para empezar veamos unos ejemplos para entender los conceptos basicos
+  - Title: Movimiento Rectilineo Uniformemete Variado
+    Description: "Bienvenido al laboratorio de Movimiento Rectilineo Uniformemente
+      Variado.\nAqu\xED podras conocer el concepto de aceleraci\xF3n y como afecta
+      a la velocidad de un objeto."

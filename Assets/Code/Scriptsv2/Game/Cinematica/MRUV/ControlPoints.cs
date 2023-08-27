@@ -12,9 +12,13 @@ public class ControlPoints : MonoBehaviour
     [SerializeField] private float _nearPoint;
     [SerializeField] private List<VariableUnity> _distancePoints = new();
     private readonly Dictionary<VariableUnity, List<VariableUnity>> _pointsInfo = new();
+    private Dictionary<VariableUnity, List<VariableUnity>> _oldPointsInfo = new();
     private int pointIndex;
     public List<VariableUnity> DistancePoints => _distancePoints;
     public Dictionary<VariableUnity, List<VariableUnity>> PointsInfo => _pointsInfo;
+    public Dictionary<VariableUnity, List<VariableUnity>> OldPointsInfo => _oldPointsInfo;
+    public List<VariableUnity> _newStartValues;
+    public List<VariableUnity> _oldStartValues;
     private void Awake()
     {
         if (Instance == null)
@@ -35,6 +39,10 @@ public class ControlPoints : MonoBehaviour
         _cinematicObject = cObject;
         _cinematicObject.OnFinishMove += LogPoints;
         _cinematicObject.OnStartMove += ResetPoints;
+        _distancePoints.Clear();
+        _pointsInfo.Clear();
+        _oldPointsInfo.Clear();
+        AddControlPointAt(_cinematicObject.MaxVirtualDistance);
     }
     private void CleanCinematicObject()
     {
@@ -49,6 +57,7 @@ public class ControlPoints : MonoBehaviour
     {
         _distancePoints.Clear();
         _pointsInfo.Clear();
+        _oldPointsInfo.Clear();
         AddControlPointAt(_cinematicObject.MaxVirtualDistance);
         // AddControlPointAt(_cinematicObject.MaxVirtualDistance / 2);
         // AddControlPointAt(25);
@@ -79,6 +88,13 @@ public class ControlPoints : MonoBehaviour
     }
     private void ResetPoints()
     {
+        // // Variables
+        // _oldStartValues.Clear();
+        // _oldStartValues = new List<VariableUnity>(_newStartValues);
+        // Control Points
+        _oldPointsInfo.Clear();
+        _oldPointsInfo = _pointsInfo.ToDictionary(entry => entry.Key,
+                                               entry => entry.Value);
         _pointsInfo.Clear();
         pointIndex = 0;
         _nearPoint = _distancePoints[pointIndex].Value;
@@ -99,6 +115,12 @@ public class ControlPoints : MonoBehaviour
     }
     public bool AddControlPointAt(float value)
     {
+        if (value > _cinematicObject.MaxVirtualDistance)
+        {
+            NotificationMessage.Instance.Show("", "La distancia no debe ser mayor a " + _cinematicObject.MaxVirtualDistance.ToString(), 3);
+            Debug.Log("Distancia mayor al limite");
+            return false;
+        }
         int indexValue = _distancePoints.FindIndex(e => e.Value == value);
         if (indexValue < 0)
         {
@@ -112,6 +134,7 @@ public class ControlPoints : MonoBehaviour
         }
         else
         {
+            NotificationMessage.Instance.Show("", "Ya existe un punto de control en esa posición", 3);
             Debug.Log("Ya existe un punto de control en esa posición");
             return false;
         }

@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 [Serializable]
-public class VariableUnity
+public class VariableUnity : ICloneable
 {
     [SerializeField] private float _value;
     public float Value
@@ -25,6 +25,10 @@ public class VariableUnity
     {
         TipoVariable = tipo;
         Value = value;
+    }
+    public object Clone()
+    {
+        return MemberwiseClone(); //create a shallow-copy of the object
     }
 }
 [Serializable]
