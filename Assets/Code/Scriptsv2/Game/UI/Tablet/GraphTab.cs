@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class GraphTab : MonoBehaviour, ITab
 {
@@ -11,73 +12,115 @@ public class GraphTab : MonoBehaviour, ITab
     [SerializeField] private Transform _buttonContainer;
     [SerializeField] private Tablet _tablet;
     [SerializeField] private List<Button> _buttons = new();
-    private Dictionary<TipoVariable, List<float>> _values;
+    [SerializeField] private Dictionary<TipoVariable, Dictionary<float, float>> _values;
+    [SerializeField] private Dictionary<TipoVariable, Dictionary<float, float>> _oldValues = new();
+    // time moving object
+    private float newTime = 0;
+    private float oldTime = 0;
     public void Init()
     {
         Debug.Log("GraphTab Init");
+        oldTime = newTime;
+        newTime = _tablet.ActiveStation.CinematicObject.TimeMoving;
         if (_tablet.ActiveStation != null)
         {
-            CreateValueList(_tablet.ActiveStation.CinematicObject.TimeMoving, 10);
+            if (_values != null)
+            {
+                _oldValues = _values.ToDictionary(entry => entry.Key,
+                                                   entry => entry.Value);
+            }
+            _values = CreateValueList(newTime, 10);
+            // Debug.Log(_values.Count);
+            // Debug.Log(_oldValues.Count);
             InstanceUI();
         }
     }
     private void InstanceUI()
     {
         Helpers.ClearListContent(_buttons);
-        foreach (var item in _values)
+        for (int i = 0; i < _values.Count; i++)
         {
+            var item = _values.ElementAt(i);
             Button newButton = Instantiate(_buttonTemplate, _buttonContainer);
             newButton.gameObject.SetActive(true);
             newButton.GetComponentInChildren<TMP_Text>().text = item.Key.Nombre;
             _buttons.Add(newButton);
-            newButton.onClick.AddListener(() => { _graphs.Init(item.Value, _tablet.ActiveStation.CinematicObject.TimeMoving); });
+            if (_oldValues.Count > 0)
+            {
+                Debug.Log(item.Value);
+                // foreach (var item2 in _oldValues.ElementAt(i).Value)
+                // {
+                //     Debug.Log(item2);
+                // }
+                // Debug.Log(_oldValues.ElementAt(i).Value);
+                var item2 = _oldValues.ElementAt(i);
+                newButton.onClick.AddListener(() =>
+                {
+                    _graphs.Init(item.Value,
+                 item2.Value,
+                  oldTime > newTime ? oldTime : newTime);
+                });
+            }
+            else
+            {
+                newButton.onClick.AddListener(() => { _graphs.Init(item.Value, new Dictionary<float, float>(), oldTime > newTime ? oldTime : newTime); });
+            }
             LayoutRebuilder.ForceRebuildLayoutImmediate(newButton.GetComponent<RectTransform>());
         }
+        // foreach (var item in _values)
+        // {
+        //     Button newButton = Instantiate(_buttonTemplate, _buttonContainer);
+        //     newButton.gameObject.SetActive(true);
+        //     newButton.GetComponentInChildren<TMP_Text>().text = item.Key.Nombre;
+        //     _buttons.Add(newButton);
+        //     newButton.onClick.AddListener(() => { _graphs.Init(item.Value, oldTime > newTime ? oldTime : newTime); });
+        //     LayoutRebuilder.ForceRebuildLayoutImmediate(newButton.GetComponent<RectTransform>());
+        // }
         LayoutRebuilder.ForceRebuildLayoutImmediate(_buttonContainer.GetComponent<RectTransform>());
     }
-    private void CreateValueList(float totalTime, float numberOfValues)
+    private Dictionary<TipoVariable, Dictionary<float, float>> CreateValueList(float totalTime, float numberOfValues)
     {
         Debug.Log("Create Value List");
         // float totalTime = 3;
         // float numberOfValues = 10;
-        _values = new();
+        Dictionary<TipoVariable, Dictionary<float, float>> tempValues = new();
         CinematicObject _cinematic = _tablet.ActiveStation.CinematicObject;
 
         switch (_cinematic.Type)
         {
             case CinematicType.MRU:
-                List<float> MRUvaluesVel = new();
-                List<float> MRUvaluesDist = new();
-                for (int i = 0; i < numberOfValues; i++)
+                Dictionary<float, float> MRUvaluesVel = new();
+                Dictionary<float, float> MRUvaluesDist = new();
+                for (int i = 0; i <= numberOfValues; i++)
                 {
                     float time = Mathf.Lerp(0, totalTime, i / numberOfValues);
                     float vel = _cinematic.VelX;
                     float dist = Formulary2.Formula_mru_x(v: vel, t: time);
-                    MRUvaluesVel.Add(vel);
-                    MRUvaluesDist.Add(dist);
+                    MRUvaluesVel.Add(time, vel);
+                    MRUvaluesDist.Add(time, dist);
                 }
-                _values.Add(BaseVariable.Velocidad, MRUvaluesVel);
-                _values.Add(BaseVariable.Distancia, MRUvaluesDist);
+                tempValues.Add(BaseVariable.Velocidad, MRUvaluesVel);
+                tempValues.Add(BaseVariable.Distancia, MRUvaluesDist);
                 break;
             case CinematicType.MRUV:
-                List<float> valuesVel = new();
-                List<float> valuesDist = new();
-                for (int i = 0; i < numberOfValues; i++)
+                Dictionary<float, float> valuesVel = new();
+                Dictionary<float, float> valuesDist = new();
+                for (int i = 0; i <= numberOfValues; i++)
                 {
                     float time = Mathf.Lerp(0, totalTime, i / numberOfValues);
                     float vel = Formulary2.Formula_1(vo: _cinematic.VelX, a: _cinematic.AccX, t: time);
                     float dist = Formulary2.Formula_2(vo: _cinematic.VelX, vf: vel, t: time);
-                    valuesVel.Add(vel);
-                    valuesDist.Add(dist);
+                    valuesVel.Add(time, vel);
+                    valuesDist.Add(time, dist);
                 }
-                _values.Add(BaseVariable.VelocidadFinal, valuesVel);
-                _values.Add(BaseVariable.Distancia, valuesDist);
+                tempValues.Add(BaseVariable.VelocidadFinal, valuesVel);
+                tempValues.Add(BaseVariable.Distancia, valuesDist);
                 break;
             case CinematicType.Parabolico:
-                List<float> valuesVelX = new();
-                List<float> valuesVelY = new();
-                List<float> valuesDistX = new();
-                List<float> valuesHeight = new();
+                Dictionary<float, float> valuesVelX = new();
+                Dictionary<float, float> valuesVelY = new();
+                Dictionary<float, float> valuesDistX = new();
+                Dictionary<float, float> valuesHeight = new();
                 for (int i = 0; i <= numberOfValues; i++)
                 {
                     float time = Mathf.Lerp(0, totalTime, i / numberOfValues);
@@ -85,20 +128,20 @@ public class GraphTab : MonoBehaviour, ITab
                     float velX = _cinematic.VelX;
                     float dist = Formulary2.Formula_mru_x(v: _cinematic.VelX, t: time);
                     float altura = Formulary2.Altura(x: _cinematic.VelX, y: _cinematic.VelY, dist: dist, grav: _cinematic.AccY);
-                    valuesVelX.Add(velX);
-                    valuesVelY.Add(Mathf.Abs(velY));
-                    valuesDistX.Add(dist);
-                    valuesHeight.Add(altura);
+                    valuesVelX.Add(time, velX);
+                    valuesVelY.Add(time, Mathf.Abs(velY));
+                    valuesDistX.Add(time, dist);
+                    valuesHeight.Add(time, altura);
                 }
-                _values.Add(BaseVariable.Velocidad, valuesVelX);
-                _values.Add(BaseVariable.VelocidadFinal, valuesVelY);
-                _values.Add(BaseVariable.Distancia, valuesDistX);
-                _values.Add(BaseVariable.Altura, valuesHeight);
+                tempValues.Add(BaseVariable.Velocidad, valuesVelX);
+                tempValues.Add(BaseVariable.VelocidadFinal, valuesVelY);
+                tempValues.Add(BaseVariable.Distancia, valuesDistX);
+                tempValues.Add(BaseVariable.Altura, valuesHeight);
                 break;
             default:
                 break;
         }
-
+        return tempValues;
     }
     private List<float> CreateRandomList(int size)
     {

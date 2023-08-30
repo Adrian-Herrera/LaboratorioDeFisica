@@ -13,7 +13,7 @@ public class TableroDato : MonoBehaviour
     {
         NombreText.text = dato.TipoVariable.Nombre;
         ValorText.text = dato.Valor.ToString();
-        MagnitudText.text = dato.Magnitud is not null ? dato.Magnitud.Nombre : "";
+        MagnitudText.text = dato.Magnitud is not null ? dato.Magnitud.Abrev : "";
     }
     public void Init(string nombre, float value, string mag)
     {

@@ -57,6 +57,7 @@ public class QuestionsInput : MonoBehaviour
     }
     IEnumerator WrongAnswer()
     {
+        NotificationMessage.Instance.Show("Cuestionario","Respuesta Incorrecta",3);
         Color actualColor = _input.GetComponent<Image>().color;
         _input.GetComponent<Image>().color = Helpers.HexColor("#f2725e");
         yield return new WaitForSeconds(3);

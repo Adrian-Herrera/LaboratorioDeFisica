@@ -583,16 +583,15 @@ MonoBehaviour:
     TipoVariableId: 0
     TipoDatoId: 0
     MagnitudId: 0
-    Variable:
+    TipoVariable:
       Id: 0
       Nombre: 
       Abrev: 
-    Unidad:
+    Magnitud:
       Id: 0
       Nombre: 
       Abrev: 
     IsAnswered: 0
-    dataPropertie: {fileID: 0}
 --- !u!114 &2101636507853186191
 MonoBehaviour:
   m_ObjectHideFlags: 0

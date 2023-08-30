@@ -16,6 +16,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 public class Window_Graph : MonoBehaviour
 {
@@ -31,18 +32,16 @@ public class Window_Graph : MonoBehaviour
     private void Awake()
     {
         gameObjectList = new List<GameObject>();
-
-
     }
 
-    public void Init(List<float> valueList, float totalTime)
+    public void Init(Dictionary<float, float> valueList, Dictionary<float, float> oldValueList, float totalTime)
     {
         // List<int> valueList = new List<int>() { 5, 98, 56, 45, 30, 22, 17, 15, 13, 17 };
         Helpers.ClearListContent(gameObjectList);
-        ShowGraph(valueList, -1, totalTime);
+        ShowGraph(new List<Dictionary<float, float>>() { valueList, oldValueList }, -1, totalTime);
     }
 
-    private void ShowGraph(List<float> valueList, int maxVisibleValueAmount = -1, float xTime = 0, Func<float, string> getAxisLabelY = null)
+    private void ShowGraph(List<Dictionary<float, float>> valueList, int maxVisibleValueAmount = -1, float xTime = 0, Func<float, string> getAxisLabelY = null)
     {
         if (getAxisLabelY == null)
         {
@@ -51,7 +50,7 @@ public class Window_Graph : MonoBehaviour
 
         if (maxVisibleValueAmount <= 0)
         {
-            maxVisibleValueAmount = valueList.Count;
+            maxVisibleValueAmount = 10;
         }
 
         foreach (GameObject gameObject in gameObjectList)
@@ -63,19 +62,22 @@ public class Window_Graph : MonoBehaviour
         float graphWidth = graphContainer.sizeDelta.x;
         float graphHeight = graphContainer.sizeDelta.y;
 
-        float yMaximum = valueList[0];
-        float yMinimum = valueList[0];
+        float yMaximum = valueList[0][0];
+        float yMinimum = valueList[0][0];
 
-        for (int i = Mathf.Max(valueList.Count - maxVisibleValueAmount, 0); i < valueList.Count; i++)
+        foreach (Dictionary<float, float> list in valueList)
         {
-            float value = valueList[i];
-            if (value > yMaximum)
+            for (int i = 0; i < list.Count; i++)
             {
-                yMaximum = value;
-            }
-            if (value < yMinimum)
-            {
-                yMinimum = value;
+                float value = list.ElementAt(i).Value;
+                if (value > yMaximum)
+                {
+                    yMaximum = value;
+                }
+                if (value < yMinimum)
+                {
+                    yMinimum = value;
+                }
             }
         }
 
@@ -94,35 +96,46 @@ public class Window_Graph : MonoBehaviour
         int xIndex = 0;
 
         GameObject lastCircleGameObject = null;
-        for (int i = 0; i < valueList.Count; i++)
+        foreach (Dictionary<float, float> list in valueList)
         {
-            float xPosition = xIndex * xSize;
-            float yPosition = ((valueList[i] - yMinimum) / (yMaximum - yMinimum)) * graphHeight;
-            GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition));
-            gameObjectList.Add(circleGameObject);
-            if (lastCircleGameObject != null)
+            if (list.Count > 0)
             {
-                GameObject dotConnectionGameObject = CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition);
-                gameObjectList.Add(dotConnectionGameObject);
+                lastCircleGameObject = null;
+                Color newColor = valueList.IndexOf(list) == 0 ? Color.white : Color.yellow;
+                for (int i = 0; i < list.Count; i++)
+                {
+                    float xPosition = graphWidth * list.ElementAt(i).Key / xTime;
+                    // Debug.Log($"{graphWidth}*{list[i]}/{xTime}");
+                    float yPosition = graphHeight * list.ElementAt(i).Value / yMaximum;
+                    GameObject circleGameObject = CreateCircle(new Vector2(xPosition, yPosition), newColor);
+                    gameObjectList.Add(circleGameObject);
+                    if (lastCircleGameObject != null)
+                    {
+                        GameObject dotConnectionGameObject = CreateDotConnection(lastCircleGameObject.GetComponent<RectTransform>().anchoredPosition, circleGameObject.GetComponent<RectTransform>().anchoredPosition, newColor);
+                        gameObjectList.Add(dotConnectionGameObject);
+                    }
+                    lastCircleGameObject = circleGameObject;
+                    // Debug.Log(list.ElementAt(i).Key +" : " + xTime);
+                    if (list.ContainsKey(xTime))
+                    {
+                        RectTransform labelX = Instantiate(labelTemplateX);
+                        labelX.SetParent(graphContainer, false);
+                        labelX.gameObject.SetActive(true);
+                        labelX.anchoredPosition = new Vector2(xPosition, -12f);
+                        // Debug.Log($"i: {i}, count: {valueList.Count - 1} => res: {(float)i / (valueList.Count - 1)}");
+                        float labelValue = Mathf.Round(Mathf.Lerp(0, xTime, (float)i / (list.Count - 1)) * 100) / 100;
+                        labelX.GetComponent<TMP_Text>().text = labelValue.ToString();
+                        gameObjectList.Add(labelX.gameObject);
+
+                        RectTransform dashX = Instantiate(dashTemplateX);
+                        dashX.SetParent(graphContainer, false);
+                        dashX.gameObject.SetActive(true);
+                        dashX.anchoredPosition = new Vector2(xPosition, -3f);
+                        gameObjectList.Add(dashX.gameObject);
+                    }
+
+                }
             }
-            lastCircleGameObject = circleGameObject;
-
-            RectTransform labelX = Instantiate(labelTemplateX);
-            labelX.SetParent(graphContainer, false);
-            labelX.gameObject.SetActive(true);
-            labelX.anchoredPosition = new Vector2(xPosition, -12f);
-            // Debug.Log($"i: {i}, count: {valueList.Count - 1} => res: {(float)i / (valueList.Count - 1)}");
-            float labelValue = Mathf.Round(Mathf.Lerp(0, xTime, (float)i / (valueList.Count - 1)) * 100) / 100;
-            labelX.GetComponent<TMP_Text>().text = labelValue.ToString();
-            gameObjectList.Add(labelX.gameObject);
-
-            RectTransform dashX = Instantiate(dashTemplateX);
-            dashX.SetParent(graphContainer, false);
-            dashX.gameObject.SetActive(true);
-            dashX.anchoredPosition = new Vector2(xPosition, -3f);
-            gameObjectList.Add(dashX.gameObject);
-
-            xIndex++;
         }
 
         int separatorCount = 10;
@@ -144,11 +157,12 @@ public class Window_Graph : MonoBehaviour
         }
     }
 
-    private GameObject CreateCircle(Vector2 anchoredPosition)
+    private GameObject CreateCircle(Vector2 anchoredPosition, Color color)
     {
         GameObject gameObject = new GameObject("circle", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
         gameObject.GetComponent<Image>().sprite = circleSprite;
+        gameObject.GetComponent<Image>().color = color;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         rectTransform.anchoredPosition = anchoredPosition;
         rectTransform.sizeDelta = new Vector2(11, 11);
@@ -157,11 +171,11 @@ public class Window_Graph : MonoBehaviour
         return gameObject;
     }
 
-    private GameObject CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB)
+    private GameObject CreateDotConnection(Vector2 dotPositionA, Vector2 dotPositionB, Color color)
     {
         GameObject gameObject = new GameObject("dotConnection", typeof(Image));
         gameObject.transform.SetParent(graphContainer, false);
-        gameObject.GetComponent<Image>().color = new Color(1, 1, 1, .5f);
+        gameObject.GetComponent<Image>().color = color;
         RectTransform rectTransform = gameObject.GetComponent<RectTransform>();
         Vector2 dir = (dotPositionB - dotPositionA).normalized;
         float distance = Vector2.Distance(dotPositionA, dotPositionB);

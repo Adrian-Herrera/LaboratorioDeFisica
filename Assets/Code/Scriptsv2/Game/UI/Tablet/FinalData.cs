@@ -19,7 +19,6 @@ public class FinalData : MonoBehaviour, ITab
     private readonly List<FinalDataElement> _dataList = new();
     private readonly List<ShowVariable> _initialDataList = new();
     private List<ShowVariable> _oldDataList = new();
-    [SerializeField] private List<VariableUnity> _oldVariables = new();
     public void Init()
     {
         Debug.Log("FinalData Init");
