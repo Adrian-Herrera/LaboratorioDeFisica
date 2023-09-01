@@ -32,7 +32,14 @@ public class ControlPoints : MonoBehaviour
     }
     private void Start()
     {
-        Player.Instance.OnExitStation += CleanCinematicObject;
+        Player.Instance.OnExitStation += () =>
+        {
+            CleanCinematicObject();
+            _pointsInfo.Clear();
+            _oldPointsInfo.Clear();
+            _newStartValues.Clear();
+            _oldStartValues.Clear();
+        };
     }
     public void SetCinematicObject(CinematicObject cObject)
     {

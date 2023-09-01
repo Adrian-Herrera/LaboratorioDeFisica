@@ -14,4 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Instructions:
   - Title: Poleas
-    Description: Aqui conoceras el concepto basico y funcionamiento de las poleas
+    Description: "Aqui conoceras el concepto b\xE1sico y funcionamiento de las poleas.\nY
+      como a mayor numero de poleas, menor la fuerza o peso necesario para levantar
+      un objeto"

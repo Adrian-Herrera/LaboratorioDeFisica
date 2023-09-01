@@ -7,12 +7,14 @@ using UnityEngine.EventSystems;
 
 public class ExerciseItem : MonoBehaviour, IPointerClickHandler
 {
+    private static ExerciseItem SelectedItem;
     [SerializeField] private SOMedals medals;
     [SerializeField] private TMP_Text _title;
     [SerializeField] private Image _medal;
     [SerializeField] private Button _exerciseBtn;
     // private ExerciseMenu data;
     private Ejercicio _ejercicio;
+    public Ejercicio Ejercicio => _ejercicio;
     public void Init(Ejercicio ejercicio)
     {
         _ejercicio = ejercicio;
@@ -31,12 +33,21 @@ public class ExerciseItem : MonoBehaviour, IPointerClickHandler
     }
     private void ChargeExercise()
     {
+        SelectedItem = null;
         LevelManager.Instance.ChargeQuiz(_ejercicio.Id);
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        ExerciseSelection.Instance.EjercicioSeleccionado = _ejercicio;
+        // ExerciseSelection.Instance.EjercicioSeleccionado = _ejercicio;
+        ExerciseSelection.Instance.ChangeSelection(this);
+        if (SelectedItem != null)
+        {
+            SelectedItem.GetComponent<Image>().color = Helpers.HexColor("#2D669D");
+        }
+        SelectedItem = this;
+        SelectedItem.GetComponent<Image>().color = Helpers.HexColor("#598EC1");
+
     }
 
 }

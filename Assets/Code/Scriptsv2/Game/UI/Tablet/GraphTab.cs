@@ -12,11 +12,20 @@ public class GraphTab : MonoBehaviour, ITab
     [SerializeField] private Transform _buttonContainer;
     [SerializeField] private Tablet _tablet;
     [SerializeField] private List<Button> _buttons = new();
-    [SerializeField] private Dictionary<TipoVariable, Dictionary<float, float>> _values;
+    [SerializeField] private Dictionary<TipoVariable, Dictionary<float, float>> _values = new();
     [SerializeField] private Dictionary<TipoVariable, Dictionary<float, float>> _oldValues = new();
     // time moving object
     private float newTime = 0;
     private float oldTime = 0;
+    private void Start()
+    {
+        Player.Instance.OnExitStation += () =>
+        {
+            Helpers.ClearListContent(_buttons);
+            _values.Clear();
+            _oldValues.Clear();
+        };
+    }
     public void Init()
     {
         Debug.Log("GraphTab Init");
@@ -29,10 +38,13 @@ public class GraphTab : MonoBehaviour, ITab
                 _oldValues = _values.ToDictionary(entry => entry.Key,
                                                    entry => entry.Value);
             }
-            _values = CreateValueList(newTime, 10);
+            if (newTime > 0)
+            {
+                _values = CreateValueList(newTime, 10);
+                InstanceUI();
+            }
             // Debug.Log(_values.Count);
             // Debug.Log(_oldValues.Count);
-            InstanceUI();
         }
     }
     private void InstanceUI()

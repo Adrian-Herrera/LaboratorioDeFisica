@@ -19,6 +19,14 @@ public class FinalData : MonoBehaviour, ITab
     private readonly List<FinalDataElement> _dataList = new();
     private readonly List<ShowVariable> _initialDataList = new();
     private List<ShowVariable> _oldDataList = new();
+    private void Start()
+    {
+        Player.Instance.OnExitStation += () =>
+        {
+            Helpers.ClearListContent(_oldDataList);
+            Helpers.ClearListContent(_initialDataList);
+        };
+    }
     public void Init()
     {
         Debug.Log("FinalData Init");

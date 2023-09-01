@@ -33,6 +33,10 @@ public class Window_Graph : MonoBehaviour
     {
         gameObjectList = new List<GameObject>();
     }
+    private void Start()
+    {
+        Player.Instance.OnExitStation += () => { Helpers.ClearListContent(gameObjectList); };
+    }
 
     public void Init(Dictionary<float, float> valueList, Dictionary<float, float> oldValueList, float totalTime)
     {
